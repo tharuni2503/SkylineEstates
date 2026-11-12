@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useStore } from "@/lib/store";
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Logo from "./Logo";
 import { Menu, X, Bell, Heart, User, LogOut } from "lucide-react";
 
@@ -19,6 +19,7 @@ export default function Navbar() {
   const { wishlist, account, signOut } = useStore();
   const [open, setOpen] = useState(false);
   const [bell, setBell] = useState(false);
+  const reduceMotion = useReducedMotion();
   const roleHome: Record<string, string> = { buyer: "/properties", seller: "/dashboard", agent: "/dashboard", builder: "/builder", admin: "/admin" };
   const accountHome = account ? (roleHome[account.role] || "/dashboard") : "/login";
 
@@ -61,10 +62,10 @@ export default function Navbar() {
             )}
             <Link href="/wishlist" aria-label={`Saved properties (${wishlist.length})`} className="relative"><Heart size={18} />{wishlist.length > 0 && <span className="absolute -right-2 -top-2 rounded-full bg-beige px-1.5 text-[10px] text-matte">{wishlist.length}</span>}</Link>
             <div className="relative">
-              <button aria-label="Notifications" aria-expanded={bell} onClick={() => setBell(!bell)}><Bell size={18} /></button>
-              {bell && <ul className="absolute right-0 top-8 z-50 w-[min(16rem,calc(100vw-2.5rem))] bg-white p-3 text-sm text-charcoal shadow"><li className="pb-2 text-xs uppercase tracking-widest text-slate">Sample notifications (demo data)</li><li className="py-1">New site visit request for Skyline Crest</li><li className="py-1">Your listing was approved</li><li className="py-1">2 new leads this week</li></ul>}
+              <button type="button" aria-label="Notifications" aria-expanded={bell} aria-controls="notifications-menu" onClick={() => setBell(!bell)} className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-full transition-colors hover:bg-ivory/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"><Bell size={18} /></button>
+              {bell && <ul id="notifications-menu" className="absolute right-0 top-11 z-50 w-[min(18rem,calc(100vw-2.5rem))] border border-line/70 bg-white p-3 text-sm text-charcoal shadow-xl"><li className="pb-2 text-xs uppercase tracking-widest text-slate">Sample notifications (demo data)</li><li className="py-1">New site visit request for Skyline Crest</li><li className="py-1">Your listing was approved</li><li className="py-1">2 new leads this week</li></ul>}
             </div>
-            <button onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="site-menu" aria-label={open ? "Close menu" : "Open menu"} className="flex items-center gap-2 text-sm lg:hidden">
+            <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="site-menu" aria-label={open ? "Close menu" : "Open menu"} className="flex items-center gap-2 text-sm lg:hidden">
               <span className="hidden md:inline">{open ? "Close" : "Menu"}</span>{open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
@@ -72,7 +73,7 @@ export default function Navbar() {
 
         <AnimatePresence>
           {open && (
-            <motion.div id="site-menu" role="dialog" aria-modal="true" aria-label="Site menu" initial={{ clipPath: "inset(0 0 100% 0)" }} animate={{ clipPath: "inset(0 0 0% 0)" }} exit={{ clipPath: "inset(0 0 100% 0)" }} transition={{ duration: .7, ease: [.76, 0, .24, 1] }} className="fixed inset-0 overflow-y-auto bg-matte pt-16">
+            <motion.div id="site-menu" role="dialog" aria-modal="true" aria-label="Site menu" initial={reduceMotion ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }} animate={reduceMotion ? { opacity: 1 } : { clipPath: "inset(0 0 0% 0)" }} exit={reduceMotion ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }} transition={reduceMotion ? { duration: .18 } : { duration: .7, ease: [.76, 0, .24, 1] }} className="fixed inset-0 overflow-y-auto bg-matte pt-16">
               <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-7xl gap-10 px-5 py-10 md:grid-cols-[1.6fr_1fr] md:items-center">
                 <ul>
                   {[...links, ...more].map(([l, h], i) => (
