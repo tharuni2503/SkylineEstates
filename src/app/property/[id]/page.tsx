@@ -30,7 +30,7 @@ export default function PropertyPage(){
    <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[.16em] text-slate"><Link href="/" className="hover:text-matte">Home</Link><span>/</span><Link href="/properties" className="hover:text-matte">Properties</Link><span>/</span><span className="text-matte/70">{p.title}</span></nav>
    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px]">
     <div>
-     <Gallery main={p.image} title={p.title} seed={Math.max(0,properties.indexOf(p))}/>
+     <Gallery main={p.image} title={p.title} images={p.galleryImages ?? []}/>
      <div className="mt-8 border border-line/70 bg-white p-6 shadow-[0_12px_34px_rgba(17,17,17,.04)] md:p-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
        <div>
