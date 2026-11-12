@@ -1,0 +1,83 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+
+:root{--ease-luxe:cubic-bezier(.22,1,.36,1)}
+html{scroll-padding-top:3.5rem;overflow-x:clip;scroll-behavior:smooth}
+body{@apply bg-ivory text-charcoal font-sans antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
+img,video,canvas,svg{max-width:100%}
+img,video{height:auto}
+::selection{background:rgba(216,195,165,.35);color:#111}
+:focus-visible{outline:2px solid #C9A66B;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+h1,h2,h3{text-wrap:balance;overflow-wrap:anywhere}
+.cinematic-vignette{box-shadow:inset 0 0 160px rgba(17,17,17,.38)}
+/* Ambient decorative drift (disabled by the reduced-motion clamp above) */
+@keyframes skyline-drift{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(4%,3%,0) scale(1.08)}}
+.skyline-drift{animation:skyline-drift 14s ease-in-out infinite;will-change:transform}
+
+
+/* SKYLINE FRONTEND POLISH — cinematic motion, tactile controls and responsive rhythm */
+:root {
+  --skyline-motion: cubic-bezier(.22, 1, .36, 1);
+  --skyline-shadow: 0 22px 60px rgba(24, 23, 20, .12);
+}
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button, [role="button"], a { touch-action: manipulation; }
+button:not(:disabled), a { transition-timing-function: var(--skyline-motion); }
+button:disabled { cursor: not-allowed; opacity: .55; }
+:where(input, select, textarea) {
+  transition: border-color .28s var(--skyline-motion), box-shadow .28s var(--skyline-motion), background-color .28s var(--skyline-motion);
+}
+:where(input, select, textarea):focus {
+  border-color: #b89a6a !important;
+  box-shadow: 0 0 0 3px rgba(184,154,106,.14);
+  outline: none;
+}
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid #b89a6a;
+  outline-offset: 3px;
+}
+.property-card {
+  transform: translateZ(0);
+  transition: box-shadow .65s var(--skyline-motion), border-color .45s var(--skyline-motion);
+  will-change: transform;
+}
+.property-card:hover { border-color: rgba(184,154,106,.48); }
+.property-card img { backface-visibility: hidden; }
+.property-card button, .property-card a { min-height: 40px; }
+.property-card a:active, button:active { transform: scale(.985); }
+.image-parallax { overflow: hidden; isolation: isolate; }
+.image-parallax img, [data-site-parallax] img {
+  transform: scale(1.035);
+  will-change: transform;
+}
+.motion-reveal { will-change: transform, opacity; }
+.skyline-skeleton {
+  position: relative; overflow: hidden; border-radius: 3px;
+  background: linear-gradient(100deg, #e9e5df 20%, #f5f2ed 38%, #e9e5df 56%);
+  background-size: 220% 100%;
+  animation: skyline-shimmer 1.55s linear infinite;
+}
+@keyframes skyline-shimmer { to { background-position-x: -220%; } }
+.skyline-page-enter { animation: skyline-page-enter .7s var(--skyline-motion) both; }
+@keyframes skyline-page-enter {
+  from { opacity: 0; transform: translate3d(0,12px,0); filter: blur(5px); }
+  to { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
+}
+@media (hover: none) {
+  .property-card:hover { border-color: rgba(0,0,0,.08); }
+  .property-card:active { transform: scale(.992); }
+}
+@media (max-width: 767px) {
+  html { scroll-padding-top: 4.5rem; }
+  .property-card { box-shadow: 0 8px 24px rgba(17,17,17,.055); }
+  .property-card .group\/cta { min-height: 44px; }
+  select, input, textarea { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skyline-skeleton { animation: none; }
+  .skyline-page-enter { animation: none; }
+  .property-card, .property-card * { scroll-behavior: auto !important; }
+}

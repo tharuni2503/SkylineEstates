@@ -1,0 +1,1 @@
+export const testimonials=[["Priya Nair","We shortlisted three Gachibowli apartments in one evening and closed within a month."],["Arjun Mehta","The agent knew every project in Kokapet and the paperwork was clear from day one."],["Fatima Sheikh","Our villa listing got qualified enquiries in the first week."]] as const;

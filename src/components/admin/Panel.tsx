@@ -1,0 +1,23 @@
+"use client";
+import { useState } from "react";
+import { downloadCsv } from "@/lib/csv";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+const data:Record<string,{cols:string[];rows:string[][]}>={
+"Users":{cols:["Name","Role","Joined"],rows:[["Ravi Teja","Buyer","Sep 2026"],["Anjali Rao","Seller","Aug 2026"],["Imran Khan","Buyer","Oct 2026"]]},
+"Agents":{cols:["Name","Area","Active listings"],rows:[["Lakshmi Prasad","Gachibowli","14"],["Imran Siddiqui","Narsingi","9"]]},
+"Builders":{cols:["Company","Projects","Status"],rows:[["Aurum Developers","3","Verified"],["Greenfield Homes","2","Verified"],["Skyline Infra","1","Under review"]]},
+"Leads":{cols:["Name","Property","Stage"],rows:[["Sneha Reddy","Horizon Residences","New"],["Karthik Varma","Tellapur Greens Villa","Closed"]]},
+"Reports":{cols:["Report","Period","Value"],rows:[["New listings","Oct 2026","31"],["Site visits","Oct 2026","58"],["Closed deals","Oct 2026","9"]]},
+};
+export default function Panel({name}:{name:string}){
+ const [site,setSite]=useState({title:"Skyline Estates",email:"hello@skylineestates.in"}); const [saved,setSaved]=useState(false); const [q,setQ]=useState(""); const [off,setOff]=useState<string[]>([]); const act=["Users","Agents","Builders"].includes(name); const [editing,setEditing]=useState<string|null>(null); const [draft,setDraft]=useState(""); const [custom,setCustom]=useState<Record<string,string>>({});
+ if(name==="Analytics")return <><h1 className="font-serif text-3xl">Analytics</h1><div className="mt-6 h-72"><ResponsiveContainer><LineChart data={[{m:"Jun",v:1200},{m:"Jul",v:1850},{m:"Aug",v:1700},{m:"Sep",v:2600},{m:"Oct",v:3100}]}><XAxis dataKey="m"/><YAxis/><Tooltip/><Line dataKey="v" name="Site visitors" stroke="#111111"/></LineChart></ResponsiveContainer></div></>;
+ if(name==="Settings")return <><h1 className="font-serif text-3xl">Website settings</h1><form className="mt-6 max-w-md space-y-4" onSubmit={e=>{e.preventDefault();setSaved(true);}}>
+  <label className="block text-sm">Site title<input className="mt-1 w-full border border-line px-4 py-2" value={site.title} onChange={e=>setSite({...site,title:e.target.value})}/></label>
+  <label className="block text-sm">Contact email<input type="email" className="mt-1 w-full border border-line px-4 py-2" value={site.email} onChange={e=>setSite({...site,email:e.target.value})}/></label>
+  <button className="bg-matte px-6 py-2 text-sm text-ivory">Save settings</button>{saved&&<p role="status" className="text-sm text-slate">Settings saved for this session.</p>}</form></>;
+ const d=data[name]; if(!d)return null;
+ const rows=d.rows.filter(r=>r.join(" ").toLowerCase().includes(q.toLowerCase()));
+ return <><h1 className="font-serif text-3xl">{name}</h1><p className="mt-1 text-xs text-slate">Demonstration data</p><input aria-label={`Search ${name}`} placeholder="Search" value={q} onChange={e=>setQ(e.target.value)} className="mt-6 w-full max-w-sm border border-line px-4 py-2 text-sm"/><button className="ml-4 text-sm underline" onClick={()=>downloadCsv(`${name.toLowerCase()}.csv`,[d.cols,...rows])}>Download CSV</button>
+  <div className="mt-4 overflow-x-auto"><table className="w-full text-left text-sm"><thead className="text-slate"><tr>{d.cols.map(c=><th key={c} className="py-2">{c}</th>)}{act&&<><th>Account</th><th>Action</th></>}</tr></thead><tbody>{rows.map((r,i)=><tr key={i} className="border-t border-line">{r.map((c,k)=><td key={k} className="py-3">{k===0?(custom[c]??c):c}</td>)}{act&&<><td>{off.includes(r[0])?"Suspended":"Active"}</td><td><button className="underline" onClick={()=>setOff(o=>o.includes(r[0])?o.filter(x=>x!==r[0]):[...o,r[0]])}>{off.includes(r[0])?"Reactivate":"Suspend"}</button><button className="ml-3 underline" onClick={()=>{setEditing(r[0]);setDraft(custom[r[0]]??r[0]);}}>View / edit</button></td></>}</tr>)}</tbody></table>{rows.length===0&&<p className="py-8 text-center text-slate">No results match your search.</p>}</div>
+  {editing&&<form className="mt-6 max-w-md space-y-3 border border-line p-4" onSubmit={e=>{e.preventDefault();setCustom(c=>({...c,[editing]:draft}));setEditing(null);}}><p className="font-serif text-xl">Profile: {editing}</p><label className="block text-sm">Name<input className="mt-1 w-full border border-line px-3 py-2" value={draft} onChange={e=>setDraft(e.target.value)}/></label><dl className="text-sm text-slate">{d.cols.slice(1).map((c,i)=><div key={c}>{c}: {d.rows.find(x=>x[0]===editing)?.[i+1]}</div>)}</dl><button className="bg-matte px-5 py-2 text-sm text-ivory">Save</button><button type="button" className="ml-4 text-sm underline" onClick={()=>setEditing(null)}>Cancel</button></form>}</>;}
