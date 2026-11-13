@@ -13,24 +13,47 @@ import VisitForm from "@/components/forms/VisitForm";
 import PropertyCard from "@/components/properties/PropertyCard";
 import InsightCard from "@/components/properties/InsightCard";
 import VideoTour from "@/components/properties/VideoTour";
+import EmiCalculator from "@/components/properties/EmiCalculator";
+import NearbyPlaces from "@/components/properties/NearbyPlaces";
+import { agents, fallbackAgent } from "@/data/agents";
+import { useEffect } from "react";
+import { Phone, Star, CalendarCheck2 } from "lucide-react";
+
+/** Records this listing as recently viewed (session demo list). */
+function TrackRecent({ id }: { id?: string }) {
+ useEffect(() => {
+  if (!id) return;
+  try {
+   const k = "skyline.recent";
+   const prev: string[] = JSON.parse(window.localStorage.getItem(k) ?? "[]");
+   window.localStorage.setItem(k, JSON.stringify([id, ...prev.filter(x => x !== id)].slice(0, 6)));
+  } catch {}
+ }, [id]);
+ return null;
+}
 
 export default function PropertyPage(){
  const {id}=useParams<{id:string}>();const {properties,ready,wishlist,toggleWish,compare,toggleCompare}=useStore();const toast=useToast();
  if(!ready)return <div className="mx-auto max-w-7xl px-5 py-10"><div className="aspect-[16/10] animate-pulse bg-line/70"/><div className="mt-8 space-y-3"><div className="h-4 w-40 animate-pulse bg-line/70"/><div className="h-10 w-2/3 animate-pulse bg-line/70"/><div className="h-6 w-1/3 animate-pulse bg-line/70"/></div></div>;
  const p=properties.find(x=>x.id===id);
  if(!p)return <div className="mx-auto max-w-xl px-5 py-24 text-center"><p className="text-[11px] uppercase tracking-[.3em] text-slate">Listing unavailable</p><h1 className="mt-3 font-serif text-4xl text-matte">Property not found</h1><p className="mt-3 text-slate">This residence may have been removed or is no longer available.</p><Link href="/properties" className="mt-7 inline-flex bg-matte px-6 py-3 text-[11px] font-medium uppercase tracking-[.18em] text-ivory transition hover:bg-charcoal">Back to properties</Link></div>;
+ const agent = agents.find(a => a.id === p.agentId) ?? fallbackAgent;
+ const duty = Math.round(p.price * 0.07);
+ const gst = Math.round(p.price * 0.01);
+ const onRoad = p.price + duty + gst;
  const similar=properties.filter(x=>x.id!==p.id&&x.category===p.category).slice(0,3);
  const specs:[string,string][]=[["Listing",p.listing==="Buy"?"For sale":"For rent"],...(p.furnishing?[["Furnishing",p.furnishing] as [string,string]]:[]),...(p.bathrooms?[["Bathrooms",String(p.bathrooms)] as [string,string]]:[]),["Posted",new Date(p.postedAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})]];
  const share=async()=>{try{await navigator.clipboard.writeText(window.location.href);toast("Link copied");}catch{toast("Copy failed. Copy the address bar link instead.");}};
  const btn="flex items-center gap-2 border border-line bg-white px-4 py-2.5 text-sm transition hover:border-matte hover:bg-ivory";
  const saved=wishlist.includes(p.id); const inCmp=compare.includes(p.id);
- const baths = (p as any).bathrooms ?? (p.bhk ? Math.max(1, Math.ceil(p.bhk*0.75)) : undefined);
+ const baths = p.bathrooms ?? (p.bhk ? Math.max(1, Math.ceil(p.bhk*0.75)) : undefined);
  return <div className="bg-ivory/30">
+  <TrackRecent id={p.id} />
   <div className="mx-auto max-w-7xl px-5 pb-16 pt-8 md:pt-10">
    <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[.16em] text-slate"><Link href="/" className="hover:text-matte">Home</Link><span>/</span><Link href="/properties" className="hover:text-matte">Properties</Link><span>/</span><span className="text-matte/70">{p.title}</span></nav>
    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px]">
     <div>
-     <Gallery main={p.image} title={p.title} images={p.galleryImages ?? []}/>
+     <Gallery main={p.image} title={p.title} seed={Math.max(0,properties.indexOf(p))}/>
      <div className="mt-8 border border-line/70 bg-white p-6 shadow-[0_12px_34px_rgba(17,17,17,.04)] md:p-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
        <div>
@@ -66,6 +89,16 @@ export default function PropertyPage(){
        <h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">About this property</h2>
        {p.description?<p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-charcoal/80">{p.description}</p>:<p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-charcoal/80">A {p.bhk?`${p.bhk}-bedroom `:""}{p.category.toLowerCase()} of {p.areaSqft.toLocaleString()} sq ft in {p.location.split(",")[0]}, thoughtfully positioned for connectivity, comfort, and everyday ease near Hyderabad’s key corridors.</p>}
       </section>
+      <EmiCalculator price={p.price} />
+      <NearbyPlaces seed={p.id} />
+      <section className="border border-line/70 bg-white p-6 md:p-8" aria-label="Location on the map">
+       <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">Location</p>
+       <h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">Find it on <em className="italic text-[#9c7f56]">the map.</em></h2>
+       <p className="mt-2 flex items-center gap-1.5 text-sm text-slate"><MapPin size={14} className="text-[#9c7f56]"/>{p.location}</p>
+       <div className="mt-4 overflow-hidden border border-line/60">
+        <iframe title={`Map showing ${p.location}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" src={`https://maps.google.com/maps?q=${encodeURIComponent(p.location)}&output=embed`} className="aspect-[16/9] w-full border-0" />
+       </div>
+      </section>
       <section className="border border-line/70 bg-white p-6 md:p-8">
        <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">Features</p>
        <h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">Amenities & highlights</h2>
@@ -92,9 +125,36 @@ export default function PropertyPage(){
       <p className="mt-1 text-sm text-ivory/70">Speak with a Skyline advisor for pricing, availability, and neighbourhood insights.</p>
       <Link href="/contact" className="mt-4 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[.18em] text-beige hover:text-ivory">Contact advisor <ArrowUpRight size={14}/></Link>
      </div>
+     {/* Agent profile */}
+     <div className="mt-4 border border-line/70 bg-white p-5">
+      <div className="flex items-center gap-4">
+       <span aria-hidden="true" className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-matte font-serif text-lg text-ivory">{agent.name.split(" ").map(w => w[0]).slice(0, 2).join("")}</span>
+       <div className="min-w-0">
+        <p className="font-serif text-xl leading-tight text-matte">{agent.name}</p>
+        <p className="text-[10px] uppercase tracking-[.18em] text-[#9c7f56]">{agent.role} · {agent.area}</p>
+       </div>
+      </div>
+      <div className="mt-4 flex items-center gap-4 border-t border-line/60 pt-4 text-sm text-charcoal/85">
+       <span className="inline-flex items-center gap-1.5"><Star size={14} className="fill-gold text-gold"/>{agent.rating} <span className="text-slate">({agent.reviews})</span></span>
+       <span className="text-slate">·</span><span>{agent.deals} deals</span><span className="text-slate">·</span><span>{agent.years} yrs</span>
+      </div>
+      <a href={`tel:${agent.phone.replace(/\s/g, "")}`} className="mt-4 inline-flex w-full items-center justify-center gap-2 border border-line bg-ivory/60 px-4 py-2.5 text-sm text-matte transition hover:border-matte hover:bg-ivory"><Phone size={15}/>{agent.phone}</a>
+      <p className="mt-2 flex items-center gap-1.5 text-[10px] uppercase tracking-[.16em] text-slate/80"><CalendarCheck2 size={12}/>Usually responds same day</p>
+     </div>
+     {/* Price breakdown (illustrative) */}
+     <div className="mt-4 border border-line/70 bg-white p-5">
+      <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">Indicative cost</p>
+      <dl className="mt-3 space-y-1.5 text-sm">
+       <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">Agreement value</dt><dd className="font-medium text-matte tabular-nums">{inr(p.price)}</dd></div>
+       <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">Registration &amp; stamp duty (≈7%)</dt><dd className="font-medium text-matte tabular-nums">{inr(duty)}</dd></div>
+       <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">GST (≈1%)</dt><dd className="font-medium text-matte tabular-nums">{inr(gst)}</dd></div>
+       <div className="flex items-baseline justify-between gap-3 border-t border-line/60 pt-1.5"><dt className="font-medium text-matte">Indicative on-road cost</dt><dd className="font-serif text-lg text-[#9c7f56] tabular-nums">{inr(onRoad)}</dd></div>
+      </dl>
+      <p className="mt-2 text-[10px] uppercase tracking-[.14em] text-slate/70">Illustrative only — excludes society &amp; lender fees</p>
+     </div>
     </aside>
    </div>
   </div>
-  <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-line bg-white/98 p-3 backdrop-blur lg:hidden"><a href="#visit" className="flex-1 bg-matte py-3 text-center text-sm font-medium text-ivory">Schedule visit</a>{PHONE&&<a href={`tel:${PHONE}`} className="flex-1 border border-matte py-3 text-center text-sm font-medium">Call agent</a>}</div>
+  <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-line bg-white/96 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_rgba(17,17,17,.08)] backdrop-blur lg:hidden"><a href="#visit" className="flex-1 bg-matte py-3.5 text-center text-sm font-medium text-ivory transition hover:bg-charcoal">Schedule visit</a>{PHONE&&<a href={`tel:${PHONE}`} className="flex-1 border border-matte py-3.5 text-center text-sm font-medium text-matte transition hover:bg-matte hover:text-ivory">Call agent</a>}</div>
  </div>;
 }

@@ -12,7 +12,7 @@ export default function VideoTour({ src, sample, title }: { src?: string; sample
       ) : (
         <div className="mt-3 flex aspect-video w-full flex-col items-center justify-center gap-3 bg-matte p-6 text-center text-ivory">
           <p className="font-serif text-2xl">A video walkthrough is available on request.</p>
-          <a href="#contact-agent" className="border border-ivory/70 px-6 py-3 text-xs font-medium tracking-[.18em] transition hover:bg-ivory hover:text-matte">REQUEST VIDEO TOUR</a>
+          <a href="#visit" className="border border-ivory/70 px-6 py-3 text-xs font-medium tracking-[.18em] transition hover:bg-ivory hover:text-matte">REQUEST VIDEO TOUR</a>
         </div>
       )}
     </section>

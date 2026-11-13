@@ -1,6 +1,6 @@
 export type Category="Apartment"|"Villa"|"Independent House"|"Residential Plot"|"Commercial";
 export type Listing="Buy"|"Rent";
-export interface Property{id:string;title:string;location:string;price:number;listing:Listing;category:Category;bhk:number;areaSqft:number;image:string;amenities:string[];verified:boolean;featured:boolean;postedAt:string;agentId:string;description?:string;bathrooms?:number;furnishing?:string;parking?:string;address?:string;contactPhone?:string;videoUrl?:string;galleryImages?:string[]}
+export interface Property{id:string;title:string;location:string;price:number;listing:Listing;category:Category;bhk:number;areaSqft:number;image:string;amenities:string[];verified:boolean;featured:boolean;postedAt:string;agentId:string;description?:string;bathrooms?:number;furnishing?:string;parking?:string;address?:string;contactPhone?:string;videoUrl?:string}
 export interface PropertyQuery{q?:string;listing?:Listing;category?:Category|"All";maxPrice?:number;bhk?:number;amenity?:string;minArea?:number;maxArea?:number;minPrice?:number;verified?:boolean;featured?:boolean;sort?:"latest"|"price-asc"|"price-desc"}
 export interface Inquiry{id:string;propertyId:string;name:string;email:string;phone:string;message:string;createdAt:string}
 export interface SiteVisit{id:string;propertyId:string;name:string;phone:string;date:string;time:string;status:"Pending"|"Confirmed"|"Completed"}

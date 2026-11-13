@@ -1,7 +1,7 @@
 @tailwind base;@tailwind components;@tailwind utilities;
 
 :root{--ease-luxe:cubic-bezier(.22,1,.36,1)}
-html{scroll-padding-top:3.5rem;overflow-x:clip;scroll-behavior:smooth}
+html{scroll-padding-top:5rem;overflow-x:clip;scroll-behavior:smooth}
 body{@apply bg-ivory text-charcoal font-sans antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
 img,video,canvas,svg{max-width:100%}
 img,video{height:auto}
@@ -21,7 +21,6 @@ h1,h2,h3{text-wrap:balance;overflow-wrap:anywhere}
   --skyline-motion: cubic-bezier(.22, 1, .36, 1);
   --skyline-shadow: 0 22px 60px rgba(24, 23, 20, .12);
 }
-html { scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; }
 button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 button, [role="button"], a { touch-action: manipulation; }
@@ -80,4 +79,24 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   .skyline-skeleton { animation: none; }
   .skyline-page-enter { animation: none; }
   .property-card, .property-card * { scroll-behavior: auto !important; }
+}
+
+/* SKYLINE POLISH — hero sheen, scroll cue, gallery crossfade, wishlist pop */
+.text-sheen {
+  background-image: linear-gradient(100deg, #b7925f 0%, #e9d9b8 22%, #fffbe8 38%, #e9d9b8 52%, #a8854f 78%, #c9a66b 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: hero-sheen 5.6s ease-in-out 1.1s infinite;
+}
+@keyframes hero-sheen { 0%, 100% { background-position: 130% 0; } 50% { background-position: -30% 0; } }
+.scroll-line { transform-origin: top; animation: scroll-line 2.4s ease-in-out infinite; }
+@keyframes scroll-line { 0%, 100% { transform: scaleY(.55); opacity: .55; } 50% { transform: scaleY(1); opacity: 1; } }
+.gallery-fade { animation: gallery-fade .45s var(--skyline-motion) both; }
+@keyframes gallery-fade { from { opacity: .3; transform: scale(1.02); } to { opacity: 1; transform: none; } }
+.heart-pop { animation: heart-pop .4s cubic-bezier(.34, 1.56, .64, 1) both; }
+@keyframes heart-pop { 0% { transform: scale(.35); } 55% { transform: scale(1.5); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .text-sheen { animation: none; }
+  .scroll-line { animation: none; }
+  .gallery-fade, .heart-pop { animation: none; }
 }

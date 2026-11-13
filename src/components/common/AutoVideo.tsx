@@ -53,6 +53,14 @@ export default function AutoVideo({ src, srcLite, poster, priority = false, lazy
     return () => io.disconnect();
   }, [useVideo, file]);
 
+  // Hard guarantee: if the video can play but no "playing" event reaches React,
+  // still reveal the footage. Never leave visitors staring at only the poster.
+  useEffect(() => {
+    if (!useVideo) return;
+    const t = window.setTimeout(() => setPlaying(true), 1500);
+    return () => window.clearTimeout(t);
+  }, [useVideo, file]);
+
   return (
     <div ref={box} className="absolute inset-0 overflow-hidden">
       <Image src={poster} alt="" fill priority={priority} sizes="100vw" className="object-cover" />
@@ -76,6 +84,8 @@ export default function AutoVideo({ src, srcLite, poster, priority = false, lazy
             if (startAt > 0 && v.duration > startAt) v.currentTime = startAt;
             v.playbackRate = rate;
           }}
+          onCanPlay={() => setPlaying(true)}
+          onPlay={() => setPlaying(true)}
           onPlaying={() => setPlaying(true)}
           onError={() => setBad(true)}
         />

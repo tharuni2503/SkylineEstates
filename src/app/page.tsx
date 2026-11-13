@@ -148,7 +148,7 @@ export default function Home() {
         </section>
 
         <Fade from="white" to="matte" />
-        <section data-site-reveal className="relative overflow-hidden bg-matte py-16 text-ivory md:py-20">
+        <section data-site-reveal className="relative overflow-hidden bg-matte py-20 text-ivory md:py-24">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(216,195,165,.14),transparent_45%),radial-gradient(ellipse_at_85%_70%,rgba(248,245,240,.06),transparent_40%)]" />
           <div className="relative mx-auto max-w-7xl px-5 md:px-8">
             <div className="grid items-end gap-8 lg:grid-cols-[1.1fr_.9fr]">
