@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import MaskReveal from "@/components/common/MaskReveal";
 
-const values=[["Verified before listed","Each property is inspected and its documents checked before it goes live."],["Prices you can trust","We show the full cost, including registration and maintenance, up front."],["Local, not generic","Our advisors live and work in the neighbourhoods they recommend."],["Advice before sales","We will tell you when not to buy."]];
+const values=[["Reviewed before listing (demo)","In a live deployment, each property would be inspected and its documents checked before going live."],["Prices you can trust","We aim to show clear costs, including indicative charges, so you can compare with confidence."],["Local, not generic","Our advisors focus on the neighbourhoods they know well."],["Advice before sales","We believe good guidance includes saying when not to buy."]];
 const stats=[["12","Curated listings in this demo"],["8","Hyderabad localities covered"],["6","Services under one roof"]];
 const team=[["Lakshmi Prasad","Senior advisor, Gachibowli"],["Imran Siddiqui","Advisor, Narsingi and Kokapet"],["Meera Iyer","Head of builder partnerships"],["Rohan Das","Investment analyst"]];
 

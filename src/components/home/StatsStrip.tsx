@@ -12,10 +12,13 @@ import { useReducedMotion } from "framer-motion";
 function Count({ value }: { value: number }) {
  const ref = useRef<HTMLSpanElement>(null);
  const reduce = useReducedMotion();
- const [n, setN] = useState(0);
+ // Render the meaningful target immediately (SSR/first paint) so stats never appear as "0".
+ const [n, setN] = useState(value);
+ const animated = useRef(false);
 
  useEffect(() => {
-  if (reduce) { setN(value); return; }
+  if (reduce) { setN(value); animated.current = true; return; }
+  if (animated.current) { setN(value); return; }
   const el = ref.current;
   const dur = 1100;
   let interval: number | undefined;
@@ -23,21 +26,24 @@ function Count({ value }: { value: number }) {
   let begin: number | undefined;
   let t0: number | null = null;
   let done = false;
+  const startFrom = Math.max(0, Math.floor(value * 0.45));
 
   const finish = () => {
    if (done) return;
    done = true;
+   animated.current = true;
    setN(value);
    if (interval) window.clearInterval(interval);
    if (hard) window.clearTimeout(hard);
   };
   const start = () => {
-   if (t0 !== null) return;
+   if (t0 !== null || animated.current) return;
+   setN(startFrom);
    t0 = performance.now();
    const tick = () => {
     const p = Math.min(1, (performance.now() - (t0 as number)) / dur);
     const eased = 1 - Math.pow(1 - p, 3);
-    setN(Math.round(eased * value));
+    setN(Math.round(startFrom + eased * (value - startFrom)));
     if (p >= 1) finish();
    };
    tick();
@@ -61,7 +67,10 @@ function Count({ value }: { value: number }) {
   return () => {
    io?.disconnect();
    if (begin) window.clearTimeout(begin);
-   finish();
+   // On unmount/cleanup ensure the meaningful value remains visible.
+   if (!animated.current) setN(value);
+   if (interval) window.clearInterval(interval);
+   if (hard) window.clearTimeout(hard);
   };
  }, [value, reduce]);
 

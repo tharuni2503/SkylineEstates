@@ -18,7 +18,7 @@ export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,
     {/* Badges */}
     <div className="pointer-events-none absolute left-3 top-3 z-[2] flex flex-wrap gap-1.5">
      {p.featured&&<span className="bg-beige px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[.18em] text-matte shadow-sm">Featured</span>}
-     {p.verified&&<span className="inline-flex items-center gap-1 bg-matte/80 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[.16em] text-ivory backdrop-blur-sm"><BadgeCheck size={12}/>Verified</span>}
+     {p.verified&&<span className="inline-flex items-center gap-1 bg-matte/80 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[.16em] text-ivory backdrop-blur-sm" title="Reviewed listing (demo)"><BadgeCheck size={12}/>Verified (demo)</span>}
      <span className="bg-white/92 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[.16em] text-matte backdrop-blur-sm">{p.listing==="Buy"?"For Sale":"For Rent"}</span>
     </div>
     {/* Wishlist */}

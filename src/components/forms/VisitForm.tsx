@@ -28,3 +28,4 @@ export default function VisitForm({propertyId=""}:{propertyId?:string}){
   {fail&&<p role="alert" className="text-sm text-red-700">We couldn't send your request. Check your connection and try again.</p>}
   <button disabled={isSubmitting} className="w-full bg-matte py-3 text-sm font-medium text-ivory transition hover:bg-charcoal disabled:opacity-60">{isSubmitting?"Sending…":"Schedule site visit"}</button>
  </form>;}
+

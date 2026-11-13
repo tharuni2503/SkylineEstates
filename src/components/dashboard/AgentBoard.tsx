@@ -25,11 +25,14 @@ export default function AgentBoard() {
   const [visits, setVisits] = useState<any[]>(seedVisits);
   const [replied, setReplied] = useState<string[]>([]);
   const [enquiries, setEnquiries] = useState<any[]>(seedInquiries);
-  const [followUps, setFollowUps] = useState<FollowUp[]>([
+  const FOLLOW_KEY = "skyline.followUps";
+  const defaultFollowUps: FollowUp[] = [
     { id: "f1", leadId: "l1", note: "Call to confirm budget range and preferred towers", due: "2026-11-14", done: false },
     { id: "f2", leadId: "l2", note: "Share floor plan and payment schedule by email", due: "2026-11-15", done: false },
     { id: "f3", leadId: "l3", note: "Confirm site-visit parking and meeting point", due: "2026-11-13", done: true },
-  ]);
+  ];
+  const [followUps, setFollowUps] = useState<FollowUp[]>(defaultFollowUps);
+  const [followReady, setFollowReady] = useState(false);
   const [newFollow, setNewFollow] = useState({ leadId: "l1", note: "", due: "2026-11-16" });
 
   const displayName = account?.name || "Lakshmi Prasad";
@@ -42,7 +45,20 @@ export default function AgentBoard() {
     setVisits([...localVisits.map(r => ({ id: r.id, name: r.name, propertyId: r.propertyId, date: r.date, time: r.time, status: r.status ?? "Pending" })), ...seedVisits]);
     const localInq = readLocal<any[]>("skyline.inquiryLog", []);
     setEnquiries([...localInq, ...seedInquiries]);
+    try {
+      const raw = window.localStorage.getItem(FOLLOW_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) setFollowUps(parsed.filter((f: any) => f && typeof f.id === "string" && typeof f.note === "string"));
+      }
+    } catch {}
+    setFollowReady(true);
   }, []);
+
+  useEffect(() => {
+    if (!followReady) return;
+    try { window.localStorage.setItem(FOLLOW_KEY, JSON.stringify(followUps)); } catch {}
+  }, [followUps, followReady]);
 
   const openLeads = leads.filter(l => l.status !== "Closed").length;
   const pendingVisits = visits.filter(v => v.status === "Pending").length;
