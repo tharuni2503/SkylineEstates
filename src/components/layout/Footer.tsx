@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useToast } from "@/lib/toast";
 import { categories, locations } from "@/data/content";
 import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { CONTACT_EMAIL, CONTACT_ADDRESS } from "@/lib/contact";
 const nav=[["Home","/"],["Properties","/properties"],["Locations","/locations"],["Projects","/projects"],["About Us","/about"],["Contact Us","/contact"],["AI Assistant","/ai-assistant"],["Insights","/blog"]];
 export default function Footer(){
  const toast=useToast();const [email,setEmail]=useState("");const [err,setErr]=useState("");
@@ -20,7 +21,7 @@ export default function Footer(){
   </div>
   <div className="relative mx-auto grid max-w-7xl gap-10 border-b border-ivory/10 pb-14 sm:grid-cols-2 lg:grid-cols-12">
    <div className="lg:col-span-4"><p className="font-serif text-3xl text-ivory">Skyline Estates</p><p className="mt-3 max-w-sm text-sm leading-relaxed text-ivory/65">A premium real-estate experience for Hyderabad, pairing curated residences, verified information, and attentive advisory.</p>
-    <div className="mt-5 space-y-2 text-sm text-ivory/65"><p className="flex items-center gap-2"><MapPin size={14} className="text-beige"/>Financial District, Hyderabad</p><p className="flex items-center gap-2"><Mail size={14} className="text-beige"/>hello@skylineestates.in</p></div>
+    <div className="mt-5 space-y-2 text-sm text-ivory/65"><p className="flex items-center gap-2"><MapPin size={14} className="text-beige"/>{CONTACT_ADDRESS}</p><p className="flex items-center gap-2"><Mail size={14} className="text-beige"/><a href={`mailto:${CONTACT_EMAIL}`} className="transition hover:text-ivory">{CONTACT_EMAIL}</a></p><p className="text-xs text-ivory/45">Demo contact details — replace with approved business information before launch.</p></div>
     <form onSubmit={sub} noValidate className="mt-6"><label className="text-[11px] uppercase tracking-[.22em] text-beige" htmlFor="news">Newsletter</label>
      <div className="mt-2 flex gap-2"><input id="news" value={email} onChange={e=>setEmail(e.target.value)} aria-invalid={!!err} aria-describedby={err?"news-err":undefined} placeholder="Email address" className="min-w-0 flex-1 border border-ivory/10 bg-charcoal/80 px-3 py-2.5 text-sm text-ivory placeholder:text-ivory/35 focus:border-beige/40 focus:outline-none"/><button className="bg-beige px-4 py-2.5 text-sm font-medium text-matte transition hover:bg-ivory">Join</button></div>
      {err&&<p id="news-err" role="alert" className="mt-1 text-xs text-beige">{err}</p>}</form></div>

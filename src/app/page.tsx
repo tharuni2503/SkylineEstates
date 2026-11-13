@@ -12,6 +12,7 @@ import { testimonials, reasons } from "@/data/content";
 import { posts } from "@/data/blogs";
 import { ArrowUpRight, Building2, KeyRound, Landmark, LineChart, ShieldCheck } from "lucide-react";
 import { useStore } from "@/lib/store";
+import { CONTACT_EMAIL, PHONE } from "@/lib/contact";
 
 /* Category imagery for the homepage bento — reliable local first, curated remote with local fallback */
 const CATEGORY_CARDS = [
@@ -281,8 +282,8 @@ export default function Home() {
               {testimonials.map(([n, t], i) => (
                 <article key={n} data-site-reveal className={`group flex h-full flex-col border border-line/70 bg-white p-6 shadow-[0_12px_34px_rgba(17,17,17,.05)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_22px_46px_rgba(17,17,17,.08)] ${i===0?"md:col-span-2 lg:col-span-1":""}`}>
                   <div className="flex items-center justify-between gap-3">
-                    <div aria-label="5 out of 5 stars" className="text-sm tracking-[.08em] text-[#b7925f]">★★★★★</div>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[.16em] text-emerald-800"><span className="h-1.5 w-1.5 rounded-full bg-emerald-600" aria-hidden="true" />VERIFIED</span>
+                    <div aria-label="5 out of 5 stars sample" className="text-sm tracking-[.08em] text-[#b7925f]">★★★★★</div>
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[.16em] text-[#9c7f56]"><span className="h-1.5 w-1.5 rounded-full bg-beige" aria-hidden="true" />SAMPLE</span>
                   </div>
                   <span className="mt-4 font-serif text-4xl leading-none text-beige/60" aria-hidden="true">“</span>
                   <blockquote className="-mt-2 flex-1 text-[15px] leading-relaxed text-charcoal/84">{t}</blockquote>
@@ -331,7 +332,11 @@ export default function Home() {
                   <Link href="/contact" className="inline-flex items-center justify-center bg-beige px-6 py-3 text-[11px] font-medium tracking-[.18em] text-matte transition duration-300 hover:-translate-y-0.5 hover:bg-ivory">CONTACT AN ADVISOR</Link>
                   <Link href="/contact?visit=1" className="inline-flex items-center justify-center border border-ivory/35 px-6 py-3 text-[11px] font-medium tracking-[.18em] text-ivory transition duration-300 hover:-translate-y-0.5 hover:bg-ivory/10">BOOK A SITE VISIT</Link>
                 </div>
-                <p className="mt-5 text-xs text-ivory/55">Call <a href="tel:+914000000000" className="text-beige/90 underline decoration-beige/30 underline-offset-4 transition hover:text-beige">+91 40 0000 0000</a> · <a href="mailto:hello@skylineestates.in" className="text-beige/90 underline decoration-beige/30 underline-offset-4 transition hover:text-beige">hello@skylineestates.in</a></p>
+                <p className="mt-5 text-xs text-ivory/55">
+                  {PHONE ? <>Call <a href={`tel:${PHONE}`} className="text-beige/90 underline decoration-beige/30 underline-offset-4 transition hover:text-beige">{PHONE}</a> · </> : <>Request a callback via contact · </>}
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-beige/90 underline decoration-beige/30 underline-offset-4 transition hover:text-beige">{CONTACT_EMAIL}</a>
+                  <span className="ml-1 text-ivory/40">(demo)</span>
+                </p>
               </div>
             </div>
           </div>
