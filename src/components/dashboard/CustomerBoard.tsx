@@ -114,7 +114,7 @@ export default function CustomerBoard() {
               <>
                 <div className="flex items-center justify-between gap-3"><p className="text-sm text-slate"><span className="font-medium text-matte">{saved.length}</span> {saved.length === 1 ? "property" : "properties"} saved</p><Link href="/properties" className="inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[.18em] text-[#9c7f56] hover:text-matte">Add more <ArrowRight size={12} /></Link></div>
                 {saved.length === 0 ? <div className="mt-4 border border-line/70 bg-white p-10 text-center"><p className="font-serif text-2xl text-matte">Nothing saved yet</p><p className="mt-1.5 text-sm text-slate">Tap the heart on any listing to keep it here.</p><Link href="/properties" className="mt-4 inline-block bg-matte px-6 py-3 text-[10px] font-medium uppercase tracking-[.18em] text-ivory hover:bg-charcoal">Browse properties</Link></div>
-                : <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{saved.map(p => <PropertyCard key={p.id} p={p} saved onToggle={toggleWish} compared={compare.includes(p.id)} onCompare={toggleCompare} />)}</div>}
+                : <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{saved.map(p => <PropertyCard key={p.id} p={p} titleAs="h2" saved onToggle={toggleWish} compared={compare.includes(p.id)} onCompare={toggleCompare} />)}</div>}
               </>
             )}
 
@@ -152,7 +152,7 @@ export default function CustomerBoard() {
               <>
                 <p className="text-sm text-slate"><Eye size={13} className="mr-1 inline text-[#9c7f56]" />Homes you opened recently (stored in this browser).</p>
                 {recent.length === 0 ? <div className="mt-4 border border-line/70 bg-white p-10 text-center"><p className="font-serif text-2xl text-matte">Nothing viewed yet</p><Link href="/properties" className="mt-4 inline-block bg-matte px-6 py-3 text-[10px] font-medium uppercase tracking-[.18em] text-ivory hover:bg-charcoal">Explore properties</Link></div>
-                : <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{recent.map(p => <PropertyCard key={p.id} p={p} saved={wishlist.includes(p.id)} onToggle={toggleWish} compared={compare.includes(p.id)} onCompare={toggleCompare} />)}</div>}
+                : <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{recent.map(p => <PropertyCard key={p.id} p={p} titleAs="h2" saved={wishlist.includes(p.id)} onToggle={toggleWish} compared={compare.includes(p.id)} onCompare={toggleCompare} />)}</div>}
               </>
             )}
 

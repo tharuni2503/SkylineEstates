@@ -5,9 +5,10 @@ import { Heart, BedDouble, Bath, Ruler, BadgeCheck, MapPin, ArrowUpRight, Check,
 import type { Property } from "@/types";
 import { inr } from "@/lib/format";
 
-export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,list=false}:{p:Property;saved:boolean;onToggle:(id:string)=>void;compared?:boolean;onCompare?:(id:string)=>void;list?:boolean}){
+export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,list=false,titleAs="h3"}:{p:Property;saved:boolean;onToggle:(id:string)=>void;compared?:boolean;onCompare?:(id:string)=>void;list?:boolean;titleAs?:"h2"|"h3"}){
  const baths = p.bathrooms ?? (p.bhk ? Math.max(1, Math.ceil(p.bhk * 0.75)) : undefined);
  const href = `/property/${p.id}`;
+ const TitleTag = titleAs;
  return <motion.article layout initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.12}} transition={{duration:.55,ease:[.22,1,.36,1]}} className={`property-card group relative flex h-full flex-col overflow-hidden rounded-sm border border-line/70 bg-white shadow-[0_10px_30px_rgba(17,17,17,.04)] transition-shadow duration-500 hover:shadow-[0_26px_60px_rgba(17,17,17,.12)] ${list?"md:flex-row":""}`}>
   {/* Media */}
   <div className={`relative aspect-[4/3] shrink-0 overflow-hidden bg-matte/10 ${list?"md:aspect-auto md:min-h-[16.5rem] md:w-[38%]":""}`}>
@@ -29,7 +30,7 @@ export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,
   {/* Body */}
   <div className={`flex flex-1 flex-col p-5 md:p-6 ${list?"md:justify-center":""}`}>
     <p className="text-[10px] font-medium uppercase tracking-[.24em] text-[#9c7f56]">{p.category}</p>
-    <h3 className="mt-1.5 min-h-[2.55em] font-serif text-[1.32rem] leading-[1.28] text-matte md:text-[1.4rem]"><Link href={href} className="decoration-beige/70 decoration-[2px] underline-offset-4 transition-colors hover:text-[#3a3026] hover:underline">{p.title}</Link></h3>
+    <TitleTag className="mt-1.5 min-h-[2.55em] font-serif text-[1.32rem] leading-[1.28] text-matte md:text-[1.4rem]"><Link href={href} className="decoration-beige/70 decoration-[2px] underline-offset-4 transition-colors hover:text-[#3a3026] hover:underline">{p.title}</Link></TitleTag>
     <p className="mt-1.5 flex min-h-[1.5em] items-center gap-1.5 text-[13px] text-slate"><MapPin size={13} className="shrink-0 text-[#9c7f56]"/><span className="line-clamp-1">{p.location}</span></p>
     <p className="mt-3 font-serif text-[1.72rem] leading-none text-matte tabular-nums md:text-[1.85rem]">{inr(p.price)}{p.listing==="Rent"&&<span className="ml-1.5 align-baseline font-sans text-[13px] font-normal tracking-wide text-slate">/ month</span>}</p>
     <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line/60 pt-4 text-[13px] text-charcoal/85 tabular-nums">
