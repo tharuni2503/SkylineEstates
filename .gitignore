@@ -40,3 +40,7 @@ Thumbs.db
 secrets/
 credentials/
 
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+
