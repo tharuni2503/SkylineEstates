@@ -161,7 +161,7 @@ export default function Home() {
               <form action="/properties" className="grid gap-3 border border-ivory/12 bg-ivory/[0.04] p-4 shadow-[0_20px_50px_rgba(0,0,0,.18)] backdrop-blur-sm sm:grid-cols-2">
                 <label className="sm:col-span-2"><span className="block text-[11px] uppercase tracking-[.16em] text-beige/75">Location or project</span><input name="q" placeholder="Gachibowli, Kokapet, villa..." className="mt-1 w-full border border-ivory/12 bg-matte/40 px-3 py-2.5 text-sm text-ivory placeholder:text-ivory/45 focus:border-beige/50 focus:outline-none" /></label>
                 <label><span className="block text-[11px] uppercase tracking-[.16em] text-beige/75">Max budget</span><select name="maxPrice" className="mt-1 w-full border border-ivory/12 bg-matte/40 px-3 py-2.5 text-sm text-ivory focus:border-beige/50 focus:outline-none [&>option]:text-charcoal"><option value="">Any</option><option value="5000000">₹50 L</option><option value="10000000">₹1 Cr</option><option value="20000000">₹2 Cr</option><option value="50000000">₹5 Cr</option></select></label>
-                <button className="self-end bg-beige px-5 py-2.5 text-[11px] font-medium tracking-[.18em] text-matte transition hover:bg-ivory">SEARCH PROPERTIES</button>
+                <button type="submit" className="self-end bg-beige px-5 py-3 text-[11px] font-medium tracking-[.18em] text-matte transition duration-300 hover:-translate-y-0.5 hover:bg-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">SEARCH PROPERTIES</button>
               </form>
             </div>
           </div>

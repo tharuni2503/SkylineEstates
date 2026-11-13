@@ -149,7 +149,7 @@ export default function Assistant() {
           </div>
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-2 rounded-full border border-beige/60 bg-[#f5efe3] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[.18em] text-[#6f5c37]"><span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />Interactive demo · not investment advice</span>
-            {msgs.length > 0 && <button onClick={() => { setMsgs([]); setError(""); }} className="text-xs font-medium uppercase tracking-[.16em] text-slate underline decoration-beige/60 underline-offset-4 transition hover:text-matte">Clear chat</button>}
+            {msgs.length > 0 && <button type="button" onClick={() => { setMsgs([]); setError(""); }} className="text-xs font-medium uppercase tracking-[.16em] text-slate underline decoration-beige/60 underline-offset-4 transition hover:text-matte">Clear chat</button>}
           </div>
         </div>
 
@@ -164,7 +164,7 @@ export default function Assistant() {
             </div>
 
             <div className="border-b border-line/60 bg-ivory/40 p-4">
-              <button onClick={() => setPrefsOpen(o => !o)} className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[.18em] text-[#9c7f56] hover:text-matte"><SlidersHorizontal size={14} />{prefsOpen ? "Hide" : "Show"} preferences</button>
+              <button type="button" onClick={() => setPrefsOpen(o => !o)} className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[.18em] text-[#9c7f56] hover:text-matte"><SlidersHorizontal size={14} />{prefsOpen ? "Hide" : "Show"} preferences</button>
               {prefsOpen && (
                 <div className="mt-3 space-y-3">
                   <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
@@ -191,7 +191,7 @@ export default function Assistant() {
               {msgs.length === 0 && !busy && (
                 <div>
                   <p className="text-sm text-slate">Suggested questions</p>
-                  <div className="mt-3 flex flex-wrap gap-2">{prompts.map(p => <button key={p} onClick={() => send(p)} className="border border-line bg-ivory/70 px-3 py-2 text-left text-[13px] leading-snug text-charcoal transition hover:border-beige hover:bg-white hover:text-matte">{p}</button>)}</div>
+                  <div className="mt-3 flex flex-wrap gap-2">{prompts.map(p => <button type="button" key={p} onClick={() => send(p)} className="border border-line bg-ivory/70 px-3 py-2 text-left text-[13px] leading-snug text-charcoal transition hover:border-beige hover:bg-white hover:text-matte">{p}</button>)}</div>
                 </div>
               )}
               {msgs.map(m => m.role === "user" ? (
@@ -228,7 +228,7 @@ export default function Assistant() {
             </div>
 
             <div className="border-t border-line/60 p-4 sm:p-5">
-              {msgs.length > 0 && <div className="mb-3 flex flex-wrap gap-1.5">{followUps.map(f => <button key={f} onClick={() => send(f)} className="border border-line bg-ivory/60 px-2.5 py-1.5 text-[11px] text-slate transition hover:border-beige hover:text-matte">{f}</button>)}</div>}
+              {msgs.length > 0 && <div className="mb-3 flex flex-wrap gap-1.5">{followUps.map(f => <button type="button" key={f} onClick={() => send(f)} className="border border-line bg-ivory/60 px-2.5 py-1.5 text-[11px] text-slate transition hover:border-beige hover:text-matte">{f}</button>)}</div>}
               <form onSubmit={e => { e.preventDefault(); send(text); }} className="flex gap-2">
                 <input aria-label="Ask the assistant about homes" value={text} onChange={e => setText(e.target.value)} placeholder="e.g. 3 BHK under ₹1.2 Cr in Gachibowli…" className="h-12 min-w-0 flex-1 border border-line bg-ivory/50 px-4 text-sm text-matte placeholder:text-slate focus:border-beige/70 focus:bg-white focus:outline-none" />
                 <button type="submit" disabled={busy} className="h-12 bg-matte px-6 text-[10px] font-medium uppercase tracking-[.2em] text-ivory transition hover:bg-charcoal disabled:opacity-60">Send</button>
@@ -267,7 +267,7 @@ export default function Assistant() {
       </div>
       {comparing.length >= 2 && (
         <section aria-label="Comparison" className="fixed inset-x-0 bottom-0 z-40 max-h-[46vh] overflow-auto border-t border-line bg-white/97 p-4 shadow-[0_-10px_40px_rgba(17,17,17,.12)] backdrop-blur">
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3"><h2 className="font-serif text-xl">Comparing {comparing.length}</h2><button className="text-sm underline underline-offset-4" onClick={clearCompare}>Clear</button></div>
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3"><h2 className="font-serif text-xl">Comparing {comparing.length}</h2><button type="button" className="text-sm underline underline-offset-4" onClick={clearCompare}>Clear</button></div>
           <div className="mx-auto mt-2 max-w-7xl overflow-x-auto"><table className="w-full min-w-[560px] text-left text-sm"><tbody>{([["Price", (p: Property) => inr(p.price)], ["Type", (p: Property) => p.category], ["Area", (p: Property) => `${p.areaSqft.toLocaleString()} sq ft`], ["BHK", (p: Property) => p.bhk ? String(p.bhk) : "—"], ["Verified", (p: Property) => p.verified ? "Yes" : "No"]] as [string, (p: Property) => string][]).map(([k, fn]) => <tr key={k} className="border-t border-line align-top"><th className="whitespace-nowrap py-2 pr-4 font-normal text-slate">{k}</th>{comparing.map(p => <td key={p.id} className="min-w-[9rem] py-2 pr-4">{fn(p)}</td>)}</tr>)}</tbody></table></div>
         </section>
       )}
