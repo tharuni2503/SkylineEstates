@@ -18,3 +18,4 @@ export default function ContactForm({propertyId,propertyTitle}:{propertyId?:stri
   <div><textarea aria-label="Message" placeholder="How can we help?" rows={4} className={c} {...register("message")}/><Err m={errors.message?.message}/></div>
   {fail&&<p role="alert" className="text-sm text-red-700">We couldn't send your message. Check your connection and try again.</p>}
   <button disabled={isSubmitting} className="w-full bg-matte py-3 text-sm text-ivory disabled:opacity-60">{isSubmitting?"Sending…":propertyId?"Send property enquiry":"Send message"}</button></form>;}
+
