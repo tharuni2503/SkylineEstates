@@ -160,7 +160,7 @@ export default function Assistant() {
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-matte text-beige"><Sparkles size={17} /></span>
                 <div><p className="text-sm font-medium text-matte">Assistant</p><p className="text-[10px] uppercase tracking-[.2em] text-slate">Rule-based over sample data</p></div>
               </div>
-              <p className="hidden text-[10px] uppercase tracking-[.18em] text-slate/70 sm:block">{properties.length} listings indexed</p>
+              <p className="hidden text-[10px] uppercase tracking-[.18em] text-slate sm:block">{properties.length} listings indexed</p>
             </div>
 
             <div className="border-b border-line/60 bg-ivory/40 p-4">
@@ -240,8 +240,8 @@ export default function Assistant() {
             <div className="border border-line/70 bg-matte p-5 text-ivory">
               <p className="text-[11px] uppercase tracking-[.28em] text-beige/85">Portfolio pulse · demo</p>
               <div className="mt-3 grid grid-cols-2 gap-3">
-                <div className="bg-ivory/5 p-3"><p className="font-serif text-2xl tabular-nums">{saved.length}</p><p className="text-[10px] uppercase tracking-[.18em] text-ivory/60">Saved</p></div>
-                <div className="bg-ivory/5 p-3"><p className="font-serif text-2xl tabular-nums">{comparing.length}</p><p className="text-[10px] uppercase tracking-[.18em] text-ivory/60">Comparing</p></div>
+                <div className="bg-ivory/5 p-3"><p className="font-serif text-2xl tabular-nums">{saved.length}</p><p className="text-[10px] uppercase tracking-[.18em] text-ivory/70">Saved</p></div>
+                <div className="bg-ivory/5 p-3"><p className="font-serif text-2xl tabular-nums">{comparing.length}</p><p className="text-[10px] uppercase tracking-[.18em] text-ivory/70">Comparing</p></div>
               </div>
               {saved.length > 0 && <p className="mt-3 text-xs leading-relaxed text-ivory/70">Average saved budget: <span className="text-beige">{inr(Math.round(saved.reduce((a, p) => a + p.price, 0) / saved.length))}</span>{saved[0]?.location ? ` · across ${new Set(saved.map(p => p.location.split(",")[0])).size} areas` : ""}</p>}
               <Link href="/properties" className="mt-4 inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[.2em] text-beige transition hover:text-ivory">Open collection <ArrowRight size={12} /></Link>

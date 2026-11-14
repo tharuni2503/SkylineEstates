@@ -132,7 +132,7 @@ export default function Navbar() {
                      </>
                    )}
                  </div>
-                 <address className="space-y-1 not-italic text-ivory/60"><p className="text-[10px] uppercase tracking-[.3em] text-beige/60">Visit us</p><p>Financial District, Hyderabad 500032</p><p><a href="mailto:hello@skylineestates.in" className="underline decoration-beige/30 underline-offset-4 transition hover:text-ivory">hello@skylineestates.in</a> <span className="text-ivory/40">(demo)</span></p></address>
+                 <address className="space-y-1 not-italic text-ivory/70"><p className="text-[10px] uppercase tracking-[.3em] text-beige/60">Visit us</p><p>Financial District, Hyderabad 500032</p><p><a href="mailto:hello@skylineestates.in" className="underline decoration-beige/30 underline-offset-4 transition hover:text-ivory">hello@skylineestates.in</a> <span className="text-ivory/40">(demo)</span></p></address>
                </motion.div>
              </div>
            </motion.div>
