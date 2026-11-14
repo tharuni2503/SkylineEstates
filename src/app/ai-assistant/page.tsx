@@ -51,7 +51,7 @@ const rank = (q: string, list: Property[]): Ranked[] => {
   return r.map(p => {
     let score = 45;
     const reasons: string[] = [];
-    if (i.bhk && p.bhk === i.bhk) { score += 20; reasons.push(`${p.bhk} BHK, as asked`); }
+    if (i.bhk && (i.bhk >= 5 ? p.bhk >= 5 : p.bhk === i.bhk)) { score += 20; reasons.push(i.bhk >= 5 ? `${p.bhk} BHK, 5+ requested` : `${p.bhk} BHK, as asked`); }
     if (i.maxPrice && p.price <= i.maxPrice) { score += 12; reasons.push(`Under ${inr(i.maxPrice)}`); }
     if (i.minPrice && p.price >= i.minPrice) { score += 6; reasons.push(`From ${inr(i.minPrice)}`); }
     if (i.minArea && p.areaSqft >= i.minArea) { score += 5; reasons.push(`${i.minArea.toLocaleString()}+ sq ft`); }
