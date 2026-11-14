@@ -149,19 +149,29 @@ export default function Home() {
         </section>
 
         <Fade from="white" to="matte" />
-        <section data-site-reveal className="relative overflow-hidden bg-matte py-20 text-ivory md:py-24">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(216,195,165,.14),transparent_45%),radial-gradient(ellipse_at_85%_70%,rgba(248,245,240,.06),transparent_40%)]" />
+        <section data-site-reveal className="relative overflow-hidden bg-matte py-20 text-ivory md:py-24" aria-labelledby="quick-search-heading">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_18%_25%,rgba(216,195,165,.16),transparent_42%),radial-gradient(ellipse_at_88%_70%,rgba(248,245,240,.07),transparent_38%)]" />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-beige/35 to-transparent" />
           <div className="relative mx-auto max-w-7xl px-5 md:px-8">
-            <div className="grid items-end gap-8 lg:grid-cols-[1.1fr_.9fr]">
+            <div className="grid items-end gap-8 lg:grid-cols-[1.05fr_.95fr]">
               <div>
-                <p className="text-[11px] tracking-[.38em] text-beige/80">FIND YOUR MATCH</p>
-                <h2 className="mt-3 font-serif text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.05]">Search by location, budget, and lifestyle.</h2>
-                <p className="mt-4 max-w-xl text-sm leading-relaxed text-ivory/72">Refine your search in moments and step into a collection of verified residences across Hyderabad.</p>
+                <p className="inline-flex items-center gap-2 rounded-full border border-beige/25 bg-ivory/5 px-3 py-1 text-[10px] font-medium uppercase tracking-[.3em] text-beige/90"><span className="h-1.5 w-1.5 rounded-full bg-gold/90" aria-hidden="true" />Quick Search</p>
+                <h2 id="quick-search-heading" className="mt-4 font-serif text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.05]">A fast start to the right address.</h2>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-ivory/75">Enter a location and budget to jump straight into matching residences. For detailed filters, amenities, and comparisons, use the full search on the Properties page.</p>
+                <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] uppercase tracking-[.18em] text-ivory/60">
+                  <li className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-beige/70" aria-hidden="true" />Instant results</li>
+                  <li className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-beige/70" aria-hidden="true" />Curated listings</li>
+                  <li className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-beige/70" aria-hidden="true" />Demo experience</li>
+                </ul>
               </div>
-              <form action="/properties" className="grid gap-3 border border-ivory/12 bg-ivory/[0.04] p-4 shadow-[0_20px_50px_rgba(0,0,0,.18)] backdrop-blur-sm sm:grid-cols-2">
-                <label className="sm:col-span-2"><span className="block text-[11px] uppercase tracking-[.16em] text-beige/75">Location or project</span><input name="q" placeholder="Gachibowli, Kokapet, villa..." className="mt-1 w-full border border-ivory/12 bg-matte/40 px-3 py-2.5 text-sm text-ivory placeholder:text-ivory/45 focus:border-beige/50 focus:outline-none" /></label>
-                <label><span className="block text-[11px] uppercase tracking-[.16em] text-beige/75">Max budget</span><select name="maxPrice" className="mt-1 w-full border border-ivory/12 bg-matte/40 px-3 py-2.5 text-sm text-ivory focus:border-beige/50 focus:outline-none [&>option]:text-charcoal"><option value="">Any</option><option value="5000000">₹50 L</option><option value="10000000">₹1 Cr</option><option value="20000000">₹2 Cr</option><option value="50000000">₹5 Cr</option></select></label>
-                <button type="submit" className="self-end bg-beige px-5 py-3 text-[11px] font-medium tracking-[.18em] text-matte transition duration-300 hover:-translate-y-0.5 hover:bg-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">SEARCH PROPERTIES</button>
+              <form action="/properties" className="grid gap-4 rounded-sm border border-beige/20 bg-gradient-to-b from-ivory/[0.07] to-ivory/[0.03] p-5 shadow-[0_24px_60px_rgba(0,0,0,.22)] backdrop-blur-sm sm:grid-cols-2">
+                <div className="sm:col-span-2 flex items-center justify-between border-b border-ivory/10 pb-3">
+                  <p className="text-[11px] font-medium uppercase tracking-[.22em] text-beige/85">Start your search</p>
+                  <span className="text-[10px] uppercase tracking-[.18em] text-ivory/50">Homepage shortcut</span>
+                </div>
+                <label className="sm:col-span-2"><span className="block text-[11px] uppercase tracking-[.16em] text-beige/80">Location or project</span><input name="q" placeholder="e.g. Gachibowli, Kokapet, villa" className="mt-1.5 h-12 w-full border border-ivory/15 bg-matte/45 px-4 text-sm text-ivory placeholder:text-ivory/40 focus:border-beige/50 focus:outline-none" /></label>
+                <label><span className="block text-[11px] uppercase tracking-[.16em] text-beige/80">Max budget</span><select name="maxPrice" className="mt-1.5 h-12 w-full border border-ivory/15 bg-matte/45 px-4 text-sm text-ivory focus:border-beige/50 focus:outline-none [&>option]:text-charcoal"><option value="">Any budget</option><option value="5000000">?50 L</option><option value="10000000">?1 Cr</option><option value="20000000">?2 Cr</option><option value="50000000">?5 Cr</option></select></label>
+                <button type="submit" className="self-end h-12 bg-beige px-5 text-[11px] font-medium tracking-[.2em] text-matte shadow-[0_10px_24px_rgba(0,0,0,.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">SEARCH PROPERTIES</button>
               </form>
             </div>
           </div>

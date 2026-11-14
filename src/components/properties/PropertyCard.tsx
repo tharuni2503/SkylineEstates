@@ -28,12 +28,15 @@ export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,
     </motion.button>
   </div>
   {/* Body */}
-  <div className={`flex flex-1 flex-col p-5 md:p-6 ${list?"md:justify-center":""}`}>
+  <div className={`flex flex-1 flex-col p-5 md:p-6 ${list?"md:justify-center md:py-6":""}`}>
     <p className="text-[10px] font-medium uppercase tracking-[.24em] text-[#9c7f56]">{p.category}</p>
-    <TitleTag className="mt-1.5 min-h-[2.55em] font-serif text-[1.32rem] leading-[1.28] text-matte md:text-[1.4rem]"><Link href={href} className="decoration-beige/70 decoration-[2px] underline-offset-4 transition-colors hover:text-[#3a3026] hover:underline">{p.title}</Link></TitleTag>
-    <p className="mt-1.5 flex min-h-[1.5em] items-center gap-1.5 text-[13px] text-slate"><MapPin size={13} className="shrink-0 text-[#9c7f56]"/><span className="line-clamp-1">{p.location}</span></p>
-    <p className="mt-3 font-serif text-[1.72rem] leading-none text-matte tabular-nums md:text-[1.85rem]">{inr(p.price)}{p.listing==="Rent"&&<span className="ml-1.5 align-baseline font-sans text-[13px] font-normal tracking-wide text-slate">/ month</span>}</p>
-    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line/60 pt-4 text-[13px] text-charcoal/85 tabular-nums">
+    <TitleTag className="mt-1.5 min-h-[3.5rem] font-serif text-[1.32rem] leading-[1.28] text-matte md:min-h-[3.8rem] md:text-[1.4rem]"><Link href={href} className="line-clamp-2 decoration-beige/70 decoration-[2px] underline-offset-4 transition-colors hover:text-[#3a3026] hover:underline">{p.title}</Link></TitleTag>
+    <p className="mt-1.5 flex min-h-[1.5rem] items-center gap-1.5 text-[13px] text-slate"><MapPin size={13} className="shrink-0 text-[#9c7f56]"/><span className="line-clamp-1">{p.location}</span></p>
+    <div className="mt-3 min-h-[2.4rem]">
+      <p className="font-serif text-[1.72rem] leading-none text-matte tabular-nums md:text-[1.85rem]">{inr(p.price)}</p>
+      <p className="mt-1 text-[12px] uppercase tracking-[.14em] text-slate">{p.listing==="Rent" ? "per month" : "guide price (demo)"}</p>
+    </div>
+    <div className="mt-4 flex min-h-[3.25rem] flex-wrap items-center gap-x-4 gap-y-2 border-t border-line/60 pt-4 text-[13px] text-charcoal/85 tabular-nums">
      {p.bhk?<span className="inline-flex items-center gap-1.5"><BedDouble size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>{p.bhk} BHK</span>:<span className="inline-flex items-center gap-1.5"><BedDouble size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>Plot / Area</span>}
      {baths?<span className="inline-flex items-center gap-1.5"><Bath size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>{baths} Baths</span>:null}
      <span className="inline-flex items-center gap-1.5"><Ruler size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>{p.areaSqft.toLocaleString()} sq ft</span>

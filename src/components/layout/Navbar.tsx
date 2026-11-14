@@ -70,7 +70,17 @@ export default function Navbar() {
          <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
            <ul className="hidden items-center gap-5 xl:flex xl:gap-6">
              {links.map(([l, h]) => (
-               <li key={h}><Link href={h} aria-current={isOn(path, h) ? "page" : undefined} className={`group relative py-1 text-[13px] transition hover:text-ivory ${isOn(path, h) ? "text-ivory" : "text-ivory/80"}`}>{l}<span className={`absolute inset-x-0 -bottom-0.5 h-px origin-left bg-gold transition-transform duration-300 ${isOn(path, h) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} /></Link></li>
+               <li key={h}>
+                 <Link
+                   href={h}
+                   aria-current={isOn(path, h) ? "page" : undefined}
+                   className={`group relative px-0.5 py-1.5 text-[13px] font-medium tracking-[.01em] transition duration-300 hover:text-beige ${isOn(path, h) ? "text-beige" : "text-ivory/80"}`}
+                 >
+                   {l}
+                   <span className={`absolute inset-x-0 -bottom-1 h-px origin-left bg-gradient-to-r from-gold/40 via-beige to-gold/40 transition-transform duration-300 ease-out ${isOn(path, h) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} />
+                   <span className={`pointer-events-none absolute left-1/2 top-full mt-1 h-1 w-1 -translate-x-1/2 rounded-full bg-beige/80 transition-opacity duration-300 ${isOn(path, h) ? "opacity-100" : "opacity-0 group-hover:opacity-60"}`} aria-hidden="true" />
+                 </Link>
+               </li>
              ))}
            </ul>
            {account ? (
@@ -89,12 +99,29 @@ export default function Navbar() {
            )}
            <Link href="/wishlist" aria-label={`Saved properties (${wishlist.length})`} title="Wishlist" className="relative flex h-11 w-11 items-center justify-center rounded-full text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory"><Heart size={18} strokeWidth={1.75} />{wishlist.length > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-beige px-1 text-[10px] font-semibold text-matte">{wishlist.length}</span>}</Link>
            <div className="relative" ref={bellRef}>
-             <button aria-label="Notifications" aria-expanded={bell} aria-controls="notifications-panel" onClick={() => setBell(v => !v)} className="relative flex h-11 w-11 items-center justify-center rounded-full text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory"><Bell size={18} strokeWidth={1.75} />{bell && <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />}</button>
+             <button
+               aria-label="Notifications"
+               aria-expanded={bell}
+               aria-haspopup="dialog"
+               aria-controls="notifications-panel"
+               onClick={() => setBell(v => !v)}
+               className={`relative flex h-11 w-11 items-center justify-center rounded-full transition duration-300 hover:bg-ivory/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${bell ? "bg-ivory/10 text-beige" : "text-ivory/90 hover:text-ivory"}`}
+             >
+               <Bell size={18} strokeWidth={1.75} />
+               <span className={`absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-gold transition-opacity ${bell ? "opacity-100" : "opacity-70"}`} aria-hidden="true" />
+             </button>
              {bell && (
-               <div id="notifications-panel" role="dialog" aria-label="Notifications" className="absolute right-0 top-12 z-50 w-[min(17rem,calc(100vw-2rem))] overflow-hidden border border-line/60 bg-white text-sm text-charcoal shadow-[0_18px_44px_rgba(0,0,0,.22)]">
-                 <p className="border-b border-line/60 bg-ivory px-4 py-2.5 text-[10px] font-medium uppercase tracking-[.22em] text-slate">Notifications</p>
-                 <ul className="p-2"><li className="rounded-sm px-2.5 py-2 transition-colors hover:bg-ivory">New site visit request for Skyline Crest</li><li className="rounded-sm px-2.5 py-2 transition-colors hover:bg-ivory">Your listing was approved</li><li className="rounded-sm px-2.5 py-2 transition-colors hover:bg-ivory">2 new leads this week</li></ul>
-                 <p className="border-t border-line/60 px-4 py-2 text-[10px] uppercase tracking-[.18em] text-slate/75">Demo notifications</p>
+               <div id="notifications-panel" role="dialog" aria-label="Notifications" className="absolute right-0 top-12 z-50 w-[min(18rem,calc(100vw-2rem))] overflow-hidden rounded-sm border border-line/70 bg-white text-sm text-charcoal shadow-[0_20px_50px_rgba(0,0,0,.24)]">
+                 <div className="flex items-center justify-between border-b border-line/60 bg-ivory px-4 py-2.5">
+                   <p className="text-[10px] font-medium uppercase tracking-[.22em] text-slate">Notifications</p>
+                   <span className="rounded-full bg-beige/30 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[.12em] text-[#7a6241]">Demo</span>
+                 </div>
+                 <ul className="p-2">
+                   <li><button type="button" className="w-full rounded-sm px-3 py-2.5 text-left transition-colors hover:bg-ivory focus-visible:bg-ivory focus-visible:outline-none">New site visit request for Skyline Crest</button></li>
+                   <li><button type="button" className="w-full rounded-sm px-3 py-2.5 text-left transition-colors hover:bg-ivory focus-visible:bg-ivory focus-visible:outline-none">Your listing was approved</button></li>
+                   <li><button type="button" className="w-full rounded-sm px-3 py-2.5 text-left transition-colors hover:bg-ivory focus-visible:bg-ivory focus-visible:outline-none">2 new leads this week</button></li>
+                 </ul>
+                 <p className="border-t border-line/60 px-4 py-2 text-[10px] uppercase tracking-[.18em] text-slate/75">Sample alerts for demonstration</p>
                </div>
              )}
            </div>

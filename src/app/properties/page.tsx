@@ -82,8 +82,8 @@ export default function PropertiesPage(){
 
  return <div className="mx-auto max-w-7xl px-4 py-10 sm:px-5 md:py-14">
   <div className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-   <SectionHead as="h1" eyebrow="Skyline collection" title="Properties in *Hyderabad.*"/>
-   <p className="max-w-xl text-sm leading-relaxed text-slate">Discover verified residences, compare options, and refine by location, budget, type, and amenities with clarity.</p>
+   <SectionHead as="h1" eyebrow="Search & refine" title="Properties in *Hyderabad.*"/>
+   <p className="max-w-xl text-sm leading-relaxed text-slate">Use advanced filters, sorting, and comparison to narrow the collection by location, budget, type, area, and amenities. This is the full discovery workspace (distinct from the homepage quick search).</p>
   </div>
 
   <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
@@ -100,8 +100,13 @@ export default function PropertiesPage(){
   {/* Removable filter chips */}
   {chips.length>0&&<div className="mt-4 flex flex-wrap items-center gap-2" aria-label="Active filters">{chips.map(c=><button key={c.label} onClick={c.clear} className="inline-flex h-8 items-center gap-1.5 border border-beige/60 bg-[#f5efe3] pl-3 pr-2 text-[11px] font-medium text-[#6f5c37] transition hover:border-beige hover:bg-[#eee4d2]">{c.label}<X size={13} aria-hidden="true"/><span className="sr-only">Remove filter</span></button>)}<button onClick={()=>setF(base)} className="text-[11px] font-medium uppercase tracking-[.16em] text-slate underline underline-offset-4 transition hover:text-matte">Clear all</button></div>}
 
-  {/* Search toolbar */}
-  <div className="mt-4 flex flex-col gap-2.5 rounded-sm border border-line/70 bg-white/85 p-2.5 shadow-[0_10px_28px_rgba(17,17,17,.05)] lg:flex-row lg:items-center">
+  {/* Search & refine toolbar */}
+  <div className="mt-5 rounded-sm border border-line/70 bg-white p-3 shadow-[0_12px_30px_rgba(17,17,17,.05)] md:p-4">
+   <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-line/60 pb-3">
+     <p className="text-[11px] font-medium uppercase tracking-[.22em] text-[#9c7f56]">Advanced search & filters</p>
+     <p className="text-xs text-slate">Refine results, sort listings, and compare properties</p>
+   </div>
+   <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center">
    <label className="relative flex-1">
      <Search size={17} aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate"/>
      <input type="text" aria-label="Search by location" placeholder="Search by project, locality or keyword…" className="h-12 w-full border border-transparent bg-ivory/60 pl-11 pr-10 text-[15px] text-matte transition placeholder:text-slate focus:border-beige/70 focus:bg-white focus:outline-none" value={f.q??""} onChange={e=>setF({...f,q:e.target.value||undefined})}/>
@@ -115,6 +120,7 @@ export default function PropertiesPage(){
    </div>
   </div>
 
+  </div>
   {/* Desktop filter panel */}
   <div className="mt-3 hidden border border-line/70 bg-white p-4 shadow-[0_8px_24px_rgba(17,17,17,.03)] lg:block">{panel}</div>
 
