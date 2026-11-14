@@ -81,7 +81,7 @@ export default function StatsStrip(){
  const {properties}=useStore();
  const areas=new Set(properties.map(p=>p.location.split(",")[0].trim())).size;
  const verified=properties.filter(p=>p.verified).length;
- const rows:[number,string][]=[[properties.length,"Residences listed"],[areas,"Hyderabad localities"],[verified,"Verified listings"],[6,"Services under one roof"]];
+ const rows:[number,string][]=[[properties.length,"Sample residences"],[areas,"Sample localities"],[verified,"Marked verified"],[6,"Services & tools"]];
  return <section aria-label="Skyline Estates in numbers" className="relative overflow-hidden border-y border-beige/10 bg-matte text-ivory">
   <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_50%,rgba(216,195,165,.10),transparent_45%),radial-gradient(ellipse_at_80%_50%,rgba(201,166,107,.08),transparent_40%)]"/>
   <dl className="relative mx-auto grid max-w-7xl grid-cols-2 gap-px bg-ivory/10 md:grid-cols-4">{rows.map(([n,l])=><div key={l} className="group bg-matte px-4 py-8 text-center transition-colors duration-500 hover:bg-charcoal/60 sm:px-5 sm:py-9"><dt className="font-serif text-4xl tabular-nums text-beige md:text-5xl"><Count value={n}/></dt><dd className="mt-2 text-[10px] uppercase tracking-[.2em] text-ivory/70 sm:text-[11px] sm:tracking-[.22em]">{l}</dd></div>)}</dl>
