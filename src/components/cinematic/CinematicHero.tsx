@@ -85,8 +85,8 @@ export default function CinematicHero() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,.28)_100%)]" />
       </div>
 
-      {/* Centered hero content */}
-      <div className="hero-copy relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-5 text-center md:px-8">
+      {/* Hero content */}
+      <div className="hero-copy relative z-10 mx-auto flex h-full max-w-7xl flex-col items-start justify-center px-5 text-left md:px-8 lg:px-10">
         <p ref={eyebrow} className="hero-eyebrow inline-flex items-center gap-2 rounded-full border border-ivory/25 bg-black/20 px-4 py-1.5 text-[10px] font-medium uppercase tracking-[.34em] text-ivory/90 backdrop-blur-sm sm:text-[11px]">
           <span className="h-1.5 w-1.5 rounded-full bg-beige" aria-hidden="true" /> Skyline Estates · Hyderabad
         </p>
@@ -104,7 +104,7 @@ export default function CinematicHero() {
           Curated residences across Hyderabad&rsquo;s finest addresses — discover, compare, and plan your next move with clarity.
         </p>
 
-        <div ref={ctas} className="hero-ctas mt-8 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row sm:justify-center">
+        <div ref={ctas} className="hero-ctas mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center">
           <Link
             href="/properties"
             className="group inline-flex min-w-[12.5rem] items-center justify-center gap-2.5 border border-beige/40 bg-beige px-7 py-3.5 text-[11px] font-medium uppercase tracking-[.22em] text-matte shadow-[0_14px_34px_rgba(0,0,0,.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-ivory"
@@ -122,7 +122,7 @@ export default function CinematicHero() {
         <p className="hero-subnote mt-5 text-[10px] uppercase tracking-[.26em] text-ivory/70 sm:mt-6">A refined frontend demonstration experience</p>
       </div>
 
-      <div aria-hidden="true" className="hero-scroll pointer-events-none absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-[10px] uppercase tracking-[.3em] text-ivory/60">
+      <div aria-hidden="true" className="hero-scroll pointer-events-none absolute bottom-6 left-5 z-10 flex flex-col items-start gap-2 text-[10px] uppercase tracking-[.3em] text-ivory/60 md:left-8 lg:left-10">
         <span>Scroll</span>
         <span className="scroll-line h-8 w-px bg-gradient-to-b from-ivory/70 to-transparent" />
       </div>
