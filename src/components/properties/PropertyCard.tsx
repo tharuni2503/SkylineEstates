@@ -32,9 +32,12 @@ export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,
     <p className="text-[10px] font-medium uppercase tracking-[.24em] text-[#9c7f56]">{p.category}</p>
     <TitleTag className="mt-1.5 min-h-[3.5rem] font-serif text-[1.32rem] leading-[1.28] text-matte md:min-h-[3.8rem] md:text-[1.4rem]"><Link href={href} className="line-clamp-2 decoration-beige/70 decoration-[2px] underline-offset-4 transition-colors hover:text-[#3a3026] hover:underline">{p.title}</Link></TitleTag>
     <p className="mt-1.5 flex min-h-[1.5rem] items-center gap-1.5 text-[13px] text-slate"><MapPin size={13} className="shrink-0 text-[#9c7f56]"/><span className="line-clamp-1">{p.location}</span></p>
-    <div className="mt-3 min-h-[2.4rem]">
+    <div className="mt-3 min-h-[3rem]">
       <p className="font-serif text-[1.72rem] leading-none text-matte tabular-nums md:text-[1.85rem]">{inr(p.price)}</p>
-      <p className="mt-1 text-[12px] uppercase tracking-[.14em] text-slate">{p.listing==="Rent" ? "per month" : "guide price (demo)"}</p>
+      <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] uppercase tracking-[.14em] text-slate">
+        <span>{p.listing==="Rent" ? "per month" : "guide price (demo)"}</span>
+        {p.areaSqft ? <><span className="text-slate/40">·</span><span className="normal-case tracking-normal text-slate/80">{inr(Math.round(p.price / p.areaSqft))} / sq ft</span></> : null}
+      </div>
     </div>
     <div className="mt-4 flex min-h-[3.25rem] flex-wrap items-center gap-x-4 gap-y-2 border-t border-line/60 pt-4 text-[13px] text-charcoal/85 tabular-nums">
      {p.bhk?<span className="inline-flex items-center gap-1.5"><BedDouble size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>{p.bhk} BHK</span>:<span className="inline-flex items-center gap-1.5"><BedDouble size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>Plot / Area</span>}

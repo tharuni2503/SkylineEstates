@@ -78,7 +78,7 @@ export default function PropertyPage() {
               <button className={`${btn} justify-center sm:justify-start`} aria-pressed={saved} onClick={() => toggleWish(p.id)}><Heart size={16} className={saved ? "fill-matte" : ""} />{saved ? "Saved" : "Save"}</button>
               <button className={`${btn} justify-center sm:justify-start`} aria-pressed={inCmp} onClick={() => toggleCompare(p.id)}><GitCompare size={16} />{inCmp ? "In comparison" : "Compare"}</button>
               <button className={`${btn} justify-center sm:justify-start`} onClick={share}><Share2 size={16} />Copy link</button>
-              <Link href="#visit" className="inline-flex items-center justify-center gap-2 bg-matte px-5 py-3 text-[11px] font-medium uppercase tracking-[.18em] text-ivory transition hover:bg-charcoal sm:ml-auto">Schedule Visit <ArrowUpRight size={14} /></Link>
+              <Link href="#visit" className="inline-flex items-center justify-center gap-2 bg-matte px-6 py-3 text-[11px] font-medium uppercase tracking-[.18em] text-ivory shadow-[0_10px_24px_rgba(17,17,17,.16)] transition hover:-translate-y-0.5 hover:bg-charcoal sm:ml-auto">Schedule Visit <ArrowUpRight size={14} /></Link>
             </div>
           </div>
 
@@ -118,10 +118,10 @@ export default function PropertyPage() {
         </div>
 
         <aside id="visit" className="scroll-mt-24 pb-24 lg:pb-0 lg:sticky lg:top-24 lg:self-start">
-          <div className="border border-line/70 bg-white p-5 shadow-[0_12px_34px_rgba(17,17,17,.05)] md:p-6">
+          <div className="border border-line/70 bg-white p-5 shadow-[0_14px_38px_rgba(17,17,17,.06)] md:p-6">
             <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">Private viewing</p>
             <h2 className="mt-2 font-serif text-3xl text-matte">Schedule a site visit</h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate">Share your preferred time and our advisor will coordinate your visit (demo request).</p>
+            <p className="mt-2 text-sm leading-relaxed text-slate">Share your preferred time and our advisor will coordinate your visit. <span className="text-slate/80">Demo request — no booking is sent.</span></p>
             <div className="mt-5"><VisitForm propertyId={p.id} /></div>
           </div>
           <div className="mt-4 border border-line/70 bg-matte p-5 text-ivory">
