@@ -1,1 +1,5 @@
-export const testimonials=[["Priya Nair","We shortlisted three Gachibowli apartments in one evening and closed within a month."],["Arjun Mehta","The agent knew every project in Kokapet and the paperwork was clear from day one."],["Fatima Sheikh","Our villa listing got qualified enquiries in the first week."]] as const;
+export const testimonials = [
+  ["Buyer journey", "Compare a focused shortlist, review property details, and request a site visit from one place."],
+  ["Investor journey", "Explore location, price and property insights before deciding which listings deserve a closer look."],
+  ["Seller journey", "Present a property, review incoming enquiries, and keep listing information organised in one dashboard."],
+] as const;

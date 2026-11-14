@@ -23,7 +23,7 @@ export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,
      <span className="bg-white/92 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[.16em] text-matte backdrop-blur-sm">{p.listing==="Buy"?"For Sale":"For Rent"}</span>
     </div>
     {/* Wishlist */}
-    <motion.button whileTap={{scale:.78}} type="button" aria-pressed={saved} aria-label={saved?"Remove from wishlist":"Add to wishlist"} title={saved?"Saved to wishlist":"Save to wishlist"} onClick={()=>onToggle(p.id)} className={`absolute right-3 top-3 z-[2] rounded-full border p-2.5 shadow-sm backdrop-blur-sm transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${saved?"border-matte/20 bg-matte text-beige":"border-white/60 bg-white/92 text-matte hover:bg-white"}`}>
+    <motion.button whileTap={{scale:.78}} type="button" aria-pressed={saved} aria-label={saved?"Remove from wishlist":"Add to wishlist"} title={saved?"Saved to wishlist":"Save to wishlist"} onClick={()=>onToggle(p.id)} className={`absolute right-3 top-3 z-[2] rounded-full border p-2.5 shadow-sm backdrop-blur-sm transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 ${saved?"border-matte/20 bg-matte text-beige":"border-white/60 bg-white/92 text-matte hover:bg-white"}`}>
       <Heart key={saved?"on":"off"} size={17} strokeWidth={1.75} className={saved?"heart-pop fill-beige text-beige":"transition-transform duration-300 hover:scale-110"}/>
     </motion.button>
   </div>
@@ -39,7 +39,7 @@ export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,
      <span className="inline-flex items-center gap-1.5"><Ruler size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>{p.areaSqft.toLocaleString()} sq ft</span>
     </div>
     <div className="mt-auto flex items-center gap-2.5 pt-5">
-     {onCompare&&<button onClick={()=>onCompare(p.id)} aria-pressed={compared} className={`inline-flex h-10 items-center gap-1.5 border px-3.5 text-[10px] font-medium uppercase tracking-[.16em] transition-all duration-300 ${compared?"border-matte bg-matte text-ivory":"border-line/80 bg-white text-charcoal hover:border-matte hover:bg-ivory"}`}>{compared?<Check size={13}/>:<Scale size={13}/>}{compared?"Added":"Compare"}</button>}
+     {onCompare&&<button onClick={()=>onCompare(p.id)} aria-pressed={compared} type="button" className={`inline-flex h-10 items-center gap-1.5 border px-3.5 text-[10px] font-medium uppercase tracking-[.16em] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 ${compared?"border-matte bg-matte text-ivory":"border-line/80 bg-white text-charcoal hover:border-matte hover:bg-ivory"}`}>{compared?<Check size={13}/>:<Scale size={13}/>}{compared?"Added":"Compare"}</button>}
      <Link href={href} className="group/cta ml-auto inline-flex h-10 items-center gap-2 bg-matte px-4 text-[10px] font-medium uppercase tracking-[.18em] text-ivory transition duration-300 hover:bg-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2">View Property <ArrowUpRight size={14} className="transition-transform duration-300 group-hover/cta:-translate-y-0.5 group-hover/cta:translate-x-0.5"/></Link>
     </div>
   </div>

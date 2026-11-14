@@ -101,26 +101,26 @@ export default function AgentBoard() {
 
         <div className="mt-6 md:grid md:grid-cols-[auto_1fr] md:gap-8">
           <nav aria-label="Agent dashboard" className="mb-6 md:mb-0">
-            <div role="tablist" aria-orientation="vertical" className="flex flex-wrap gap-x-5 gap-y-2 border-b border-line md:flex-col md:flex-nowrap md:gap-1 md:border-0 md:w-52">
-              {tabs.map(t => <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`whitespace-nowrap pb-3 text-left text-sm transition md:px-3 md:py-2.5 ${tab === t ? "border-b-2 border-matte font-medium text-matte md:border-b-0 md:bg-white" : "text-slate hover:text-matte"}`}>{t}</button>)}
+            <div role="tablist" aria-orientation="vertical" className="flex gap-2 overflow-x-auto border-b border-line pb-2 md:w-56 md:flex-col md:overflow-visible md:border-0 md:pb-0">
+              {tabs.map(t => <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`shrink-0 whitespace-nowrap border px-3 py-2.5 text-left text-xs transition md:w-full md:text-sm ${tab === t ? "border-matte bg-matte font-medium text-ivory md:bg-white md:text-matte" : "border-transparent text-slate hover:border-line hover:bg-white"}`}>{t}</button>)}
             </div>
           </nav>
 
           <div>
             {tab === "Overview" && (
               <>
-                <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
                   {stats.map(([label, value, Icon]) => (
-                    <div key={label} className="border border-line/70 bg-white p-4">
-                      <Icon size={17} className="text-[#9c7f56]" />
-                      <p className="mt-2 font-serif text-2xl tabular-nums text-matte">{value}</p>
-                      <p className="text-[9px] uppercase tracking-[.18em] text-slate">{label}</p>
+                    <div key={label} className="group border border-line/70 bg-white p-4 shadow-[0_8px_24px_rgba(17,17,17,.035)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(17,17,17,.07)] sm:p-5">
+                      <div className="flex items-center justify-between"><span className="flex h-9 w-9 items-center justify-center bg-ivory"><Icon size={17} className="text-[#9c7f56]" /></span><span className="text-[9px] uppercase tracking-[.14em] text-slate">Demo</span></div>
+                      <p className="mt-4 font-serif text-3xl tabular-nums text-matte">{value}</p>
+                      <p className="mt-1 text-[10px] font-medium uppercase tracking-[.16em] text-slate">{label}</p>
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 border border-line/70 bg-white p-5">
-                  <p className="text-[11px] uppercase tracking-[.26em] text-[#9c7f56]">Enquiries · last 5 months (sample)</p>
-                  <div className="mt-3 h-48"><ResponsiveContainer><BarChart data={monthly}><XAxis dataKey="m" /><YAxis allowDecimals={false} /><Tooltip /><Bar dataKey="v" name="Enquiries" fill="#D8C3A5" radius={[3, 3, 0, 0]} /></BarChart></ResponsiveContainer></div>
+                <div className="mt-6 border border-line/70 bg-white p-4 shadow-[0_8px_24px_rgba(17,17,17,.035)] sm:p-5">
+                  <div className="flex flex-wrap items-start justify-between gap-2"><div><p className="text-[10px] font-medium uppercase tracking-[.24em] text-[#9c7f56]">Pipeline activity</p><h2 className="mt-1 font-serif text-xl text-matte">Enquiries over time</h2></div><span className="border border-line px-2.5 py-1 text-[9px] uppercase tracking-[.14em] text-slate">Sample data</span></div>
+                  <div className="mt-4 h-48"><ResponsiveContainer width="100%" height="100%"><BarChart data={monthly} margin={{top:8,right:8,left:-18,bottom:0}}><XAxis dataKey="m" tick={{fontSize:11}} axisLine={false} tickLine={false}/><YAxis allowDecimals={false} tick={{fontSize:10}} axisLine={false} tickLine={false}/><Tooltip contentStyle={{border:"1px solid #E5E7EB",borderRadius:0,fontSize:12}}/><Bar dataKey="v" name="Enquiries" fill="#D8C3A5" radius={[3,3,0,0]} maxBarSize={38}/></BarChart></ResponsiveContainer></div>
                 </div>
                 <div className="mt-6 grid gap-4 lg:grid-cols-2">
                   <div className="border border-line/70 bg-matte p-5 text-ivory">

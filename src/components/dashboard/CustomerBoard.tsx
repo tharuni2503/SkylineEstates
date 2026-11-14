@@ -77,25 +77,25 @@ export default function CustomerBoard() {
 
         <div className="mt-6 md:grid md:grid-cols-[auto_1fr] md:gap-8">
           <nav aria-label="Customer dashboard" className="mb-6 md:mb-0">
-            <div role="tablist" aria-orientation="vertical" className="flex flex-wrap gap-x-5 gap-y-2 border-b border-line md:flex-col md:flex-nowrap md:gap-1 md:border-0 md:w-52">
-              {tabs.map(t => <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`whitespace-nowrap pb-3 text-left text-sm transition md:px-3 md:py-2.5 ${tab === t ? "border-b-2 border-matte font-medium text-matte md:border-b-0 md:bg-white" : "text-slate hover:text-matte"}`}>{t}{t === "Notifications" && unread > 0 ? <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-beige px-1.5 text-[10px] font-semibold text-matte">{unread}</span> : null}</button>)}
+            <div role="tablist" aria-orientation="vertical" className="flex gap-2 overflow-x-auto border-b border-line pb-2 md:w-56 md:flex-col md:overflow-visible md:border-0 md:pb-0">
+              {tabs.map(t => <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`shrink-0 whitespace-nowrap border px-3 py-2.5 text-left text-xs transition md:w-full md:text-sm ${tab === t ? "border-matte bg-matte font-medium text-ivory md:bg-white md:text-matte" : "border-transparent text-slate hover:border-line hover:bg-white"}`}>{t}{t === "Notifications" && unread > 0 ? <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-beige px-1.5 text-[10px] font-semibold text-matte">{unread}</span> : null}</button>)}
             </div>
           </nav>
 
           <div>
             {tab === "Overview" && (
               <>
-                <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
                   {stats.map(([label, value, Icon]) => (
-                    <div key={label} className="border border-line/70 bg-white p-4 transition-shadow hover:shadow-[0_10px_26px_rgba(17,17,17,.06)]">
-                      <Icon size={17} className="text-[#9c7f56]" />
-                      <p className="mt-2 font-serif text-2xl tabular-nums text-matte">{value}</p>
-                      <p className="text-[9px] uppercase tracking-[.18em] text-slate">{label}</p>
+                    <div key={label} className="group border border-line/70 bg-white p-4 shadow-[0_8px_24px_rgba(17,17,17,.035)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(17,17,17,.07)] sm:p-5">
+                      <div className="flex items-center justify-between"><span className="flex h-9 w-9 items-center justify-center bg-ivory"><Icon size={17} className="text-[#9c7f56]" /></span><span className="text-[9px] uppercase tracking-[.14em] text-slate">Your activity</span></div>
+                      <p className="mt-4 font-serif text-3xl tabular-nums text-matte">{value}</p>
+                      <p className="mt-1 text-[10px] font-medium uppercase tracking-[.16em] text-slate">{label}</p>
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 border border-line/70 bg-white p-5">
-                  <p className="text-[11px] uppercase tracking-[.26em] text-[#9c7f56]">Recent activity</p>
+                <div className="mt-6 border border-line/70 bg-white p-4 shadow-[0_8px_24px_rgba(17,17,17,.035)] sm:p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-2"><div><p className="text-[10px] font-medium uppercase tracking-[.22em] text-[#9c7f56]">Your activity</p><h2 className="mt-1 font-serif text-xl text-matte">Recent updates</h2></div><span className="border border-line px-2.5 py-1 text-[9px] uppercase tracking-[.14em] text-slate">Browser demo</span></div>
                   <ul className="mt-3 divide-y divide-line/60 text-sm">
                     {upcoming.slice(0, 2).map(v => (
                       <li key={v.id} className="flex flex-wrap items-center justify-between gap-2 py-3"><span className="text-charcoal/90">Site visit for <Link href={`/property/${v.propertyId}`} className="font-medium underline underline-offset-4 decoration-beige/60 hover:text-matte">{properties.find(p => p.id === v.propertyId)?.title ?? "your shortlisted residence"}</Link></span><span className="text-xs text-slate">{v.date} · {v.time} · <span className="text-[#9c7f56]">{v.status}</span></span></li>
@@ -122,7 +122,7 @@ export default function CustomerBoard() {
               <>
                 <div className="flex flex-wrap items-center justify-between gap-3"><p className="text-sm text-slate">Comparing <span className="font-medium text-matte">{comparing.length}</span> of 4</p>{comparing.length > 0 && <button className="text-[10px] font-medium uppercase tracking-[.18em] text-slate underline underline-offset-4 hover:text-matte" onClick={clearCompare}>Clear comparison</button>}</div>
                 {comparing.length === 0 ? <div className="mt-4 border border-line/70 bg-white p-10 text-center"><p className="font-serif text-2xl text-matte">Nothing to compare</p><p className="mt-1.5 text-sm text-slate">Add two or more listings — or ask the assistant for suggestions.</p><Link href="/ai-assistant" className="mt-4 inline-flex items-center gap-2 bg-matte px-6 py-3 text-[10px] font-medium uppercase tracking-[.18em] text-ivory hover:bg-charcoal"><Sparkles size={12} />Ask the assistant</Link></div>
-                : <div className="mt-4 overflow-x-auto border border-line/70 bg-white p-4"><table className="w-full min-w-[640px] text-left text-sm"><tbody>{([["Property", (p: any) => p.title], ["Price", (p: any) => inr(p.price)], ["Location", (p: any) => p.location], ["Type", (p: any) => p.category], ["Area", (p: any) => `${p.areaSqft.toLocaleString()} sq ft`], ["BHK", (p: any) => p.bhk ?? "—"], ["Verified", (p: any) => p.verified ? "Yes" : "No"], ["Amenities", (p: any) => p.amenities.slice(0, 3).join(", ") || "—"]] as [string, (p: any) => string][]).map(([k, fn]) => <tr key={k} className="border-t border-line align-top"><th className="whitespace-nowrap py-2.5 pr-4 font-normal text-slate">{k}</th>{comparing.map(p => <td key={p.id} className="min-w-[10rem] py-2.5 pr-4">{fn(p)}</td>)}</tr>)}</tbody></table></div>}
+                : <div className="mt-4 overflow-x-auto border border-line/70 bg-white p-4 sm:p-5"><table className="w-full min-w-[640px] text-left text-sm"><tbody>{([["Property", (p: any) => p.title], ["Price", (p: any) => inr(p.price)], ["Location", (p: any) => p.location], ["Type", (p: any) => p.category], ["Area", (p: any) => `${p.areaSqft.toLocaleString()} sq ft`], ["BHK", (p: any) => p.bhk ?? "—"], ["Verified", (p: any) => p.verified ? "Yes" : "No"], ["Amenities", (p: any) => p.amenities.slice(0, 3).join(", ") || "—"]] as [string, (p: any) => string][]).map(([k, fn]) => <tr key={k} className="border-t border-line align-top"><th className="sticky left-0 whitespace-nowrap bg-white py-3 pr-4 text-[10px] font-medium uppercase tracking-[.12em] text-slate">{k}</th>{comparing.map(p => <td key={p.id} className="min-w-[10rem] border-b border-line/50 py-3 pr-4 align-top text-charcoal">{fn(p)}</td>)}</tr>)}</tbody></table></div>}
               </>
             )}
 

@@ -10,7 +10,7 @@ import type { Property, PropertyQuery } from "@/types";
 import { inr } from "@/lib/format";
 import { ArrowRight, BedDouble, Check, GitCompare, Ruler, Sparkles, ShieldCheck, Info, MapPin, Calculator, LineChart, SlidersHorizontal } from "lucide-react";
 
-type Intent = { bhk?: number; maxPrice?: number; minPrice?: number; listing?: "Buy" | "Rent"; category?: string; loc?: string; amenities: string[]; wantsEmi: boolean; wantsInvest: boolean };
+type Intent = { bhk?: number; maxPrice?: number; minPrice?: number; minArea?: number; maxArea?: number; listing?: "Buy" | "Rent"; category?: string; loc?: string; amenities: string[]; wantsEmi: boolean; wantsInvest: boolean };
 type Ranked = { p: Property; match: number; reasons: string[] };
 type Msg = { id: number; role: "user" | "assistant"; text: string; results?: Ranked[]; emi?: { p: Property; monthly: number }; invest?: { p: Property; score: number; positives: string[] } };
 
@@ -29,26 +29,33 @@ const parse = (q: string): Intent => {
   const maxPrice = m ? Number(m[1]) * (unit.startsWith("cr") ? 1e7 : 1e5) : undefined;
   const minPriceM = t.match(/(?:above|from|more than|over)\s*₹?\s*([\d.]+)\s*(crore|cr|lakh|l)?\b/);
   const minPrice = minPriceM ? Number(minPriceM[1]) * ((minPriceM[2] ?? "cr").startsWith("cr") ? 1e7 : 1e5) : undefined;
+  const areaMaxM = t.match(/(?:under|below|up to|max)\\s*([\\d,]+)\\s*(?:sq\\.?\\s*ft|sqft|square feet)/i);
+  const areaMinM = t.match(/(?:above|over|at least|from)\\s*([\\d,]+)\\s*(?:sq\\.?\\s*ft|sqft|square feet)/i);
+  const maxArea = areaMaxM ? Number(areaMaxM[1].replace(/,/g, "")) : undefined;
+  const minArea = areaMinM ? Number(areaMinM[1].replace(/,/g, "")) : undefined;
   const cat = ([[/villa/i, "Villa"], [/apartment|flat|tower/i, "Apartment"], [/house|independent/i, "Independent House"], [/plot|land/i, "Residential Plot"], [/commercial|office|shop/i, "Commercial"]] as [RegExp, string][]).find(([re]) => re.test(t))?.[1];
   const listing = /rent|lease/i.test(t) ? "Rent" : /buy|sale|purchase/i.test(t) ? "Buy" : undefined;
   const loc = LOCATIONS.find(l => t.includes(l.toLowerCase()));
   const nearWork = /it\s*(hub|park|corridor)|near work|tech|office hub/i.test(t);
   const amenities = AMENITIES.filter(([re]) => re.test(t)).map(([, v]) => v);
-  return { bhk: bhkM ? Number(bhkM[1]) : undefined, maxPrice, minPrice, listing, category: cat, loc: loc ?? (nearWork ? "near IT hubs" : undefined), amenities, wantsEmi: /emi|monthly|instal/i.test(t), wantsInvest: /invest|return|appreciation|score|best deal|value/i.test(t) };
+  return { bhk: bhkM ? Number(bhkM[1]) : undefined, maxPrice, minPrice, minArea, maxArea, listing, category: cat, loc: loc ?? (nearWork ? "near IT hubs" : undefined), amenities, wantsEmi: /emi|monthly|instal/i.test(t), wantsInvest: /invest|return|appreciation|score|best deal|value/i.test(t) };
 };
 
 const rank = (q: string, list: Property[]): Ranked[] => {
   const i = parse(q);
-  const f: PropertyQuery = { bhk: i.bhk, maxPrice: i.maxPrice, minPrice: i.minPrice, listing: i.listing, category: i.category as PropertyQuery["category"] ?? "All", amenity: i.amenities[0] };
+  const f: PropertyQuery = { bhk: i.bhk, maxPrice: i.maxPrice, minPrice: i.minPrice, minArea: i.minArea, maxArea: i.maxArea, listing: i.listing, category: i.category as PropertyQuery["category"] ?? "All" };
   let r = filterProperties(list, f);
+  if (i.amenities.length) r = r.filter(p => i.amenities.every(a => p.amenities.includes(a)));
   if (i.loc && i.loc !== "near IT hubs") r = r.filter(p => p.location.includes(i.loc!));
   else if (i.loc === "near IT hubs") r = r.filter(p => IT_HUBS.some(l => p.location.includes(l)));
   return r.map(p => {
     let score = 45;
     const reasons: string[] = [];
-    if (i.bhk && p.bhk === i.bhk) { score += 20; reasons.push(`${p.bhk} BHK, as asked`); }
+    if (i.bhk && (i.bhk >= 5 ? p.bhk >= 5 : p.bhk === i.bhk)) { score += 20; reasons.push(i.bhk >= 5 ? `${p.bhk} BHK, 5+ requested` : `${p.bhk} BHK, as asked`); }
     if (i.maxPrice && p.price <= i.maxPrice) { score += 12; reasons.push(`Under ${inr(i.maxPrice)}`); }
     if (i.minPrice && p.price >= i.minPrice) { score += 6; reasons.push(`From ${inr(i.minPrice)}`); }
+    if (i.minArea && p.areaSqft >= i.minArea) { score += 5; reasons.push(`${i.minArea.toLocaleString()}+ sq ft`); }
+    if (i.maxArea && p.areaSqft <= i.maxArea) { score += 5; reasons.push(`Up to ${i.maxArea.toLocaleString()} sq ft`); }
     if (i.loc) { score += 15; reasons.push(i.loc === "near IT hubs" ? "Close to IT hubs" : `In ${i.loc}`); }
     if (i.category && p.category === i.category) { score += 12; reasons.push(p.category); }
     if (i.listing && p.listing === i.listing) { score += 8; reasons.push(i.listing === "Buy" ? "For sale" : "For rent"); }
@@ -56,7 +63,7 @@ const rank = (q: string, list: Property[]): Ranked[] => {
     if (p.verified) { score += 5; reasons.push("Verified listing"); }
     if (p.featured) { score += 3; reasons.push("Featured"); }
     return { p, match: Math.min(97, score), reasons };
-  }).sort((a, b) => b.match - a.match).slice(0, 3);
+  }).sort((a, b) => b.match - a.match);
 };
 
 const emi = (price: number) => {
@@ -89,7 +96,8 @@ export default function Assistant() {
     setMsgs(m => [...m, { id: ++idRef.current, role: "user", text: query }]);
     try {
       await new Promise(r => setTimeout(r, 650));
-      const results = rank(query, properties);
+      const ranked = rank(query, properties);
+      const results = ranked.slice(0, 3);
       const i = parse(query);
       let answer: string;
       let invest: Msg["invest"];
@@ -105,7 +113,7 @@ export default function Assistant() {
           invest = { p: top, score: s?.score ?? 50, positives };
           answer = `My read on ${top.title}: rule-based insight over our own listings only — strong on ${positives.slice(0, 3).join(", ") || "fundamentals"}. Not a return prediction or financial advice.`;
         } else {
-          answer = `Found ${results.length} ${results.length > 1 ? "matches" : "match"} — ordered by fit, not popularity. Tap any card to open the listing, or add two or more to compare.`;
+          answer = `Found ${ranked.length} matching ${ranked.length === 1 ? "property" : "properties"}${ranked.length > results.length ? ` — showing the top ${results.length}` : ""}, ordered by the demo fit score. Tap a card to open the listing, or add two or more to compare.`;
         }
       } else {
         answer = "Nothing matches that yet. Try a wider budget, a different area, or removing an amenity — or ask for villas, rentals or BHK counts.";

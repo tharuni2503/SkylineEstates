@@ -45,6 +45,8 @@ export default function PropertiesPage(){
 
  const setMinBudget=(v?:number)=>setF(x=>({...x,minPrice:v,maxPrice:v!==undefined&&x.maxPrice!==undefined&&v>x.maxPrice?v:x.maxPrice}));
  const setMaxBudget=(v?:number)=>setF(x=>({...x,maxPrice:v,minPrice:v!==undefined&&x.minPrice!==undefined&&v<x.minPrice?v:x.minPrice}));
+ const setMinArea=(v?:number)=>setF(x=>({...x,minArea:v,maxArea:v!==undefined&&x.maxArea!==undefined&&v>x.maxArea?v:x.maxArea}));
+ const setMaxArea=(v?:number)=>setF(x=>({...x,maxArea:v,minArea:v!==undefined&&x.minArea!==undefined&&v<x.minArea?v:x.minArea}));
 
  const cls="h-11 border border-line bg-white px-4 text-sm text-charcoal transition placeholder:text-slate hover:border-matte/60 focus:border-beige/70 focus:outline-none";
  const picked=list.filter(p=>cmp.includes(p.id));
@@ -74,8 +76,8 @@ export default function PropertiesPage(){
      <label className="text-xs font-medium uppercase tracking-[.16em] text-slate">Amenity<select className={sel} value={f.amenity??""} onChange={e=>setF({...f,amenity:e.target.value||undefined})}><option value="">Any</option>{amen.map(a=><option key={a}>{a}</option>)}</select></label>
      <label className="text-xs font-medium uppercase tracking-[.16em] text-slate">Min budget<select className={sel} value={f.minPrice??0} onChange={e=>setMinBudget(+e.target.value||undefined)}>{budgets.map(([v,l])=><option key={v} value={v}>{l}</option>)}</select></label>
      <label className="text-xs font-medium uppercase tracking-[.16em] text-slate">Max budget<select className={sel} value={f.maxPrice??0} onChange={e=>setMaxBudget(+e.target.value||undefined)}>{budgets.map(([v,l])=><option key={v} value={v}>{l}</option>)}</select></label>
-     <label className="text-xs font-medium uppercase tracking-[.16em] text-slate">Min area (sq ft)<input type="number" min={0} inputMode="numeric" className={sel} value={num(f.minArea)} onChange={e=>setF({...f,minArea:e.target.value?+e.target.value:undefined})}/></label>
-     <label className="text-xs font-medium uppercase tracking-[.16em] text-slate">Max area (sq ft)<input type="number" min={0} inputMode="numeric" className={sel} value={num(f.maxArea)} onChange={e=>setF({...f,maxArea:e.target.value?+e.target.value:undefined})}/></label>
+     <label className="text-xs font-medium uppercase tracking-[.16em] text-slate">Min area (sq ft)<input type="number" min={0} max={f.maxArea} inputMode="numeric" className={sel} value={num(f.minArea)} onChange={e=>setMinArea(e.target.value?Math.max(0,Number(e.target.value)):undefined)}/></label>
+     <label className="text-xs font-medium uppercase tracking-[.16em] text-slate">Max area (sq ft)<input type="number" min={f.minArea??0} inputMode="numeric" className={sel} value={num(f.maxArea)} onChange={e=>setMaxArea(e.target.value?Math.max(0,Number(e.target.value)):undefined)}/></label>
      <div className="flex flex-wrap items-end gap-x-5 gap-y-3 pb-2.5"><label className="flex cursor-pointer items-center gap-2 text-sm text-charcoal"><input type="checkbox" className="h-4 w-4 accent-[#9c7f56]" checked={!!f.verified} onChange={e=>setF({...f,verified:e.target.checked||undefined})}/><BadgeCheck size={15} className="text-[#9c7f56]"/>Verified</label><label className="flex cursor-pointer items-center gap-2 text-sm text-charcoal"><input type="checkbox" className="h-4 w-4 accent-[#9c7f56]" checked={!!f.featured} onChange={e=>setF({...f,featured:e.target.checked||undefined})}/><Star size={15} className="text-[#9c7f56]"/>Featured</label></div>
    </div>
    <button type="button" className="mt-4 text-xs font-medium uppercase tracking-[.18em] text-[#9c7f56] underline decoration-beige/60 underline-offset-4 transition hover:text-matte" onClick={()=>setF(base)}>Clear all filters</button></div>;
