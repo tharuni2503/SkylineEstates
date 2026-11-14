@@ -12,9 +12,9 @@ export default function ContactForm({propertyId,propertyTitle}:{propertyId?:stri
  const c="w-full border border-line bg-white px-4 py-3 text-sm";
  const Err=({m}:{m?:string})=>m?<p role="alert" className="mt-1 text-xs text-red-700">{m}</p>:null;
  return <form onSubmit={handleSubmit(submit)} noValidate className="space-y-4 bg-white p-6">
-  <div><input aria-label="Full name" placeholder="Full name" className={c} {...register("name")}/><Err m={errors.name?.message}/></div>
-  <div><input aria-label="Email" placeholder="Email" className={c} {...register("email")}/><Err m={errors.email?.message}/></div>
-  <div><input aria-label="Mobile number" placeholder="Mobile number" className={c} {...register("phone")}/><Err m={errors.phone?.message}/></div>
+  <div><input aria-label="Full name" autoComplete="name" placeholder="Full name" className={c} {...register("name")}/><Err m={errors.name?.message}/></div>
+  <div><input type="email" aria-label="Email" autoComplete="email" placeholder="Email" className={c} {...register("email")}/><Err m={errors.email?.message}/></div>
+  <div><input type="tel" aria-label="Mobile number" autoComplete="tel" inputMode="numeric" placeholder="Mobile number" className={c} {...register("phone")}/><Err m={errors.phone?.message}/></div>
   <div><textarea aria-label="Message" placeholder="How can we help?" rows={4} className={c} {...register("message")}/><Err m={errors.message?.message}/></div>
   {fail&&<p role="alert" className="text-sm text-red-700">We couldn't send your message. Check your connection and try again.</p>}
   <button disabled={isSubmitting} className="w-full bg-matte py-3 text-sm text-ivory disabled:opacity-60">{isSubmitting?"Sending…":propertyId?"Send property enquiry":"Send message"}</button></form>;}
