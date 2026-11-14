@@ -24,11 +24,11 @@ const IT_HUBS = ["Gachibowli", "Financial District", "Kondapur", "Madhapur", "Ko
 const parse = (q: string): Intent => {
   const t = q.toLowerCase();
   const bhkM = t.match(/(\d)\s*\+?\s*bhk/);
-  const m = t.match(/(?:under|below|up to|max|budget of)\s*₹?\s*([\d.]+)\s*(crore|cr|lakh|l)?\b/);
+  const m = t.match(/(?:under|below|up to|max|budget of)\s*₹?\s*([\d,.]+)\s*(crore|cr|lakh|l)?\b/);
   const unit = m?.[2] ?? "cr";
-  const maxPrice = m ? Number(m[1]) * (unit.startsWith("cr") ? 1e7 : 1e5) : undefined;
-  const minPriceM = t.match(/(?:above|from|more than|over)\s*₹?\s*([\d.]+)\s*(crore|cr|lakh|l)?\b/);
-  const minPrice = minPriceM ? Number(minPriceM[1]) * ((minPriceM[2] ?? "cr").startsWith("cr") ? 1e7 : 1e5) : undefined;
+  const maxPrice = m ? Number(m[1].replace(/,/g, "")) * (unit.startsWith("cr") ? 1e7 : 1e5) : undefined;
+  const minPriceM = t.match(/(?:above|from|more than|over)\s*₹?\s*([\d,.]+)\s*(crore|cr|lakh|l)?\b/);
+  const minPrice = minPriceM ? Number(minPriceM[1].replace(/,/g, "")) * ((minPriceM[2] ?? "cr").startsWith("cr") ? 1e7 : 1e5) : undefined;
   const areaMaxM = t.match(/(?:under|below|up to|max)\s*([\d,]+)\s*(?:sq\.?\s*ft|sqft|square feet)/i);
   const areaMinM = t.match(/(?:above|over|at least|from)\s*([\d,]+)\s*(?:sq\.?\s*ft|sqft|square feet)/i);
   const maxArea = areaMaxM ? Number(areaMaxM[1].replace(/,/g, "")) : undefined;
