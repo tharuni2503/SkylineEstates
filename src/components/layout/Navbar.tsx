@@ -87,9 +87,9 @@ export default function Navbar() {
                <Link href="/login" className="hidden bg-beige px-5 py-2 text-xs font-medium tracking-[.15em] text-matte transition hover:bg-ivory lg:block">SIGN IN</Link>
              </>
            )}
-           <Link href="/wishlist" aria-label={`Saved properties (${wishlist.length})`} title="Wishlist" className="relative rounded-full p-2 text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory"><Heart size={18} strokeWidth={1.75} />{wishlist.length > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-beige px-1 text-[10px] font-semibold text-matte">{wishlist.length}</span>}</Link>
+           <Link href="/wishlist" aria-label={`Saved properties (${wishlist.length})`} title="Wishlist" className="relative flex h-11 w-11 items-center justify-center rounded-full text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory"><Heart size={18} strokeWidth={1.75} />{wishlist.length > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-beige px-1 text-[10px] font-semibold text-matte">{wishlist.length}</span>}</Link>
            <div className="relative" ref={bellRef}>
-             <button aria-label="Notifications" aria-expanded={bell} aria-controls="notifications-panel" onClick={() => setBell(v => !v)} className="relative rounded-full p-2 text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory"><Bell size={18} strokeWidth={1.75} />{bell && <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />}</button>
+             <button aria-label="Notifications" aria-expanded={bell} aria-controls="notifications-panel" onClick={() => setBell(v => !v)} className="relative flex h-11 w-11 items-center justify-center rounded-full text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory"><Bell size={18} strokeWidth={1.75} />{bell && <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />}</button>
              {bell && (
                <div id="notifications-panel" role="dialog" aria-label="Notifications" className="absolute right-0 top-12 z-50 w-[min(17rem,calc(100vw-2rem))] overflow-hidden border border-line/60 bg-white text-sm text-charcoal shadow-[0_18px_44px_rgba(0,0,0,.22)]">
                  <p className="border-b border-line/60 bg-ivory px-4 py-2.5 text-[10px] font-medium uppercase tracking-[.22em] text-slate">Notifications</p>
@@ -98,7 +98,7 @@ export default function Navbar() {
                </div>
              )}
            </div>
-           <button ref={menuButtonRef} onClick={() => setOpen(v => !v)} aria-expanded={open} aria-controls="site-menu" aria-label={open ? "Close menu" : "Open menu"} className="flex items-center gap-2 rounded-sm p-1.5 text-sm text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory lg:hidden">
+           <button ref={menuButtonRef} onClick={() => setOpen(v => !v)} aria-expanded={open} aria-controls="site-menu" aria-label={open ? "Close menu" : "Open menu"} className="flex min-h-[44px] items-center gap-2 rounded-sm px-2 py-2 text-sm text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory lg:hidden">
              <span className="hidden md:inline">{open ? "Close" : "Menu"}</span>{open ? <X size={24} /> : <Menu size={24} />}
            </button>
          </div>

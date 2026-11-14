@@ -74,11 +74,11 @@ export default function PropertyPage() {
                 {p.areaSqft ? <p className="mt-2 text-sm text-slate">{inr(Math.round(p.price / p.areaSqft))} / sq ft</p> : null}
               </div>
             </div>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <button className={btn} aria-pressed={saved} onClick={() => toggleWish(p.id)}><Heart size={16} className={saved ? "fill-matte" : ""} />{saved ? "Saved" : "Save"}</button>
-              <button className={btn} aria-pressed={inCmp} onClick={() => toggleCompare(p.id)}><GitCompare size={16} />{inCmp ? "In comparison" : "Compare"}</button>
-              <button className={btn} onClick={share}><Share2 size={16} />Copy link</button>
-              <Link href="#visit" className="ml-auto inline-flex items-center gap-2 bg-matte px-5 py-2.5 text-[11px] font-medium uppercase tracking-[.18em] text-ivory transition hover:bg-charcoal">Schedule Visit <ArrowUpRight size={14} /></Link>
+            <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+              <button className={`${btn} justify-center sm:justify-start`} aria-pressed={saved} onClick={() => toggleWish(p.id)}><Heart size={16} className={saved ? "fill-matte" : ""} />{saved ? "Saved" : "Save"}</button>
+              <button className={`${btn} justify-center sm:justify-start`} aria-pressed={inCmp} onClick={() => toggleCompare(p.id)}><GitCompare size={16} />{inCmp ? "In comparison" : "Compare"}</button>
+              <button className={`${btn} justify-center sm:justify-start`} onClick={share}><Share2 size={16} />Copy link</button>
+              <Link href="#visit" className="inline-flex items-center justify-center gap-2 bg-matte px-5 py-3 text-[11px] font-medium uppercase tracking-[.18em] text-ivory transition hover:bg-charcoal sm:ml-auto">Schedule Visit <ArrowUpRight size={14} /></Link>
             </div>
           </div>
 

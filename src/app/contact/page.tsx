@@ -10,7 +10,7 @@ export default function Contact(){const [tab,setTab]=useState<"msg"|"visit">("ms
  useEffect(()=>{if(new URLSearchParams(window.location.search).get("visit"))setTab("visit");},[]);
  return <div className="relative overflow-hidden bg-ivory/30">
   <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_10%_10%,rgba(216,195,165,.16),transparent_40%),radial-gradient(ellipse_at_90%_80%,rgba(17,17,17,.04),transparent_45%)]"/>
-  <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-12 md:px-8 md:py-16 lg:grid-cols-[.95fr_1.05fr]">
+  <div className="relative mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:gap-10 sm:px-5 md:px-8 md:py-16 lg:grid-cols-[.95fr_1.05fr]">
    <div>
     <SectionHead as="h1" eyebrow="Contact" title="Talk to an *advisor.*"/>
     <p className="mt-4 max-w-md text-sm leading-relaxed text-slate">Send us a question, request a curated shortlist, or book a site visit. {CONTACT_HOURS}. Enquiries and bookings on this site are demonstrations (no backend connected).</p>
