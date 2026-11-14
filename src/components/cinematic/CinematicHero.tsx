@@ -174,7 +174,7 @@ export default function CinematicHero() {
        <div className="hero-copy relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-[4.5rem] pt-28 md:px-8 md:pb-24">
          <div ref={eyebrow} className="mb-6 flex items-center gap-4">
            <span aria-hidden="true" className="h-px w-10 bg-beige/70" />
-           <p className="text-[10px] font-medium tracking-[.46em] text-beige/95 sm:text-[11px]">SKYLINE ESTATES</p>
+           <p className="text-[10px] font-medium tracking-[.46em] text-beige/95 sm:text-[11px]">SKYLINE ESTATES · HYDERABAD</p>
          </div>
          <h1 className="font-serif text-[clamp(2.75rem,9.5vw,8rem)] leading-[0.95] tracking-[-0.02em] [text-shadow:0_10px_44px_rgba(0,0,0,.55)]">
            <span className="-mb-[.1em] block overflow-hidden pb-[.1em]">
@@ -188,10 +188,10 @@ export default function CinematicHero() {
              </span>
            </span>
          </h1>
-         <p ref={sub} className="mt-6 max-w-md text-sm leading-relaxed tracking-[.04em] text-ivory/85 md:text-[15px]">
-           Curated residences across Hyderabad&rsquo;s finest addresses &mdash; filmed where the city sleeps and the home wakes.
+         <p ref={sub} className="mt-6 max-w-xl text-sm leading-relaxed tracking-[.03em] text-ivory/90 md:text-[15px]">
+           Curated residences across Hyderabad&rsquo;s finest addresses&mdash;thoughtfully presented to help you discover, compare, and plan your next move with clarity.
          </p>
-         <div ref={ctas} className="mt-9 flex flex-wrap items-center gap-4 md:mt-10">
+         <div ref={ctas} className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-10">
            <Link
              href="/properties"
              className="group inline-flex w-full items-center justify-center gap-3 bg-beige px-8 py-4 text-center text-[11px] font-medium tracking-[.2em] text-matte shadow-[0_12px_34px_rgba(0,0,0,.35)] transition duration-500 hover:-translate-y-0.5 hover:bg-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto sm:px-9 sm:tracking-[.24em]"
@@ -200,12 +200,17 @@ export default function CinematicHero() {
            </Link>
            <Link
              href="/locations"
-             className="group inline-flex items-center justify-center gap-2 border border-ivory/30 px-6 py-4 text-[11px] font-medium tracking-[.2em] text-ivory/90 transition duration-500 hover:-translate-y-0.5 hover:border-ivory/60 hover:bg-ivory/10 hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+             className="group inline-flex w-full items-center justify-center gap-2 border border-ivory/30 bg-matte/10 px-6 py-4 text-[11px] font-medium tracking-[.2em] text-ivory/90 backdrop-blur-sm transition duration-500 hover:-translate-y-0.5 hover:border-ivory/60 hover:bg-ivory/10 hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto"
            >
              BROWSE AREAS
            </Link>
          </div>
-         <div aria-hidden="true" className="mt-12 flex items-center gap-4 text-[10px] tracking-[.34em] text-ivory/55 md:mt-16">
+         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[10px] uppercase tracking-[.22em] text-ivory/65 sm:mt-10">
+           <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-beige/80" aria-hidden="true" />Curated sample listings</span>
+           <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-beige/80" aria-hidden="true" />Compare &amp; shortlist</span>
+           <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-beige/80" aria-hidden="true" />Demo experience</span>
+         </div>
+         <div aria-hidden="true" className="mt-10 flex items-center gap-4 text-[10px] tracking-[.34em] text-ivory/55 md:mt-14">
            <span className="scroll-line h-6 w-px bg-gradient-to-b from-beige/90 to-transparent" /> SCROLL
          </div>
        </div>

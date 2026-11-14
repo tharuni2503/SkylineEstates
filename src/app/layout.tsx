@@ -21,11 +21,13 @@ export const metadata:Metadata={
     siteName: "Skyline Estates",
     locale: "en_IN",
     type: "website",
+    images: [{ url: "/videos/hero-poster.jpg", width: 1200, height: 630, alt: "Skyline Estates — premium residences across Hyderabad (demo preview)" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Skyline Estates — Find Your Perfect Space",
     description: "Premium real-estate discovery across Hyderabad. Demonstration frontend.",
+    images: ["/videos/hero-poster.jpg"],
   },
   robots: { index: true, follow: true },
 };
