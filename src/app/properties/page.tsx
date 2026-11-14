@@ -30,17 +30,35 @@ export default function PropertiesPage(){
  const [err,setErr]=useState(false);
  const [drawer,setDrawer]=useState(false);
  const drawerRef=useRef<HTMLDivElement>(null);
+ const filterTriggerRef=useRef<HTMLButtonElement>(null);
+ const drawerCloseRef=useRef<HTMLButtonElement>(null);
 
  useEffect(()=>{const s=new URLSearchParams(window.location.search);const c=s.get("category"),q=s.get("q"),l=s.get("listing"),m=s.get("maxPrice"),b=s.get("bhk"),mn=s.get("minPrice");setF(x=>({...x,...(c&&{category:c as PropertyQuery["category"]}),...(q&&{q}),...(l&&{listing:l as PropertyQuery["listing"]}),...(m&&{maxPrice:+m}),...(b&&{bhk:+b}),...(mn&&{minPrice:+mn})}));},[]);
  useEffect(()=>{if(!ready)return;setErr(false);try{setItems(filterProperties(list,f));}catch{setErr(true);setItems([]);}},[f,list,ready]);
 
- // Filter drawer: lock page scroll + close on Escape while open
+ // Filter drawer: keep keyboard focus inside the modal and restore it on close.
  useEffect(()=>{ if(!drawer) return;
-   const k=(e:KeyboardEvent)=>{ if(e.key==="Escape") setDrawer(false); };
-   window.addEventListener("keydown",k);
-   const prev=document.documentElement.style.overflow; document.documentElement.style.overflow="hidden";
-   drawerRef.current?.querySelector("button")?.focus();
-   return ()=>{ window.removeEventListener("keydown",k); document.documentElement.style.overflow=prev; };
+   const previousOverflow=document.documentElement.style.overflow;
+   document.documentElement.style.overflow="hidden";
+   drawerCloseRef.current?.focus();
+   const onKeyDown=(event:KeyboardEvent)=>{
+     if(event.key==="Escape"){ event.preventDefault(); setDrawer(false); return; }
+     if(event.key!=="Tab") return;
+     const focusable=drawerRef.current?.querySelectorAll<HTMLElement>(
+       'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+     );
+     if(!focusable?.length){ event.preventDefault(); return; }
+     const first=focusable[0];
+     const last=focusable[focusable.length-1];
+     if(event.shiftKey&&document.activeElement===first){ event.preventDefault(); last.focus(); }
+     else if(!event.shiftKey&&document.activeElement===last){ event.preventDefault(); first.focus(); }
+   };
+   window.addEventListener("keydown",onKeyDown);
+   return ()=>{
+     window.removeEventListener("keydown",onKeyDown);
+     document.documentElement.style.overflow=previousOverflow;
+     filterTriggerRef.current?.focus();
+   };
  },[drawer]);
 
  const setMinBudget=(v?:number)=>setF(x=>({...x,minPrice:v,maxPrice:v!==undefined&&x.maxPrice!==undefined&&v>x.maxPrice?v:x.maxPrice}));
@@ -112,7 +130,7 @@ export default function PropertiesPage(){
    <div className="flex flex-wrap items-stretch gap-2.5">
      <ChevronSelect label="Buy or rent" value={f.listing??""} onChange={e=>setF({...f,listing:(e.target.value||undefined) as PropertyQuery["listing"]})} className="min-w-[9.5rem] flex-1 lg:flex-none"><option value="">Buy or Rent</option><option>Buy</option><option>Rent</option></ChevronSelect>
      <ChevronSelect label="Sort" value={f.sort ?? "latest"} onChange={e=>setF({...f,sort:e.target.value as PropertyQuery["sort"]})} className="min-w-[10.5rem] flex-1 lg:flex-none"><option value="latest">Latest</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option></ChevronSelect>
-     <button type="button" className="h-11 border border-matte/15 bg-matte px-4 text-[11px] font-medium uppercase tracking-[.16em] text-ivory lg:hidden" onClick={()=>setDrawer(true)}><span className="inline-flex items-center gap-2"><SlidersHorizontal size={15}/>Filters{active>0&&` (${active})`}</span></button>
+     <button ref={filterTriggerRef} type="button" className="h-11 border border-matte/15 bg-matte px-4 text-[11px] font-medium uppercase tracking-[.16em] text-ivory lg:hidden" onClick={()=>setDrawer(true)}><span className="inline-flex items-center gap-2"><SlidersHorizontal size={15}/>Filters{active>0&&` (${active})`}</span></button>
      <button type="button" className="h-11 w-11 shrink-0 border border-line bg-white text-charcoal transition hover:border-matte hover:text-matte" aria-pressed={listView} aria-label={listView?"Switch to grid view":"Switch to list view"} title={listView?"Grid view":"List view"} onClick={()=>setListView(!listView)}>{listView?<LayoutGrid size={17} className="mx-auto"/>:<Rows3 size={17} className="mx-auto"/>}</button>
    </div>
   </div>
@@ -121,7 +139,7 @@ export default function PropertiesPage(){
   <div className="mt-3 hidden border border-line/70 bg-white p-4 shadow-[0_8px_24px_rgba(17,17,17,.03)] lg:block">{panel}</div>
 
   {/* Mobile filters drawer */}
-  {drawer&&<div ref={drawerRef} role="dialog" aria-modal="true" aria-label="Filters" className="fixed inset-0 z-50 lg:hidden"><button aria-label="Close filters" className="absolute inset-0 cursor-default bg-matte/65 backdrop-blur-[2px]" onClick={()=>setDrawer(false)}/><div className="absolute inset-x-0 bottom-0 flex max-h-[88svh] flex-col rounded-t-xl bg-white shadow-[0_-12px_40px_rgba(0,0,0,.28)]"><div className="mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full bg-line" aria-hidden="true"/><div className="flex items-center justify-between border-b border-line/60 px-5 py-4"><h2 className="font-serif text-2xl text-matte">Filters{active>0&&<span className="ml-2 align-middle text-xs font-sans font-medium uppercase tracking-[.18em] text-[#9c7f56]">{active} active</span>}</h2><button type="button" className="rounded-full p-2 transition hover:bg-ivory" aria-label="Close filters" onClick={()=>setDrawer(false)}><X size={20}/></button></div><div className="overflow-y-auto px-5 py-4">{panel}</div><div className="border-t border-line/60 p-4"><button type="button" className="w-full bg-matte py-3.5 text-[11px] font-medium uppercase tracking-[.2em] text-ivory transition hover:bg-charcoal" onClick={()=>setDrawer(false)}>Show {items?.length??0} results</button></div></div></div>}
+  {drawer&&<div ref={drawerRef} role="dialog" aria-modal="true" aria-label="Filters" className="fixed inset-0 z-50 lg:hidden"><button aria-label="Close filters" className="absolute inset-0 cursor-default bg-matte/65 backdrop-blur-[2px]" onClick={()=>setDrawer(false)}/><div className="absolute inset-x-0 bottom-0 flex max-h-[88svh] flex-col rounded-t-xl bg-white shadow-[0_-12px_40px_rgba(0,0,0,.28)]"><div className="mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full bg-line" aria-hidden="true"/><div className="flex items-center justify-between border-b border-line/60 px-5 py-4"><h2 className="font-serif text-2xl text-matte">Filters{active>0&&<span className="ml-2 align-middle text-xs font-sans font-medium uppercase tracking-[.18em] text-[#9c7f56]">{active} active</span>}</h2><button ref={drawerCloseRef} type="button" className="rounded-full p-2 transition hover:bg-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matte" aria-label="Close filters" onClick={()=>setDrawer(false)}><X size={20}/></button></div><div className="overflow-y-auto px-5 py-4">{panel}</div><div className="border-t border-line/60 p-4"><button type="button" className="w-full bg-matte py-3.5 text-[11px] font-medium uppercase tracking-[.2em] text-ivory transition hover:bg-charcoal" onClick={()=>setDrawer(false)}>Show {items?.length??0} results</button></div></div></div>}
 
   {/* Results grid / list */}
   <div className={`mt-8 grid gap-6 ${listView?"max-w-4xl":"sm:grid-cols-2 lg:grid-cols-3"}`}>
