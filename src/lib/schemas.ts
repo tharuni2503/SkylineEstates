@@ -4,7 +4,13 @@ export const visitSchema=z.object({
  email:z.string().email("Enter a valid email address"),
  phone:z.string().regex(/^[6-9]\d{9}$/,"Enter a 10-digit Indian mobile number"),
  propertyId:z.string().min(1,"Choose a property"),
- date:z.string().min(1,"Pick a visit date"),
+ date:z.string().min(1,"Pick a visit date").refine(value=>{
+  const [year,month,day]=value.split("-").map(Number);
+  if(!year||!month||!day)return false;
+  const selected=new Date(year,month-1,day);
+  const today=new Date();today.setHours(0,0,0,0);
+  return selected>=today;
+ },"Choose today or a future date"),
  time:z.string().min(1,"Pick a time slot"),
  message:z.string().optional(),
 });
