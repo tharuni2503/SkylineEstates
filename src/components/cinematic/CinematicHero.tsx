@@ -168,15 +168,17 @@ export default function CinematicHero() {
          className="pointer-events-none absolute inset-x-0 bottom-0 h-[45vh] bg-gradient-to-t from-matte/65 to-transparent"
        />
 
-       {/* Letterbox bar for the widescreen film look */}
-       <div className="pointer-events-none absolute inset-x-0 top-0 h-[4svh] bg-black" aria-hidden="true" />
+       {/* Letterbox bars for the widescreen film look */}
+       <div className="pointer-events-none absolute inset-x-0 top-0 h-[4svh] bg-gradient-to-b from-black to-black/80" aria-hidden="true" />
+       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[5svh] bg-gradient-to-t from-black/70 to-transparent" aria-hidden="true" />
+       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-beige/35 to-transparent" aria-hidden="true" />
 
        <div className="hero-copy relative mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-[4.5rem] pt-28 md:px-8 md:pb-24">
-         <div ref={eyebrow} className="mb-6 flex items-center gap-4">
-           <span aria-hidden="true" className="h-px w-10 bg-beige/70" />
-           <p className="text-[10px] font-medium tracking-[.46em] text-beige/95 sm:text-[11px]">SKYLINE ESTATES · HYDERABAD</p>
+         <div ref={eyebrow} className="mb-7 flex items-center gap-4">
+           <span aria-hidden="true" className="h-px w-12 bg-gradient-to-r from-beige/20 via-beige/80 to-beige/20" />
+           <p className="inline-flex items-center rounded-full border border-beige/25 bg-matte/20 px-3 py-1 text-[10px] font-medium tracking-[.42em] text-beige/95 backdrop-blur-sm sm:text-[11px]">SKYLINE ESTATES · HYDERABAD</p>
          </div>
-         <h1 className="font-serif text-[clamp(2.75rem,9.5vw,8rem)] leading-[0.95] tracking-[-0.02em] [text-shadow:0_10px_44px_rgba(0,0,0,.55)]">
+         <h1 className="max-w-5xl font-serif text-[clamp(2.85rem,9.5vw,8.1rem)] leading-[0.93] tracking-[-0.025em] [text-shadow:0_14px_50px_rgba(0,0,0,.6)]">
            <span className="-mb-[.1em] block overflow-hidden pb-[.1em]">
              <span ref={line1} className={`block ${reduce ? "" : "will-change-transform"}`}>
                Homes of&nbsp;
@@ -188,30 +190,37 @@ export default function CinematicHero() {
              </span>
            </span>
          </h1>
-         <p ref={sub} className="mt-6 max-w-xl text-sm leading-relaxed tracking-[.03em] text-ivory/90 md:text-[15px]">
-           Curated residences across Hyderabad&rsquo;s finest addresses&mdash;thoughtfully presented to help you discover, compare, and plan your next move with clarity.
-         </p>
-         <div ref={ctas} className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-10">
+         <div className="mt-6 flex items-start gap-4">
+           <span aria-hidden="true" className="mt-2 hidden h-px w-14 shrink-0 bg-gradient-to-r from-beige/70 to-transparent sm:block" />
+           <p ref={sub} className="max-w-xl text-[15px] leading-relaxed tracking-[.02em] text-ivory/90 sm:text-base">
+             Curated residences across Hyderabad&rsquo;s finest addresses&mdash;thoughtfully presented to help you discover, compare, and plan your next move with clarity and confidence.
+           </p>
+         </div>
+         <div ref={ctas} className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
            <Link
              href="/properties"
-             className="group inline-flex w-full items-center justify-center gap-3 bg-beige px-8 py-4 text-center text-[11px] font-medium tracking-[.2em] text-matte shadow-[0_12px_34px_rgba(0,0,0,.35)] transition duration-500 hover:-translate-y-0.5 hover:bg-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto sm:px-9 sm:tracking-[.24em]"
+             className="group inline-flex w-full items-center justify-center gap-3 border border-beige/30 bg-beige px-8 py-4 text-center text-[11px] font-medium tracking-[.22em] text-matte shadow-[0_16px_40px_rgba(0,0,0,.38)] transition duration-500 hover:-translate-y-0.5 hover:bg-ivory hover:shadow-[0_20px_46px_rgba(0,0,0,.42)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto sm:px-10"
            >
              EXPLORE PROPERTIES <ArrowRight size={16} className="transition-transform duration-500 group-hover:translate-x-1.5" />
            </Link>
            <Link
              href="/locations"
-             className="group inline-flex w-full items-center justify-center gap-2 border border-ivory/30 bg-matte/10 px-6 py-4 text-[11px] font-medium tracking-[.2em] text-ivory/90 backdrop-blur-sm transition duration-500 hover:-translate-y-0.5 hover:border-ivory/60 hover:bg-ivory/10 hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto"
+             className="group inline-flex w-full items-center justify-center gap-2 border border-ivory/35 bg-matte/20 px-7 py-4 text-[11px] font-medium tracking-[.22em] text-ivory backdrop-blur-sm transition duration-500 hover:-translate-y-0.5 hover:border-beige/40 hover:bg-ivory/10 hover:text-ivory focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto"
            >
              BROWSE AREAS
            </Link>
          </div>
-         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[10px] uppercase tracking-[.22em] text-ivory/65 sm:mt-10">
-           <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-beige/80" aria-hidden="true" />Curated sample listings</span>
-           <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-beige/80" aria-hidden="true" />Compare &amp; shortlist</span>
-           <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-beige/80" aria-hidden="true" />Demo experience</span>
+         <div className="mt-8 border-t border-ivory/10 pt-5 sm:mt-10">
+           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[10px] uppercase tracking-[.24em] text-ivory/70">
+             <span className="inline-flex items-center gap-2.5"><span className="h-1.5 w-1.5 rounded-full bg-beige shadow-[0_0_0_4px_rgba(216,195,165,.12)]" aria-hidden="true" />Curated sample listings</span>
+             <span className="hidden h-3 w-px bg-ivory/15 sm:block" aria-hidden="true" />
+             <span className="inline-flex items-center gap-2.5"><span className="h-1.5 w-1.5 rounded-full bg-beige shadow-[0_0_0_4px_rgba(216,195,165,.12)]" aria-hidden="true" />Compare &amp; shortlist</span>
+             <span className="hidden h-3 w-px bg-ivory/15 sm:block" aria-hidden="true" />
+             <span className="inline-flex items-center gap-2.5"><span className="h-1.5 w-1.5 rounded-full bg-beige shadow-[0_0_0_4px_rgba(216,195,165,.12)]" aria-hidden="true" />Demo experience</span>
+           </div>
          </div>
-         <div aria-hidden="true" className="mt-10 flex items-center gap-4 text-[10px] tracking-[.34em] text-ivory/55 md:mt-14">
-           <span className="scroll-line h-6 w-px bg-gradient-to-b from-beige/90 to-transparent" /> SCROLL
+         <div aria-hidden="true" className="mt-8 flex items-center gap-4 text-[10px] tracking-[.34em] text-ivory/55 md:mt-12">
+           <span className="scroll-line h-7 w-px bg-gradient-to-b from-beige/90 to-transparent" /> SCROLL
          </div>
        </div>
      </div>
