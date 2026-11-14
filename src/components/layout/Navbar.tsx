@@ -20,6 +20,8 @@ export default function Navbar() {
  const [open, setOpen] = useState(false);
  const [bell, setBell] = useState(false);
  const bellRef = useRef<HTMLDivElement>(null);
+ const bellButtonRef = useRef<HTMLButtonElement>(null);
+ const bellPanelRef = useRef<HTMLDivElement>(null);
  const menuButtonRef = useRef<HTMLButtonElement>(null);
  const menuRef = useRef<HTMLDivElement>(null);
  const roleHome: Record<string, string> = { buyer: "/dashboard", seller: "/dashboard", agent: "/dashboard", builder: "/builder", admin: "/admin" };
@@ -36,28 +38,54 @@ export default function Navbar() {
 
  useEffect(() => {
   if (!open) return;
-  const k = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+  const prevActive = document.activeElement as HTMLElement | null;
+  const dialog = menuRef.current;
+  const focusables = () => Array.from(dialog?.querySelectorAll<HTMLElement>('a[href],button,[tabindex]:not([tabindex="-1"])') ?? []).filter(el => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true");
+  const k = (e: KeyboardEvent) => {
+   if (e.key === "Escape") { e.preventDefault(); setOpen(false); return; }
+   if (e.key === "Tab") {
+    const els = focusables();
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+   }
+  };
   window.addEventListener("keydown", k);
   const prev = document.documentElement.style.overflow;
   document.documentElement.style.overflow = "hidden";
-  // Move focus into the dialog; return it to the toggle when closed
-  const first = menuRef.current?.querySelector<HTMLElement>("a,button");
-  first?.focus();
+  focusables()[0]?.focus();
   return () => {
    window.removeEventListener("keydown", k);
    document.documentElement.style.overflow = prev;
-   menuButtonRef.current?.focus();
+   (menuButtonRef.current ?? prevActive)?.focus?.();
   };
  }, [open]);
 
- // Close the notifications panel on outside click / Escape
+ // Close the notifications panel on outside click / Escape + focus management
  useEffect(() => {
   if (!bell) return;
+  const prevActive = document.activeElement as HTMLElement | null;
+  const focusables = () => Array.from(bellPanelRef.current?.querySelectorAll<HTMLElement>('button,[href],[tabindex]:not([tabindex="-1"])') ?? []).filter(el => !el.hasAttribute("disabled"));
+  focusables()[0]?.focus();
   const onClick = (e: MouseEvent) => { if (!bellRef.current?.contains(e.target as Node)) setBell(false); };
-  const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setBell(false); };
+  const onKey = (e: KeyboardEvent) => {
+   if (e.key === "Escape") { e.preventDefault(); setBell(false); return; }
+   if (e.key === "Tab") {
+    const els = focusables();
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+   }
+  };
   document.addEventListener("mousedown", onClick);
   document.addEventListener("keydown", onKey);
-  return () => { document.removeEventListener("mousedown", onClick); document.removeEventListener("keydown", onKey); };
+  return () => {
+   document.removeEventListener("mousedown", onClick);
+   document.removeEventListener("keydown", onKey);
+   (bellButtonRef.current ?? prevActive)?.focus?.();
+  };
  }, [bell]);
 
  const solid = !home || scrolled || open;
@@ -99,7 +127,7 @@ export default function Navbar() {
            )}
            <Link href="/wishlist" aria-label={`Saved properties (${wishlist.length})`} title="Wishlist" className="relative flex h-11 w-11 items-center justify-center rounded-full text-ivory/90 transition hover:bg-ivory/10 hover:text-ivory"><Heart size={18} strokeWidth={1.75} />{wishlist.length > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-beige px-1 text-[10px] font-semibold text-matte">{wishlist.length}</span>}</Link>
            <div className="relative" ref={bellRef}>
-             <button
+             <button ref={bellButtonRef} type="button"
                aria-label="Notifications"
                aria-expanded={bell}
                aria-haspopup="dialog"
