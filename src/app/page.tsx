@@ -158,7 +158,7 @@ export default function Home() {
                 <p className="inline-flex items-center gap-2 rounded-full border border-beige/25 bg-ivory/5 px-3 py-1 text-[10px] font-medium uppercase tracking-[.3em] text-beige/90"><span className="h-1.5 w-1.5 rounded-full bg-gold/90" aria-hidden="true" />Quick Search</p>
                 <h2 id="quick-search-heading" className="mt-4 font-serif text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.05]">A fast start to the right address.</h2>
                 <p className="mt-4 max-w-xl text-sm leading-relaxed text-ivory/75">Enter a location and budget to jump straight into matching residences. For detailed filters, amenities, and comparisons, use the full search on the Properties page.</p>
-                <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] uppercase tracking-[.18em] text-ivory/60">
+                <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] uppercase tracking-[.18em] text-ivory/70">
                   <li className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-beige/70" aria-hidden="true" />Instant results</li>
                   <li className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-beige/70" aria-hidden="true" />Curated listings</li>
                   <li className="inline-flex items-center gap-2"><span className="h-1 w-1 rounded-full bg-beige/70" aria-hidden="true" />Demo experience</li>
@@ -167,7 +167,7 @@ export default function Home() {
               <form action="/properties" className="grid gap-4 rounded-sm border border-beige/20 bg-gradient-to-b from-ivory/[0.07] to-ivory/[0.03] p-5 shadow-[0_24px_60px_rgba(0,0,0,.22)] backdrop-blur-sm sm:grid-cols-2">
                 <div className="sm:col-span-2 flex items-center justify-between border-b border-ivory/10 pb-3">
                   <p className="text-[11px] font-medium uppercase tracking-[.22em] text-beige/85">Start your search</p>
-                  <span className="text-[10px] uppercase tracking-[.18em] text-ivory/50">Homepage shortcut</span>
+                  <span className="text-[10px] uppercase tracking-[.18em] text-ivory/65">Homepage shortcut</span>
                 </div>
                 <label className="sm:col-span-2"><span className="block text-[11px] uppercase tracking-[.16em] text-beige/80">Location or project</span><input name="q" placeholder="e.g. Gachibowli, Kokapet, villa" className="mt-1.5 h-12 w-full border border-ivory/15 bg-matte/45 px-4 text-sm text-ivory placeholder:text-ivory/40 focus:border-beige/50 focus:outline-none" /></label>
                 <label><span className="block text-[11px] uppercase tracking-[.16em] text-beige/80">Max budget</span><select name="maxPrice" className="mt-1.5 h-12 w-full border border-ivory/15 bg-matte/45 px-4 text-sm text-ivory focus:border-beige/50 focus:outline-none [&>option]:text-charcoal"><option value="">Any budget</option><option value="5000000">?50 L</option><option value="10000000">?1 Cr</option><option value="20000000">?2 Cr</option><option value="50000000">?5 Cr</option></select></label>
@@ -335,10 +335,10 @@ export default function Home() {
                   <Link href="/contact" className="inline-flex items-center justify-center bg-beige px-6 py-3 text-[11px] font-medium tracking-[.18em] text-matte transition duration-300 hover:-translate-y-0.5 hover:bg-ivory">CONTACT AN ADVISOR</Link>
                   <Link href="/contact?visit=1" className="inline-flex items-center justify-center border border-ivory/35 px-6 py-3 text-[11px] font-medium tracking-[.18em] text-ivory transition duration-300 hover:-translate-y-0.5 hover:bg-ivory/10">BOOK A SITE VISIT</Link>
                 </div>
-                <p className="mt-5 text-xs text-ivory/55">
-                  {PHONE ? <>Call <a href={`tel:${PHONE}`} className="text-beige/90 underline decoration-beige/30 underline-offset-4 transition hover:text-beige">{PHONE}</a> · </> : <>Request a callback via contact · </>}
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-beige/90 underline decoration-beige/30 underline-offset-4 transition hover:text-beige">{CONTACT_EMAIL}</a>
-                  <span className="ml-1 text-ivory/40">(demo)</span>
+                <p className="mt-5 text-xs text-ivory/70">
+                  {PHONE ? <>Call <a href={`tel:${PHONE}`} className="text-beige underline decoration-beige/30 underline-offset-4 transition hover:text-ivory">{PHONE}</a> · </> : <>Request a callback via contact · </>}
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-beige underline decoration-beige/30 underline-offset-4 transition hover:text-ivory">{CONTACT_EMAIL}</a>
+                  <span className="ml-1 text-ivory/60">(demo)</span>
                 </p>
               </div>
             </div>

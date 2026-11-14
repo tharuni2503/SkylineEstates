@@ -29,7 +29,7 @@ export default function Footer(){
       <p className="flex items-start gap-2.5"><MapPin size={15} className="mt-0.5 shrink-0 text-beige"/><span>{CONTACT_ADDRESS}</span></p>
       <p className="flex items-center gap-2.5"><Mail size={15} className="shrink-0 text-beige"/><a href={`mailto:${CONTACT_EMAIL}`} className="transition hover:text-ivory">{CONTACT_EMAIL}</a></p>
      </div>
-     <p className="mt-3 text-xs leading-relaxed text-ivory/45">Replace with approved business contact details before launch.</p>
+     <p className="mt-3 text-xs leading-relaxed text-ivory/60">Replace with approved business contact details before launch.</p>
     </div>
     <form onSubmit={sub} noValidate className="mt-6">
      <label className="text-[11px] uppercase tracking-[.22em] text-beige" htmlFor="news">Newsletter (demo)</label>
@@ -44,8 +44,8 @@ export default function Footer(){
    <div className="lg:col-span-3">
     <p className={h}>Explore</p>
     <div className="mt-4 space-y-4">
-     <div><p className="mb-2 text-[10px] uppercase tracking-[.18em] text-ivory/45">Categories</p><ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">{categories.slice(0,5).map(c=><li key={c}><Link href={`/properties?category=${encodeURIComponent(c)}`} className="transition hover:text-ivory">{c}</Link></li>)}</ul></div>
-     <div><p className="mb-2 text-[10px] uppercase tracking-[.18em] text-ivory/45">Locations</p><ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">{locations.slice(0,4).map(([n])=><li key={n}><Link href={`/properties?q=${encodeURIComponent(n)}`} className="transition hover:text-ivory">{n}</Link></li>)}</ul></div>
+     <div><p className="mb-2 text-[10px] uppercase tracking-[.18em] text-ivory/60">Categories</p><ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">{categories.slice(0,5).map(c=><li key={c}><Link href={`/properties?category=${encodeURIComponent(c)}`} className="transition hover:text-ivory">{c}</Link></li>)}</ul></div>
+     <div><p className="mb-2 text-[10px] uppercase tracking-[.18em] text-ivory/60">Locations</p><ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">{locations.slice(0,4).map(([n])=><li key={n}><Link href={`/properties?q=${encodeURIComponent(n)}`} className="transition hover:text-ivory">{n}</Link></li>)}</ul></div>
     </div>
    </div>
    <div className="lg:col-span-2">
@@ -53,7 +53,7 @@ export default function Footer(){
     <ul className="mt-4 space-y-2.5 text-sm">{[["Sign in","/login"],["Create account","/register"],["Wishlist","/wishlist"],["Dashboard","/dashboard"],["Builder","/builder"],["Admin","/admin"]].map(([l,href])=><li key={href}><Link href={href} className="inline-block py-0.5 transition hover:text-ivory hover:translate-x-0.5">{l}</Link></li>)}</ul>
    </div>
   </div>
-  <div className="relative mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 pt-6 text-xs text-ivory/45"><p>© {new Date().getFullYear()} Skyline Estates. Demonstration experience with sample data and actions.</p>
+  <div className="relative mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 pt-6 text-xs text-ivory/60"><p>© {new Date().getFullYear()} Skyline Estates. Demonstration experience with sample data and actions.</p>
    <nav aria-label="Legal" className="flex gap-4"><Link href="/privacy" className="transition hover:text-ivory">Privacy</Link><Link href="/terms" className="transition hover:text-ivory">Terms</Link></nav></div>
  </footer>;
 }
