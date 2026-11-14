@@ -9,20 +9,33 @@ export default function Gallery({main,title,seed}:{main:string;title:string;seed
  const [i,setI]=useState(0);
  const [full,setFull]=useState(false);
  const boxRef=useRef<HTMLDivElement>(null);
+ const openBtnRef=useRef<HTMLButtonElement>(null);
+ const dialogRef=useRef<HTMLDivElement>(null);
  const total=imgs.length;
  const go=(d:number)=>setI(v=>(v+d+total)%total);
 
- // Keyboard navigation while the lightbox is open + scroll lock
+ // Keyboard navigation, focus trap and scroll lock while the lightbox is open
  useEffect(()=>{
   if(!full) return;
+  const prevActive = document.activeElement as HTMLElement | null;
+  const dialog = dialogRef.current;
+  const focusables = () => Array.from(dialog?.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])') ?? []).filter(el=>!el.hasAttribute('disabled'));
+  focusables()[0]?.focus();
   const k=(e:KeyboardEvent)=>{
-   if(e.key==="Escape") setFull(false);
-   else if(e.key==="ArrowLeft") go(-1);
-   else if(e.key==="ArrowRight") go(1);
+   if(e.key==="Escape"){ e.preventDefault(); setFull(false); return; }
+   if(e.key==="ArrowLeft"){ e.preventDefault(); go(-1); return; }
+   if(e.key==="ArrowRight"){ e.preventDefault(); go(1); return; }
+   if(e.key==="Tab"){
+    const els = focusables();
+    if(!els.length) return;
+    const first = els[0], last = els[els.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+   }
   };
   window.addEventListener("keydown",k);
   const prev=document.documentElement.style.overflow; document.documentElement.style.overflow="hidden";
-  return ()=>{ window.removeEventListener("keydown",k); document.documentElement.style.overflow=prev; };
+  return ()=>{ window.removeEventListener("keydown",k); document.documentElement.style.overflow=prev; (openBtnRef.current ?? prevActive)?.focus?.(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
  },[full]);
 
@@ -32,7 +45,7 @@ export default function Gallery({main,title,seed}:{main:string;title:string;seed
  return <div ref={boxRef}>
   {/* Main frame */}
   <div className="relative">
-    <button aria-label="View photo full screen" onClick={()=>setFull(true)} className="relative block aspect-[16/10] w-full overflow-hidden border border-line/60 bg-matte/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
+    <button ref={openBtnRef} type="button" aria-label="View photo full screen" onClick={()=>setFull(true)} className="relative block aspect-[16/10] w-full overflow-hidden border border-line/60 bg-matte/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
       <img key={imgs[i]} src={imgs[i]} alt={`${title}, photo ${i+1} of ${total}`} decoding="async" onError={fb} className="gallery-fade absolute inset-0 h-full w-full object-cover object-center"/>
       <span aria-hidden="true" className="pointer-events-none absolute right-3 top-3 flex items-center gap-1.5 rounded-full border border-white/20 bg-matte/60 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[.18em] text-ivory backdrop-blur-sm"><Expand size={11}/>View</span>
       <span aria-hidden="true" className="pointer-events-none absolute bottom-3 right-3 rounded-full border border-white/20 bg-matte/60 px-3 py-1 text-[11px] font-medium tracking-[.2em] text-ivory backdrop-blur-sm tabular-nums">{i+1} / {total}</span>
@@ -48,7 +61,7 @@ export default function Gallery({main,title,seed}:{main:string;title:string;seed
 
   {/* Full screen lightbox */}
   {full&&<div role="dialog" aria-modal="true" aria-label="Photo viewer" className="fixed inset-0 z-[70] flex items-center justify-center bg-matte/96 backdrop-blur-sm" onClick={()=>setFull(false)}>
-    <div className="relative h-[82vh] w-full max-w-6xl select-none px-4 sm:px-16" onClick={e=>e.stopPropagation()}>
+    <div ref={dialogRef} className="relative h-[82vh] w-full max-w-6xl select-none px-4 sm:px-16" onClick={e=>e.stopPropagation()}>
       <img key={imgs[i]} src={imgs[i]} alt={`${title}, photo ${i+1} of ${total}`} onError={fb} className="gallery-fade absolute inset-0 h-full w-full object-contain"/>
       <button className="absolute right-0 top-0 z-10 inline-flex h-11 items-center gap-2 rounded-sm border border-ivory/20 bg-matte/40 px-3 text-[11px] font-medium uppercase tracking-[.18em] text-ivory/90 backdrop-blur-sm transition hover:border-beige hover:text-beige sm:right-2 sm:top-2" onClick={()=>setFull(false)} aria-label="Close photo viewer"><span className="hidden sm:inline">Close</span><X size={18}/></button>
       <button className="absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/20 bg-matte/30 text-ivory/90 backdrop-blur-sm transition hover:border-beige hover:text-beige sm:left-2" onClick={()=>go(-1)} aria-label="Previous photo"><ChevronLeft size={22}/></button>

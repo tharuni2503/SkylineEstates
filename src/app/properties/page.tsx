@@ -34,13 +34,15 @@ export default function PropertiesPage(){
  useEffect(()=>{const s=new URLSearchParams(window.location.search);const c=s.get("category"),q=s.get("q"),l=s.get("listing"),m=s.get("maxPrice"),b=s.get("bhk"),mn=s.get("minPrice");setF(x=>({...x,...(c&&{category:c as PropertyQuery["category"]}),...(q&&{q}),...(l&&{listing:l as PropertyQuery["listing"]}),...(m&&{maxPrice:+m}),...(b&&{bhk:+b}),...(mn&&{minPrice:+mn})}));},[]);
  useEffect(()=>{if(!ready)return;setErr(false);try{setItems(filterProperties(list,f));}catch{setErr(true);setItems([]);}},[f,list,ready]);
 
+ const filterBtnRef = useRef<HTMLButtonElement>(null);
  // Filter drawer: lock page scroll + close on Escape while open
  useEffect(()=>{ if(!drawer) return;
+   const prevActive = document.activeElement as HTMLElement | null;
    const k=(e:KeyboardEvent)=>{ if(e.key==="Escape") setDrawer(false); };
    window.addEventListener("keydown",k);
    const prev=document.documentElement.style.overflow; document.documentElement.style.overflow="hidden";
-   drawerRef.current?.querySelector("button")?.focus();
-   return ()=>{ window.removeEventListener("keydown",k); document.documentElement.style.overflow=prev; };
+   drawerRef.current?.querySelector<HTMLElement>("button")?.focus();
+   return ()=>{ window.removeEventListener("keydown",k); document.documentElement.style.overflow=prev; (filterBtnRef.current ?? prevActive)?.focus?.(); };
  },[drawer]);
 
  const setMinBudget=(v?:number)=>setF(x=>({...x,minPrice:v,maxPrice:v!==undefined&&x.maxPrice!==undefined&&v>x.maxPrice?v:x.maxPrice}));
@@ -120,7 +122,7 @@ export default function PropertiesPage(){
    <div className="flex flex-wrap items-stretch gap-2.5">
      <ChevronSelect label="Buy or rent" value={f.listing??""} onChange={e=>setF({...f,listing:(e.target.value||undefined) as PropertyQuery["listing"]})} className="min-w-[9.5rem] flex-1 lg:flex-none"><option value="">Buy or Rent</option><option>Buy</option><option>Rent</option></ChevronSelect>
      <ChevronSelect label="Sort" value={f.sort ?? "latest"} onChange={e=>setF({...f,sort:e.target.value as PropertyQuery["sort"]})} className="min-w-[10.5rem] flex-1 lg:flex-none"><option value="latest">Latest</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option></ChevronSelect>
-     <button type="button" className="h-11 border border-matte/15 bg-matte px-4 text-[11px] font-medium uppercase tracking-[.16em] text-ivory lg:hidden" onClick={()=>setDrawer(true)}><span className="inline-flex items-center gap-2"><SlidersHorizontal size={15}/>Filters{active>0&&` (${active})`}</span></button>
+     <button ref={filterBtnRef} type="button" className="h-11 border border-matte/15 bg-matte px-4 text-[11px] font-medium uppercase tracking-[.16em] text-ivory lg:hidden" onClick={()=>setDrawer(true)}><span className="inline-flex items-center gap-2"><SlidersHorizontal size={15}/>Filters{active>0&&` (${active})`}</span></button>
      <button type="button" className="h-11 w-11 shrink-0 border border-line bg-white text-charcoal transition hover:border-matte hover:text-matte" aria-pressed={listView} aria-label={listView?"Switch to grid view":"Switch to list view"} title={listView?"Grid view":"List view"} onClick={()=>setListView(!listView)}>{listView?<LayoutGrid size={17} className="mx-auto"/>:<Rows3 size={17} className="mx-auto"/>}</button>
    </div>
   </div>
