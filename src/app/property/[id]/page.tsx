@@ -40,9 +40,10 @@ export default function PropertyPage() {
   const p = properties.find(x => x.id === id);
   if (!p) return <div className="mx-auto max-w-xl px-5 py-24 text-center"><p className="text-[11px] uppercase tracking-[.3em] text-slate">Listing unavailable</p><h1 className="mt-3 font-serif text-4xl text-matte">Property not found</h1><p className="mt-3 text-slate">This residence may have been removed or is no longer available.</p><Link href="/properties" className="mt-7 inline-flex bg-matte px-6 py-3 text-[11px] font-medium uppercase tracking-[.18em] text-ivory transition hover:bg-charcoal">Back to properties</Link></div>;
   const agent = agents.find(a => a.id === p.agentId) ?? fallbackAgent;
-  const duty = Math.round(p.price * 0.07);
-  const gst = Math.round(p.price * 0.01);
-  const onRoad = p.price + duty + gst;
+  // Purchase costs are illustrative only; actual charges depend on property type,
+  // transaction structure and current local rules. Do not imply a universal GST rate.
+  const registrationEstimate = p.listing === "Buy" ? Math.round(p.price * 0.07) : 0;
+  const indicativePurchaseTotal = p.price + registrationEstimate;
   const similar = properties.filter(x => x.id !== p.id && x.category === p.category).slice(0, 3);
   const specs: [string, string][] = [["Listing", p.listing === "Buy" ? "For sale" : "For rent"], ...(p.furnishing ? [["Furnishing", p.furnishing] as [string, string]] : []), ...(p.bathrooms ? [["Bathrooms", String(p.bathrooms)] as [string, string]] : []), ["Posted", new Date(p.postedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })]];
   const share = async () => { try { await navigator.clipboard.writeText(window.location.href); toast("Link copied"); } catch { toast("Copy failed. Copy the address bar link instead."); } };
@@ -141,19 +142,23 @@ export default function PropertyPage() {
               <span className="inline-flex items-center gap-1.5"><Star size={14} className="fill-gold text-gold" />{agent.rating} <span className="text-slate">({agent.reviews} sample)</span></span>
               <span>{agent.deals} deals (demo)</span><span>{agent.years} yrs</span>
             </div>
-            <a href="#contact-agent" className="mt-4 inline-flex w-full items-center justify-center gap-2 border border-line bg-ivory/60 px-4 py-2.5 text-sm text-matte transition hover:border-matte hover:bg-ivory"><Phone size={15} />Contact via enquiry (demo)</a>
+            <a href="#visit" className="mt-4 inline-flex w-full items-center justify-center gap-2 border border-line bg-ivory/60 px-4 py-2.5 text-sm text-matte transition hover:border-matte hover:bg-ivory"><Phone size={15} />Contact via enquiry (demo)</a>
             <p className="mt-2 flex items-center gap-1.5 text-[10px] uppercase tracking-[.16em] text-slate/80"><CalendarCheck2 size={12} />Response time shown as a demo indicator</p>
           </div>
-          {/* Price breakdown (illustrative) */}
+          {/* Cost guidance: avoid presenting sample percentages as statutory tax advice. */}
           <div className="mt-4 border border-line/70 bg-white p-5">
-            <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">Indicative cost</p>
-            <dl className="mt-3 space-y-1.5 text-sm">
-              <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">Agreement value</dt><dd className="font-medium text-matte tabular-nums">{inr(p.price)}</dd></div>
-              <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">Registration &amp; stamp duty (≈7%)</dt><dd className="font-medium text-matte tabular-nums">{inr(duty)}</dd></div>
-              <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">GST (≈1%)</dt><dd className="font-medium text-matte tabular-nums">{inr(gst)}</dd></div>
-              <div className="flex items-baseline justify-between gap-3 border-t border-line/60 pt-1.5"><dt className="font-medium text-matte">Indicative on-road cost</dt><dd className="font-serif text-lg text-[#9c7f56] tabular-nums">{inr(onRoad)}</dd></div>
-            </dl>
-            <p className="mt-2 text-[10px] uppercase tracking-[.14em] text-slate/70">Illustrative only — excludes society &amp; lender fees</p>
+            <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">{p.listing === "Buy" ? "Illustrative purchase estimate" : "Rental cost guide"}</p>
+            {p.listing === "Buy" ? <>
+              <dl className="mt-3 space-y-1.5 text-sm">
+                <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">Listed property price</dt><dd className="font-medium text-matte tabular-nums">{inr(p.price)}</dd></div>
+                <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">Indicative registration allowance (7% sample)</dt><dd className="font-medium text-matte tabular-nums">{inr(registrationEstimate)}</dd></div>
+                <div className="flex items-baseline justify-between gap-3 border-t border-line/60 pt-1.5"><dt className="font-medium text-matte">Illustrative subtotal</dt><dd className="font-serif text-lg text-[#9c7f56] tabular-nums">{inr(indicativePurchaseTotal)}</dd></div>
+              </dl>
+              <p className="mt-2 text-[10px] leading-relaxed text-slate/80">Planning estimate only, not a tax or legal quote. Actual stamp duty, registration, GST applicability and other charges depend on the property and transaction. Confirm with the relevant authority and a qualified advisor.</p>
+            </> : <>
+              <p className="mt-3 font-serif text-2xl text-matte">{inr(p.price)} <span className="font-sans text-sm font-normal text-slate">per month</span></p>
+              <p className="mt-2 text-xs leading-relaxed text-slate">Ask the listing contact to confirm the security deposit, maintenance, brokerage and any other move-in charges before booking.</p>
+            </>}
           </div>
         </aside>
       </div>
