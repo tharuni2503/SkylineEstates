@@ -27,8 +27,16 @@ export default function Contact(){const [tab,setTab]=useState<"msg"|"visit">("ms
     </div>
    </div>
    <div className="border border-line/70 bg-white p-5 shadow-[0_14px_40px_rgba(17,17,17,.06)] md:p-7 lg:self-start lg:sticky lg:top-24">
-    <div role="tablist" className="mb-5 flex gap-6 border-b border-line">{([["msg","Send an enquiry"],["visit","Book a site visit"]] as const).map(([k,l])=><button type="button" key={k} role="tab" aria-selected={tab===k} onClick={()=>setTab(k)} className={`pb-3 text-sm transition ${tab===k?"border-b-2 border-matte font-medium text-matte":"text-slate hover:text-matte"}`}>{l}</button>)}</div>
-    {tab==="msg"?<ContactForm/>:<VisitForm/>}
+    <div role="tablist" aria-label="Contact options" className="mb-5 flex gap-6 border-b border-line">
+     {([["msg","Send an enquiry"],["visit","Book a site visit"]] as const).map(([k,l])=>(
+      <button type="button" key={k} id={`contact-tab-${k}`} role="tab" aria-selected={tab===k} aria-controls={`contact-panel-${k}`} tabIndex={tab===k?0:-1} onClick={()=>setTab(k)} className={`pb-3 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${tab===k?"border-b-2 border-matte font-medium text-matte":"text-slate hover:text-matte"}`}>
+       {l}
+      </button>
+     ))}
+    </div>
+    <div id={`contact-panel-${tab}`} role="tabpanel" aria-labelledby={`contact-tab-${tab}`}>
+     {tab==="msg"?<ContactForm/>:<VisitForm/>}
+    </div>
    </div>
   </div>
  </div>;}
