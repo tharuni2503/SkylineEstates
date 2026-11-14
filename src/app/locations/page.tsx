@@ -12,9 +12,9 @@ export default function LocationsPage() {
     <div className="relative overflow-hidden bg-ivory">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_10%,rgba(216,195,165,.18),transparent_40%),radial-gradient(ellipse_at_85%_80%,rgba(17,17,17,.04),transparent_45%)]" />
       <div className="relative mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-start">
           <SectionHead as="h1" eyebrow="Prime locations" title="Neighbourhoods we *know by heart.*" />
-          <p className="max-w-xl text-sm leading-relaxed text-slate">Explore Hyderabad’s most sought-after areas — each with its own character, connectivity, and lifestyle. Discover verified listings tailored to every address.</p>
+          <p className="max-w-xl text-sm leading-relaxed text-slate lg:pt-10">Explore Hyderabad’s most sought-after areas — each with its own character, connectivity, and lifestyle. Discover verified listings tailored to every address.</p>
         </motion.div>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-12">
           {locations.map(([name, blurb], i) => {

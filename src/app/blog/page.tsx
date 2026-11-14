@@ -9,9 +9,9 @@ export default function Blog(){const [c,setC]=useState("All");const [q,setQ]=use
  return <div className="relative overflow-hidden bg-ivory/30">
   <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_10%_10%,rgba(216,195,165,.16),transparent_40%),radial-gradient(ellipse_at_90%_80%,rgba(17,17,17,.04),transparent_45%)]"/>
   <div className="relative mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-   <div className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+   <div className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-start">
     <SectionHead as="h1" eyebrow="Insights and journal" title="Reading for *better decisions.*"/>
-    <p className="max-w-xl text-sm leading-relaxed text-slate">Perspectives on buying, neighbourhoods, investment, and the details that matter when choosing a home.</p>
+    <p className="max-w-xl text-sm leading-relaxed text-slate lg:pt-10">Perspectives on buying, neighbourhoods, investment, and the details that matter when choosing a home.</p>
    </div>
    <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
     <input aria-label="Search articles" placeholder="Search articles" value={q} onChange={e=>setQ(e.target.value)} className="w-full max-w-md border border-line bg-white px-4 py-3 text-sm focus:border-beige/60 focus:outline-none"/>

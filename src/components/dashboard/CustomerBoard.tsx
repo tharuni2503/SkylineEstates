@@ -67,12 +67,12 @@ export default function CustomerBoard() {
     <div className="bg-ivory/30">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-5 md:py-12">
         <p className="text-[10px] uppercase tracking-[.3em] text-[#9c7f56]">My Skyline</p>
-        <div className="mt-1 flex flex-wrap items-end justify-between gap-3 border-b border-line/70 pb-5">
+        <div className="mt-1 flex flex-wrap items-start justify-between gap-3 border-b border-line/70 pb-5">
           <div>
             <h1 className="font-serif text-4xl text-matte">Welcome back, <em className="italic text-[#9c7f56]">{displayName.split(" ")[0]}.</em></h1>
             <p className="mt-1.5 text-sm text-slate">{email} · Demo dashboard — sample data and actions stored in this browser only.</p>
           </div>
-          <button onClick={() => { signOut(); toast("Signed out"); router.push("/login"); }} className="border border-line px-5 py-2.5 text-[10px] font-medium uppercase tracking-[.18em] text-matte transition hover:border-matte hover:bg-matte hover:text-ivory">Sign out</button>
+          <button onClick={() => { signOut(); toast("Signed out"); router.push("/login"); }} className="mt-1 border border-line px-5 py-2.5 text-[10px] font-medium uppercase tracking-[.18em] text-matte transition hover:border-matte hover:bg-matte hover:text-ivory">Sign out</button>
         </div>
 
         <div className="mt-6 md:grid md:grid-cols-[auto_1fr] md:gap-8">

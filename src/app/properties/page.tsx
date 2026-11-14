@@ -81,9 +81,9 @@ export default function PropertiesPage(){
    <button type="button" className="mt-4 text-xs font-medium uppercase tracking-[.18em] text-[#9c7f56] underline decoration-beige/60 underline-offset-4 transition hover:text-matte" onClick={()=>setF(base)}>Clear all filters</button></div>;
 
  return <div className="mx-auto max-w-7xl px-4 py-10 sm:px-5 md:py-14">
-  <div className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+  <div className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-start">
    <SectionHead as="h1" eyebrow="Search & refine" title="Properties in *Hyderabad.*"/>
-   <p className="max-w-xl text-sm leading-relaxed text-slate">Use advanced filters, sorting, and comparison to narrow the collection by location, budget, type, area, and amenities. This is the full discovery workspace (distinct from the homepage quick search).</p>
+   <p className="max-w-xl text-sm leading-relaxed text-slate lg:pt-10">Use advanced filters, sorting, and comparison to narrow the collection by location, budget, type, area, and amenities. This is the full discovery workspace (distinct from the homepage quick search).</p>
   </div>
 
   <div className="mt-6 flex flex-wrap items-center justify-between gap-3">

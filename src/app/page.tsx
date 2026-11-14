@@ -153,7 +153,7 @@ export default function Home() {
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_18%_25%,rgba(216,195,165,.16),transparent_42%),radial-gradient(ellipse_at_88%_70%,rgba(248,245,240,.07),transparent_38%)]" />
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-beige/35 to-transparent" />
           <div className="relative mx-auto max-w-7xl px-5 md:px-8">
-            <div className="grid items-end gap-8 lg:grid-cols-[1.05fr_.95fr]">
+            <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_.95fr]">
               <div>
                 <p className="inline-flex items-center gap-2 rounded-full border border-beige/25 bg-ivory/5 px-3 py-1 text-[10px] font-medium uppercase tracking-[.3em] text-beige/90"><span className="h-1.5 w-1.5 rounded-full bg-gold/90" aria-hidden="true" />Quick Search</p>
                 <h2 id="quick-search-heading" className="mt-4 font-serif text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.05]">A fast start to the right address.</h2>
@@ -236,9 +236,9 @@ export default function Home() {
         <section className="relative overflow-hidden bg-white py-20 md:py-24">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_10%,rgba(216,195,165,.14),transparent_40%)]" />
           <div className="relative mx-auto max-w-7xl px-5 md:px-8">
-            <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
+            <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
               <SectionHead eyebrow="Services" title="Every side of a *property decision.*" />
-              <p className="max-w-2xl text-sm leading-relaxed text-slate">Advisory, buying, selling, legal guidance, and investment insight — delivered as one composed, end-to-end experience.</p>
+              <p className="max-w-2xl text-sm leading-relaxed text-slate lg:pt-10">Advisory, buying, selling, legal guidance, and investment insight — delivered as one composed, end-to-end experience.</p>
             </div>
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[
@@ -274,12 +274,12 @@ export default function Home() {
         <section className="relative overflow-hidden bg-[#f3efe8] py-20 md:py-24">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(216,195,165,.22),transparent_40%)]" />
           <div className="relative mx-auto max-w-7xl px-5 md:px-8">
-            <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
+            <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:items-start">
               <div data-site-reveal>
                 <SectionHead eyebrow="Example journeys" title="A clearer path to *your next move.*" />
                 <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate">Explore how buyers, investors and sellers can use the platform. These are illustrative product scenarios, not customer testimonials.</p>
               </div>
-              <div data-site-reveal className="max-w-sm border border-line/70 bg-white/90 px-5 py-4 text-sm leading-relaxed text-slate shadow-[0_10px_26px_rgba(17,17,17,.05)] lg:justify-self-end">Illustrative demo content · No customer rating or review count is being claimed.</div>
+              <div data-site-reveal className="max-w-sm border border-line/70 bg-white/90 px-5 py-4 text-sm leading-relaxed text-slate shadow-[0_10px_26px_rgba(17,17,17,.05)] lg:mt-10 lg:justify-self-end">Illustrative demo content · No customer rating or review count is being claimed.</div>
             </div>
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {testimonials.map(([n, t], i) => (

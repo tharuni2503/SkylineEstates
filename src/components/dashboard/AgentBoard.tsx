@@ -88,12 +88,12 @@ export default function AgentBoard() {
     <div className="bg-[#f6f2eb]">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-5 md:py-12">
         <p className="text-[10px] uppercase tracking-[.3em] text-[#9c7f56]">Skyline advisors</p>
-        <div className="mt-1 flex flex-wrap items-end justify-between gap-3 border-b border-line/70 pb-5">
+        <div className="mt-1 flex flex-wrap items-start justify-between gap-3 border-b border-line/70 pb-5">
           <div>
             <h1 className="font-serif text-4xl text-matte">Agent <em className="italic text-[#9c7f56]">dashboard.</em></h1>
             <p className="mt-1.5 text-sm text-slate">{email} · Demo dashboard — sample data and actions stored in this browser only.</p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="mt-1 flex items-center gap-3">
             <button aria-label="Notifications" className="relative rounded-full border border-line bg-white p-2.5 text-charcoal transition hover:text-matte" onClick={() => toast(`${pendingVisits} pending visits · ${pendingFollowUps.length} follow-ups due (demo)`)}><Bell size={18} />{(pendingVisits + pendingFollowUps.length) > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-beige text-[9px] font-semibold text-matte">{pendingVisits + pendingFollowUps.length}</span>}</button>
             <button onClick={() => { signOut(); toast("Signed out"); router.push("/login"); }} className="border border-line bg-white px-5 py-2.5 text-[10px] font-medium uppercase tracking-[.18em] text-matte transition hover:border-matte">Sign out</button>
           </div>

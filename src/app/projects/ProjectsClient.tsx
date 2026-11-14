@@ -13,9 +13,9 @@ export default function ProjectsClient() {
     <div className="relative overflow-hidden bg-ivory/40">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_10%_10%,rgba(216,195,165,.18),transparent_40%),radial-gradient(ellipse_at_90%_80%,rgba(17,17,17,.04),transparent_45%)]" />
       <div className="relative mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-        <div className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+        <div className="grid gap-6 border-b border-line/70 pb-8 lg:grid-cols-[1.1fr_.9fr] lg:items-start">
           <SectionHead as="h1" eyebrow="Signature projects" title="Residences worth *a closer look.*" />
-          <p className="max-w-xl text-sm leading-relaxed text-slate">A curated selection of featured homes and developments, presented with the detail and clarity they deserve.</p>
+          <p className="max-w-xl text-sm leading-relaxed text-slate lg:pt-10">A curated selection of featured homes and developments, presented with the detail and clarity they deserve.</p>
         </div>
         {!ready ? (
           <div className="mt-10 space-y-10">{[0, 1].map((i) => <div key={i} className="aspect-[16/8] animate-pulse border border-line/60 bg-line/50" />)}</div>

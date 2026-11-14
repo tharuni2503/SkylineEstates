@@ -9,7 +9,7 @@ const team=[["Lakshmi Prasad","Senior advisor, Gachibowli"],["Imran Siddiqui","A
 
 export default function About(){return <div className="bg-ivory/30">
  <section className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
-  <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-end">
+  <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-start">
    <div>
     <SectionHead as="h1" eyebrow="About Skyline Estates" title="A property company built around the *buyer's questions.*" className="max-w-3xl"/>
     <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-charcoal/80">Skyline Estates began with a simple frustration: finding a home in Hyderabad meant juggling listings, brokers, and half-answered questions. We bring verified properties, local advisors, and thoughtful guidance together so every decision feels clear and confident.</p>
