@@ -29,8 +29,8 @@ const parse = (q: string): Intent => {
   const maxPrice = m ? Number(m[1]) * (unit.startsWith("cr") ? 1e7 : 1e5) : undefined;
   const minPriceM = t.match(/(?:above|from|more than|over)\s*₹?\s*([\d.]+)\s*(crore|cr|lakh|l)?\b/);
   const minPrice = minPriceM ? Number(minPriceM[1]) * ((minPriceM[2] ?? "cr").startsWith("cr") ? 1e7 : 1e5) : undefined;
-  const areaMaxM = t.match(/(?:under|below|up to|max)\\s*([\\d,]+)\\s*(?:sq\\.?\\s*ft|sqft|square feet)/i);
-  const areaMinM = t.match(/(?:above|over|at least|from)\\s*([\\d,]+)\\s*(?:sq\\.?\\s*ft|sqft|square feet)/i);
+  const areaMaxM = t.match(/(?:under|below|up to|max)\s*([\d,]+)\s*(?:sq\.?\s*ft|sqft|square feet)/i);
+  const areaMinM = t.match(/(?:above|over|at least|from)\s*([\d,]+)\s*(?:sq\.?\s*ft|sqft|square feet)/i);
   const maxArea = areaMaxM ? Number(areaMaxM[1].replace(/,/g, "")) : undefined;
   const minArea = areaMinM ? Number(areaMinM[1].replace(/,/g, "")) : undefined;
   const cat = ([[/villa/i, "Villa"], [/apartment|flat|tower/i, "Apartment"], [/house|independent/i, "Independent House"], [/plot|land/i, "Residential Plot"], [/commercial|office|shop/i, "Commercial"]] as [RegExp, string][]).find(([re]) => re.test(t))?.[1];
