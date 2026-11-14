@@ -48,12 +48,15 @@ export default function Gallery({main,title,seed}:{main:string;title:string;seed
 
   {/* Full screen lightbox */}
   {full&&<div role="dialog" aria-modal="true" aria-label="Photo viewer" className="fixed inset-0 z-[70] flex items-center justify-center bg-matte/96 backdrop-blur-sm" onClick={()=>setFull(false)}>
-    <div className="relative h-[82vh] w-full max-w-6xl select-none px-14 sm:px-20" onClick={e=>e.stopPropagation()}>
-      <img key={imgs[i]} src={imgs[i]} alt={`${title}, photo ${i+1} of ${total}`} onError={fb} className="gallery-fade absolute inset-0 h-full w-full px-0 object-contain"/>
-      <button className="absolute -right-1 top-0 sm:-right-2 sm:top-2 text-sm font-medium uppercase tracking-[.2em] text-ivory/80 underline decoration-ivory/30 underline-offset-4 transition hover:text-ivory" onClick={()=>setFull(false)} aria-label="Close photo viewer"><span className="hidden sm:inline">Close</span><X size={22} className="sm:hidden"/></button>
-      <button className="absolute left-0 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/20 text-ivory/90 transition hover:border-beige hover:text-beige" onClick={()=>go(-1)} aria-label="Previous photo"><ChevronLeft size={22}/></button>
-      <button className="absolute right-0 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/20 text-ivory/90 transition hover:border-beige hover:text-beige" onClick={()=>go(1)} aria-label="Next photo"><ChevronRight size={22}/></button>
-      <p aria-live="polite" className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] font-medium uppercase tracking-[.24em] text-ivory/70 tabular-nums">{i+1} of {total}</p>
+    <div className="relative h-[82vh] w-full max-w-6xl select-none px-4 sm:px-16" onClick={e=>e.stopPropagation()}>
+      <img key={imgs[i]} src={imgs[i]} alt={`${title}, photo ${i+1} of ${total}`} onError={fb} className="gallery-fade absolute inset-0 h-full w-full object-contain"/>
+      <button className="absolute right-0 top-0 z-10 inline-flex h-11 items-center gap-2 rounded-sm border border-ivory/20 bg-matte/40 px-3 text-[11px] font-medium uppercase tracking-[.18em] text-ivory/90 backdrop-blur-sm transition hover:border-beige hover:text-beige sm:right-2 sm:top-2" onClick={()=>setFull(false)} aria-label="Close photo viewer"><span className="hidden sm:inline">Close</span><X size={18}/></button>
+      <button className="absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/20 bg-matte/30 text-ivory/90 backdrop-blur-sm transition hover:border-beige hover:text-beige sm:left-2" onClick={()=>go(-1)} aria-label="Previous photo"><ChevronLeft size={22}/></button>
+      <button className="absolute right-0 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/20 bg-matte/30 text-ivory/90 backdrop-blur-sm transition hover:border-beige hover:text-beige sm:right-2" onClick={()=>go(1)} aria-label="Next photo"><ChevronRight size={22}/></button>
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-ivory/20 bg-matte/40 px-3 py-1.5 text-center backdrop-blur-sm">
+        <p aria-live="polite" className="text-[11px] font-medium uppercase tracking-[.24em] text-ivory/80 tabular-nums">{i+1} of {total}</p>
+        <p className="mt-0.5 text-[10px] uppercase tracking-[.14em] text-ivory/55">Use ← → keys · Esc to close</p>
+      </div>
     </div>
   </div>}
  </div>;

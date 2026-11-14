@@ -87,14 +87,14 @@ export default function PropertyPage() {
 
           <div className="mt-8 space-y-8">
             <section className="border border-line/70 bg-white p-6 md:p-8"><InsightCard p={p} all={properties} /></section>
-            <section className="border border-line/70 bg-white p-6 md:p-8">
+            <section id="overview" className="scroll-mt-28 border border-line/70 bg-white p-6 md:p-8">
               <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">Overview</p>
               <h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">About this property</h2>
               {p.description ? <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-charcoal/80">{p.description}</p> : <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-charcoal/80">A {p.bhk ? `${p.bhk}-bedroom ` : ""}{p.category.toLowerCase()} of {p.areaSqft.toLocaleString()} sq ft in {p.location.split(",")[0]}, thoughtfully positioned for connectivity, comfort, and everyday ease near Hyderabad’s key corridors. (Sample description.)</p>}
             </section>
-            <EmiCalculator price={p.price} />
+            <section id="emi" className="scroll-mt-28"><EmiCalculator price={p.price} /></section>
             <NearbyPlaces seed={p.id} />
-            <section className="border border-line/70 bg-white p-6 md:p-8" aria-label="Location on the map">
+            <section id="location" className="scroll-mt-28 border border-line/70 bg-white p-6 md:p-8" aria-label="Location on the map">
               <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">Location</p>
               <h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">Find it on <em className="italic text-[#9c7f56]">the map.</em></h2>
               <p className="mt-2 flex items-center gap-1.5 text-sm text-slate"><MapPin size={14} className="text-[#9c7f56]" />{p.location}</p>
@@ -103,16 +103,20 @@ export default function PropertyPage() {
               </div>
               <p className="mt-2 text-xs text-slate">Map shows the locality (demo embed), not the exact address.</p>
             </section>
-            <section className="border border-line/70 bg-white p-6 md:p-8">
+            <section id="amenities" className="scroll-mt-28 border border-line/70 bg-white p-6 md:p-8">
               <p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">Features</p>
               <h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">Amenities & highlights</h2>
               <ul className="mt-5 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">{p.amenities.map(a => <li key={a} className="flex items-center gap-3 border-b border-line/70 py-2.5 text-charcoal/85"><span className="h-1.5 w-1.5 rounded-full bg-beige" aria-hidden="true" />{a}</li>)}</ul>
             </section>
-            <VideoTour src={p.videoUrl ?? (p.category === "Villa" ? "/videos/hero-720.mp4" : undefined)} sample={!p.videoUrl} title={p.title} />
-            <Extras location={p.location} propertyId={p.id} propertyTitle={p.title}><FloorPlan bhk={p.bhk} areaSqft={p.areaSqft} /></Extras>
-            <section>
-              <div className="flex items-end justify-between gap-4 border-t border-line/70 pt-8"><div><p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">More like this</p><h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">Similar properties</h2></div><Link href="/properties" className="hidden text-sm underline underline-offset-4 sm:inline">View all</Link></div>
-              <div className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{similar.length ? similar.map(s => <PropertyCard key={s.id} p={s} saved={wishlist.includes(s.id)} onToggle={toggleWish} compared={compare.includes(s.id)} onCompare={toggleCompare} />) : <div className="border border-line/70 bg-white p-8 text-sm text-slate">No similar listings right now. <Link href="/properties" className="underline">Browse all properties</Link>.</div>}</div>
+            <section id="tour" className="scroll-mt-28 space-y-8">
+              <VideoTour src={p.videoUrl ?? (p.category === "Villa" ? "/videos/hero-720.mp4" : undefined)} sample={!p.videoUrl} title={p.title} />
+            </section>
+            <div id="enquire" className="scroll-mt-28">
+              <Extras location={p.location} propertyId={p.id} propertyTitle={p.title}><FloorPlan bhk={p.bhk} areaSqft={p.areaSqft} /></Extras>
+            </div>
+            <section id="similar" className="scroll-mt-28">
+              <div className="flex flex-wrap items-end justify-between gap-4 border-t border-line/70 pt-8"><div><p className="text-[11px] uppercase tracking-[.28em] text-[#9c7f56]">More like this</p><h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">Similar properties</h2><p className="mt-1.5 text-sm text-slate">{similar.length ? `Other ${p.category.toLowerCase()} options you may want to compare.` : "Explore more residences in the collection."}</p></div><Link href="/properties" className="inline-flex items-center gap-2 border border-line bg-white px-4 py-2.5 text-[11px] font-medium uppercase tracking-[.16em] text-matte transition hover:border-matte hover:bg-ivory">View all properties <ArrowUpRight size={14} /></Link></div>
+              <div className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{similar.length ? similar.map(s => <PropertyCard key={s.id} p={s} saved={wishlist.includes(s.id)} onToggle={toggleWish} compared={compare.includes(s.id)} onCompare={toggleCompare} />) : <div className="border border-line/70 bg-white p-8 text-sm text-slate">No similar listings in this category right now. <Link href="/properties" className="font-medium underline underline-offset-4 hover:text-matte">Browse all properties</Link> to continue exploring.</div>}</div>
             </section>
           </div>
         </div>
