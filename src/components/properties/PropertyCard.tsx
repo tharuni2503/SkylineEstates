@@ -44,9 +44,9 @@ export default function PropertyCard({p,saved,onToggle,compared=false,onCompare,
      {baths?<span className="inline-flex items-center gap-1.5"><Bath size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>{baths} Baths</span>:null}
      <span className="inline-flex items-center gap-1.5"><Ruler size={15} strokeWidth={1.75} className="text-[#9c7f56]"/>{p.areaSqft.toLocaleString()} sq ft</span>
     </div>
-    <div className="mt-auto flex items-center gap-2.5 pt-5">
+    <div className="mt-auto flex flex-wrap items-center gap-2.5 pt-5">
      {onCompare&&<button onClick={()=>onCompare(p.id)} aria-pressed={compared} type="button" className={`inline-flex h-10 items-center gap-1.5 border px-3.5 text-[10px] font-medium uppercase tracking-[.16em] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 ${compared?"border-matte bg-matte text-ivory":"border-line/80 bg-white text-charcoal hover:border-matte hover:bg-ivory"}`}>{compared?<Check size={13}/>:<Scale size={13}/>}{compared?"Added":"Compare"}</button>}
-     <Link href={href} className="group/cta ml-auto inline-flex h-10 items-center gap-2 bg-matte px-4 text-[10px] font-medium uppercase tracking-[.18em] text-ivory transition duration-300 hover:bg-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2">View Property <ArrowUpRight size={14} className="transition-transform duration-300 group-hover/cta:-translate-y-0.5 group-hover/cta:translate-x-0.5"/></Link>
+     <Link href={href} className="group/cta ml-auto inline-flex h-10 min-w-[10.5rem] items-center justify-center gap-2 bg-matte px-4 text-[10px] font-medium uppercase tracking-[.18em] text-ivory transition duration-300 hover:bg-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 sm:min-w-0">View Property <ArrowUpRight size={14} className="transition-transform duration-300 group-hover/cta:-translate-y-0.5 group-hover/cta:translate-x-0.5"/></Link>
     </div>
   </div>
  </motion.article>;
