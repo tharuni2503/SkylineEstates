@@ -266,24 +266,17 @@ export default function Home() {
           <div className="relative mx-auto max-w-7xl px-5 md:px-8">
             <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
               <div data-site-reveal>
-                <SectionHead eyebrow="Client reviews" title="Trusted by *home seekers.*" />
-                <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate">Experiences shaped by attentive guidance, verified choices, and calm, confident decisions.</p>
+                <SectionHead eyebrow="Example journeys" title="A clearer path to *your next move.*" />
+                <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate">Explore how buyers, investors and sellers can use the platform. These are illustrative product scenarios, not customer testimonials.</p>
               </div>
-              <div data-site-reveal className="flex items-center gap-4 border border-line/70 bg-white/90 px-5 py-4 shadow-[0_10px_26px_rgba(17,17,17,.05)] lg:justify-self-end">
-                <div>
-                  <div className="flex items-baseline gap-2"><span className="font-serif text-3xl text-matte">4.9</span><span className="text-sm text-slate">/ 5</span></div>
-                  <div aria-label="Rated 4.9 out of 5" className="mt-0.5 text-sm tracking-[.08em] text-[#b7925f]">★★★★★</div>
-                </div>
-                <div className="h-10 w-px bg-line" aria-hidden="true" />
-                <p className="max-w-[16rem] text-xs leading-relaxed text-slate">Based on client experiences with buying, investing, and selling across Hyderabad.</p>
-              </div>
+              <div data-site-reveal className="max-w-sm border border-line/70 bg-white/90 px-5 py-4 text-sm leading-relaxed text-slate shadow-[0_10px_26px_rgba(17,17,17,.05)] lg:justify-self-end">Illustrative demo content · No customer rating or review count is being claimed.</div>
             </div>
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {testimonials.map(([n, t], i) => (
                 <article key={n} data-site-reveal className={`group flex h-full flex-col border border-line/70 bg-white p-6 shadow-[0_12px_34px_rgba(17,17,17,.05)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_22px_46px_rgba(17,17,17,.08)] ${i===0?"md:col-span-2 lg:col-span-1":""}`}>
                   <div className="flex items-center justify-between gap-3">
-                    <div aria-label="5 out of 5 stars sample" className="text-sm tracking-[.08em] text-[#b7925f]">★★★★★</div>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[.16em] text-[#9c7f56]"><span className="h-1.5 w-1.5 rounded-full bg-beige" aria-hidden="true" />SAMPLE</span>
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[.16em] text-[#9c7f56]"><span className="h-1.5 w-1.5 rounded-full bg-beige" aria-hidden="true" />ILLUSTRATIVE SCENARIO</span>
+                    <span className="text-[10px] uppercase tracking-[.16em] text-slate">Product example</span>
                   </div>
                   <span className="mt-4 font-serif text-4xl leading-none text-beige/60" aria-hidden="true">“</span>
                   <blockquote className="-mt-2 flex-1 text-[15px] leading-relaxed text-charcoal/84">{t}</blockquote>
@@ -291,7 +284,7 @@ export default function Home() {
                     <span className="flex h-11 w-11 items-center justify-center rounded-full bg-matte font-serif text-sm text-ivory" aria-hidden="true">{n.split(" ").map(w => w[0]).join("")}</span>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-matte">{n}</p>
-                      <p className="text-xs text-slate">{i === 0 ? "Home buyer · Gachibowli" : i === 1 ? "Investor · Kokapet" : "Seller · Hyderabad"}</p>
+                      <p className="text-xs text-slate">Example platform workflow</p>
                     </div>
                   </footer>
                 </article>
