@@ -13,7 +13,7 @@ export default function Services(){return <div className="relative overflow-hidd
    <p className="max-w-xl text-sm leading-relaxed text-slate lg:pt-10">Whether you are buying a first home, selling a villa, or launching a project, Skyline advisors bring clarity, care, and expertise to every step.</p>
   </div>
   <div className="mt-12 space-y-8 md:space-y-10">{services.map((s,i)=><section key={s.slug} className="group grid items-center gap-6 overflow-hidden border border-line/70 bg-white shadow-[0_12px_34px_rgba(17,17,17,.05)] transition-all duration-500 hover:shadow-[0_22px_50px_rgba(17,17,17,.09)] md:grid-cols-2">
-   <MaskReveal className={`relative aspect-[4/3] min-h-[16rem] md:aspect-auto md:h-full ${i%2?"md:order-2":""}`}><img src={serviceImages[i]} alt={`${s.title} illustration`} loading="lazy" onError={(e)=>{const t=e.currentTarget;if(t.dataset.fallback)return;t.dataset.fallback="1";t.src="/images/hero-3d.jpg";}} className="absolute inset-0 h-full w-full object-cover transition duration-[900ms] ease-out group-hover:scale-[1.04]"/></MaskReveal>
+   <MaskReveal className={`relative aspect-[4/3] min-h-[16rem] overflow-hidden md:aspect-auto md:h-full ${i%2?"md:order-2":""}`}><img src={serviceImages[i]} alt={`${s.title} illustration`} loading="lazy" onError={(e)=>{const t=e.currentTarget;if(t.dataset.fallback)return;t.dataset.fallback="1";t.src="/images/hero-3d.jpg";}} className="absolute inset-0 h-full w-full object-cover transition duration-[900ms] ease-out group-hover:scale-[1.04]"/></MaskReveal>
    <div className="p-6 md:p-10">
     <p className="text-[11px] uppercase tracking-[.26em] text-[#9c7f56]">Service 0{i+1}</p>
     <h2 className="mt-2 font-serif text-3xl text-matte md:text-4xl">{s.title}</h2>

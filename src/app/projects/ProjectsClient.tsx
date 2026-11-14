@@ -29,7 +29,7 @@ export default function ProjectsClient() {
           <div className="mt-10 space-y-8 md:space-y-10">
             {items.map((p, i) => (
               <article key={p.id} className={`group grid overflow-hidden border border-line/70 bg-white shadow-[0_12px_34px_rgba(17,17,17,.05)] transition-all duration-500 hover:shadow-[0_22px_50px_rgba(17,17,17,.09)] md:grid-cols-2 ${i % 2 ? "md:[&>div:first-child]:order-2" : ""}`}>
-                <div className="relative aspect-[4/3] min-h-[16rem] overflow-hidden bg-[#ece7df] md:aspect-auto">
+                <div className="relative aspect-[4/3] min-h-[16rem] overflow-hidden bg-[#ece7df] md:aspect-auto" style={{contain:"paint"}}>
                   <img src={p.image} alt={p.title} loading="lazy" onError={(e)=>{const t=e.currentTarget;if(t.dataset.fallback)return;t.dataset.fallback="1";t.src="/images/hero-3d.jpg";}} className="absolute inset-0 h-full w-full object-cover transition duration-[900ms] ease-out group-hover:scale-[1.05]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-matte/30 via-transparent to-transparent opacity-60" aria-hidden="true"/>
                 </div>
