@@ -68,8 +68,9 @@ export default function CinematicHero() {
       <div ref={bg} className="absolute inset-0 will-change-transform">
         <div className="absolute inset-0">
           <AutoVideo
-            src="/videos/hero_background_clean.mp4"
-            poster="/videos/hero-background-poster.jpg"
+            src="/videos/hero.mp4"
+            srcLite="/videos/hero-720.mp4"
+            poster="/videos/hero-poster.jpg"
             priority
             loop
             rate={1}
@@ -77,11 +78,11 @@ export default function CinematicHero() {
         </div>
       </div>
 
-      {/* Overlay for readability (clean, cinematic) */}
+      {/* Overlay for readability while preserving video quality */}
       <div ref={overlay} aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/55" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,.45)_100%)]" />
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/45" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,.28)_100%)]" />
       </div>
 
       {/* Centered hero content */}
