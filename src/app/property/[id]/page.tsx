@@ -158,6 +158,14 @@ export default function PropertyPage() {
                 <div className="flex items-baseline justify-between gap-3"><dt className="text-slate">Indicative registration allowance (7% sample)</dt><dd className="font-medium text-matte tabular-nums">{inr(registrationEstimate)}</dd></div>
                 <div className="flex items-baseline justify-between gap-3 border-t border-line/60 pt-1.5"><dt className="font-medium text-matte">Illustrative subtotal</dt><dd className="font-serif text-lg text-[#9c7f56] tabular-nums">{inr(indicativePurchaseTotal)}</dd></div>
               </dl>
+
+          <nav aria-label="On this page" className="mt-6 overflow-x-auto border border-line/70 bg-white px-3 py-2 shadow-[0_6px_18px_rgba(17,17,17,.03)]">
+            <ul className="flex min-w-max items-center gap-1 text-[11px] font-medium uppercase tracking-[.16em] text-slate">
+              {([["Overview","#overview"],["EMI","#emi"],["Location","#location"],["Amenities","#amenities"],["Tour and plans","#tour"],["Enquire","#enquire"],["Similar","#similar"]] as const).map(([label,href]) => (
+                <li key={href}><a href={href} className="inline-flex rounded-sm px-3 py-2 transition hover:bg-ivory hover:text-matte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold">{label}</a></li>
+              ))}
+            </ul>
+          </nav>
               <p className="mt-2 text-[10px] leading-relaxed text-slate/80">Planning estimate only, not a tax or legal quote. Actual stamp duty, registration, GST applicability and other charges depend on the property and transaction. Confirm with the relevant authority and a qualified advisor.</p>
             </> : <>
               <p className="mt-3 font-serif text-2xl text-matte">{inr(p.price)} <span className="font-sans text-sm font-normal text-slate">per month</span></p>
