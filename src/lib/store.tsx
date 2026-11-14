@@ -14,7 +14,7 @@ export const useStore=()=>{const s=useContext(Ctx);if(!s)throw new Error("useSto
 const read=<T,>(k:string,d:T):T=>{try{const v=typeof window!=="undefined"?window.localStorage.getItem(k):null;return v?JSON.parse(v) as T:d;}catch{return d;}};
 const asProps=(v:unknown):Property[]=>Array.isArray(v)&&v.length&&typeof (v[0] as any)?.id==="string"?v as Property[]:seed;
 export function StoreProvider({children}:{children:React.ReactNode}){
- const [properties,setProps]=useState<Property[]>(seed);const [wishlist,setW]=useState<string[]>([]);const [compare,setC]=useState<string[]>([]);const [account,setAcc]=useState<Account|null>(null);const [ready,setReady]=useState(true);const [hydrated,setHydrated]=useState(false);
+ const [properties,setProps]=useState<Property[]>(seed);const [wishlist,setW]=useState<string[]>([]);const [compare,setC]=useState<string[]>([]);const [account,setAcc]=useState<Account|null>(null);const [ready,setReady]=useState(false);const [hydrated,setHydrated]=useState(false);
  const hydratedRef=useRef(false);
  useEffect(()=>{
   try{
